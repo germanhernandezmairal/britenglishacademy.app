@@ -126,6 +126,7 @@ export async function completeOnboarding(formData: FormData): Promise<never> {
     .eq("id", user.id)
 
   if (error) {
+    console.error("[Onboarding] Supabase update error:", JSON.stringify(error))
     redirect("/onboarding?error=save_failed")
   }
 
