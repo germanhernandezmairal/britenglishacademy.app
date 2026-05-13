@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, ClipboardList, X } from "lucide-react"
+import { Plus, X } from "lucide-react"
 import { UploadForm } from "./UploadForm"
 import { SubmissionCard } from "./SubmissionCard"
+import { LottiePlayer } from "@/components/shared/LottiePlayer"
+import emptyAnimation from "@/public/animations/empty.json"
 
 type GrammarError = {
   type: string
@@ -80,10 +82,11 @@ export function HomeworkView({ initialSubmissions }: { initialSubmissions: Submi
           className="flex flex-col items-center justify-center py-20 rounded-2xl border"
           style={{ background: "white", borderColor: "var(--color-border)" }}
         >
-          <ClipboardList
-            size={40}
-            className="mb-4 opacity-20"
-            style={{ color: "var(--color-primary)" }}
+          <LottiePlayer
+            animationData={emptyAnimation}
+            loop
+            autoplay
+            style={{ width: 120, height: 120 }}
           />
           <p className="text-sm font-medium mb-1" style={{ color: "var(--color-text)" }}>
             Aún no has enviado ningún deber

@@ -330,6 +330,31 @@ export function PostCard({
         </div>
       )}
 
+      {/* AI-generated banner image (weekly challenges only) */}
+      {isChallenge && post.ai_banner_url && (
+        <div className="w-full overflow-hidden" style={{ maxHeight: 220 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.ai_banner_url}
+            alt="Imagen del reto semanal"
+            className="w-full object-cover"
+            style={{ maxHeight: 220 }}
+          />
+        </div>
+      )}
+
+      {/* Placeholder gradient shown while image is being generated */}
+      {isChallenge && !post.ai_banner_url && (
+        <div
+          className="w-full flex items-center justify-center"
+          style={{
+            height: 80,
+            background: "linear-gradient(135deg, #012169 0%, #C8102E 60%, #D4A017 100%)",
+            opacity: 0.15,
+          }}
+        />
+      )}
+
       <div className="px-5 py-4">
         {/* Author row */}
         <div className="flex items-center justify-between mb-3">

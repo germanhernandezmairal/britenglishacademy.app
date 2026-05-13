@@ -1,8 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { after } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/server"
+import { notifyHomeworkSubmitted } from "@/lib/notify"
 
 const ALLOWED_MIME_TYPES = [
   "text/plain",
@@ -139,6 +141,11 @@ export async function submitHomework(formData: FormData) {
       .update({ claude_feedback: claudeFeedback })
       .eq("id", submission.id)
   }
+
+  // Fetch student name then notify staff after response is sent
+  const { data: profile } = await supabase.from("profiles").select("full_name").eq("id", user.id).single()
+  const studentName = profile?.full_name ?? "Estudiante"
+  after(async () => { await notifyHomeworkSubmitted(user.id, studentName, title) })
 
   revalidatePath("/homework")
   revalidatePath("/dashboard")

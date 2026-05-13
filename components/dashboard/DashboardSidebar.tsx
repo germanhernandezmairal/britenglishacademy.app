@@ -8,6 +8,7 @@ import {
   Users, MessageCircle, Settings2, Menu, X, LogOut, ChevronRight,
 } from "lucide-react"
 import { logout } from "@/app/actions/auth"
+import { PushNotificationToggle } from "@/components/shared/PushNotificationToggle"
 
 type Profile = {
   full_name: string
@@ -150,6 +151,8 @@ function NavContent({ profile, onNav }: { profile: Profile; onNav?: () => void }
             )}
           </div>
         </div>
+
+        <PushNotificationToggle />
 
         <form action={logout}>
           <button

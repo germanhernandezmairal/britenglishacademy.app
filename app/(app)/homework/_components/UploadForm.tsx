@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useRef, useTransition, useCallback } from "react"
-import { Upload, FileText, X, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+import { Upload, FileText, X, AlertCircle, Loader2 } from "lucide-react"
 import { submitHomework } from "@/app/actions/homework"
+import { LottiePlayer } from "@/components/shared/LottiePlayer"
+import successAnimation from "@/public/animations/success.json"
 
 const ACCEPTED = ".txt,.pdf,.doc,.docx,.jpg,.jpeg,.png"
 const MAX_MB = 20
@@ -70,14 +72,15 @@ export function UploadForm({ onClose }: { onClose: () => void }) {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center py-10 text-center">
-        <div
-          className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
-          style={{ background: "#D1FAE5" }}
-        >
-          <CheckCircle2 size={32} className="text-green-500" />
-        </div>
-        <h3 className="text-base font-bold mb-1" style={{ color: "var(--color-text)" }}>
+      <div className="flex flex-col items-center justify-center py-8 text-center">
+        <LottiePlayer
+          animationData={successAnimation}
+          loop={false}
+          autoplay
+          style={{ width: 120, height: 120 }}
+          onComplete={onClose}
+        />
+        <h3 className="text-base font-bold mb-1 mt-2" style={{ color: "var(--color-text)" }}>
           ¡Deberes enviados!
         </h3>
         <p className="text-sm mb-2" style={{ color: "var(--color-text-muted)" }}>

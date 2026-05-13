@@ -1,7 +1,11 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { after } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { createClient as createSupabaseAdmin } from "@supabase/supabase-js"
+import { generateChallengeBanner } from "./generateImage"
+import { notifyAnnouncement } from "@/lib/notify"
 
 const ALLOWED_EMOJIS = ["❤️", "👏", "🔥", "😊", "🤔"]
 
@@ -31,6 +35,27 @@ export async function createPost(content: string, type: string = "student_post")
     .single()
 
   if (error || !post) return { error: "No se pudo publicar" }
+
+  // Notify all active students when an announcement is posted
+  if (postType === "announcement") {
+    after(async () => { await notifyAnnouncement(trimmed) })
+  }
+
+  // Generate AI banner for weekly challenges after response is sent
+  if (postType === "weekly_challenge") {
+    const postId = post.id
+    const content = trimmed
+    after(async () => {
+      const imageUrl = await generateChallengeBanner(content)
+      if (!imageUrl) return
+      const admin = createSupabaseAdmin(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      )
+      await admin.from("posts").update({ ai_banner_url: imageUrl }).eq("id", postId)
+      revalidatePath("/community")
+    })
+  }
 
   revalidatePath("/community")
   return { success: true, postId: post.id }
