@@ -112,7 +112,7 @@ export function InteractiveExam({
     startTransition(async () => {
       const res = await submitInteractiveExam(exam.id, answers)
       if ("error" in res) {
-        setError(res.error)
+        setError(res.error ?? null)
         return
       }
       const attempt: Attempt = {

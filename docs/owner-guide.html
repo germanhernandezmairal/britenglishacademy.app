@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía del Propietario — Brit English School</title>
+  <style>
+    :root {
+      --navy:   #012169;
+      --crimson:#C8102E;
+      --gold:   #D4A017;
+      --navy-light: #e8ecf5;
+      --text:   #1a1a2e;
+      --muted:  #6b7280;
+      --border: #e2e8f0;
+      --success:#16a34a;
+      --success-light:#dcfce7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: #f8fafc;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1A3A8C 100%);
+      color: white;
+      padding: 60px 40px 50px;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(212,160,23,0.2);
+      border: 1px solid rgba(212,160,23,0.4);
+      color: #F0C842;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    header h1 { font-size: 36px; font-weight: 700; margin-bottom: 10px; }
+    header p { font-size: 17px; opacity: 0.78; max-width: 580px; }
+    .header-meta { margin-top: 20px; font-size: 13px; opacity: 0.55; }
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 220px 1fr; gap: 40px; max-width: 1080px; margin: 40px auto; padding: 0 40px; }
+    /* ── Sidebar TOC ── */
+    nav { position: sticky; top: 24px; align-self: start; }
+    nav h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+    nav a {
+      display: block; font-size: 13px; color: var(--muted); text-decoration: none;
+      padding: 5px 0 5px 12px; border-left: 2px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav a:hover { color: var(--navy); border-color: var(--navy); }
+    /* ── Sections ── */
+    section { margin-bottom: 60px; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+    h2 {
+      font-size: 22px; color: var(--navy);
+      display: flex; align-items: center; gap: 12px;
+      padding-bottom: 16px; margin-bottom: 24px;
+      border-bottom: 2px solid var(--navy-light);
+    }
+    .section-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--navy); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; flex-shrink: 0;
+    }
+    h3 { font-size: 16px; color: var(--text); margin: 24px 0 10px; }
+    p { margin-bottom: 12px; }
+    /* ── Step boxes ── */
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex; gap: 14px;
+      margin-bottom: 16px; padding: 14px 16px;
+      background: #f8fafc; border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .steps li::before {
+      content: counter(step);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--navy); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .steps li > div { flex: 1; }
+    .steps li strong { display: block; margin-bottom: 3px; }
+    /* ── Screenshot placeholder ── */
+    .screenshot {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      background: #f1f5f9;
+      padding: 40px 20px;
+      text-align: center;
+      margin: 20px 0;
+      color: var(--muted);
+    }
+    .screenshot .icon { font-size: 36px; margin-bottom: 10px; }
+    .screenshot p { font-size: 13px; margin: 0; color: var(--muted); }
+    /* ── Callouts ── */
+    .tip {
+      background: var(--success-light);
+      border-left: 4px solid var(--success);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px; margin: 16px 0; font-size: 14px;
+    }
+    .tip strong { color: var(--success); }
+    .warn {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px; margin: 16px 0; font-size: 14px;
+    }
+    .warn strong { color: #ea580c; }
+    .info {
+      background: var(--navy-light);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px; margin: 16px 0; font-size: 14px;
+    }
+    .info strong { color: var(--navy); }
+    /* ── Code ── */
+    code {
+      background: #f1f5f9; padding: 2px 7px; border-radius: 4px;
+      font-family: 'Courier New', monospace; font-size: 13px; color: var(--crimson);
+    }
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th { background: var(--navy); color: white; text-align: left; padding: 10px 14px; }
+    td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: #f8fafc; }
+    /* ── Status badges ── */
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+    }
+    .badge.pending { background: #fef3c7; color: #92400e; }
+    .badge.review { background: var(--navy-light); color: var(--navy); }
+    .badge.corrected { background: var(--success-light); color: #15803d; }
+    /* ── Footer ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.6);
+      text-align: center; padding: 30px;
+      font-size: 13px; margin-top: 60px;
+    }
+    footer strong { color: white; }
+    footer a { color: #F0C842; text-decoration: none; }
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; padding: 0 16px; }
+      nav { display: none; }
+      header { padding: 40px 20px; }
+      section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Guía del Propietario</div>
+  <h1>Cómo gestionar tu plataforma</h1>
+  <p>Guía paso a paso para administrar Brit English School desde el panel de administración. Sin tecnicismos.</p>
+  <div class="header-meta">Versión 1.0 · Mayo 2026 · Para consultas técnicas: <strong>gerhm19@gmail.com</strong></div>
+</header>
+
+<div class="layout">
+
+  <!-- TOC -->
+  <nav>
+    <h3>Secciones</h3>
+    <a href="#acceso">1. Acceder como administrador</a>
+    <a href="#lecciones">2. Gestionar lecciones</a>
+    <a href="#examenes">3. Gestionar exámenes</a>
+    <a href="#deberes">4. Revisar deberes</a>
+    <a href="#comunidad">5. Publicar anuncios</a>
+    <a href="#estudiantes">6. Gestionar alumnos</a>
+    <a href="#mensajes">7. Enviar mensajes</a>
+    <a href="#ia">8. La IA de Claude</a>
+    <a href="#problemas">9. Solución de problemas</a>
+    <a href="#soporte">10. Soporte técnico</a>
+  </nav>
+
+  <!-- Main -->
+  <main>
+
+    <!-- 1. Acceso -->
+    <section id="acceso">
+      <h2><span class="section-num">1</span>Acceder como administrador</h2>
+      <p>Para entrar al panel de administración de la plataforma:</p>
+      <ol class="steps">
+        <li><div><strong>Ve a la web</strong>Abre <code>www.britenglishschool.com/login</code> en tu navegador.</div></li>
+        <li><div><strong>Inicia sesión</strong>Introduce tu email y contraseña de administrador. También puedes usar el botón «Continuar con Google» si tienes una cuenta de Google vinculada.</div></li>
+        <li><div><strong>Accede al panel admin</strong>Una vez dentro, en la barra lateral izquierda verás la opción <strong>«Admin»</strong>. Haz clic para acceder al panel de administración.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">🖥️</div>
+        <p>Captura de pantalla — Página de login con email, contraseña y botón Google</p>
+      </div>
+
+      <div class="tip">
+        <strong>Consejo:</strong> Si alguien más necesita acceso de administrador (por ejemplo, un profesor),
+        dile a Germán que cambie el rol de esa persona en la base de datos. Los alumnos nunca verán
+        el panel de administración.
+      </div>
+    </section>
+
+    <!-- 2. Lecciones -->
+    <section id="lecciones">
+      <h2><span class="section-num">2</span>Gestionar lecciones de vídeo</h2>
+
+      <h3>Crear una lección nueva</h3>
+      <ol class="steps">
+        <li><div><strong>Ve a Admin → Lecciones</strong>En el panel de administración, haz clic en «Lecciones» en el menú lateral.</div></li>
+        <li><div><strong>Haz clic en «Nueva lección»</strong>Aparecerá un formulario en la parte superior de la página.</div></li>
+        <li><div><strong>Rellena el formulario</strong>
+          <ul style="margin-top:6px">
+            <li><strong>Título:</strong> nombre de la lección (ej. «Present Perfect — B2»)</li>
+            <li><strong>Descripción:</strong> breve resumen del contenido</li>
+            <li><strong>Nivel CEFR:</strong> selecciona A1, A2, B1, B2, C1 o C2</li>
+            <li><strong>URL del vídeo:</strong> pega el enlace de YouTube (ej. <code>https://www.youtube.com/embed/abc123</code>)</li>
+            <li><strong>Vocabulario:</strong> puedes añadir palabras clave separadas por comas</li>
+          </ul>
+        </div></li>
+        <li><div><strong>Haz clic en «Crear lección»</strong>La lección se guardará como <em>borrador</em> (no visible para alumnos).</div></li>
+        <li><div><strong>Publícala cuando esté lista</strong>En la lista de lecciones, activa el interruptor «Publicada» para que los alumnos del nivel correspondiente puedan verla.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">📹</div>
+        <p>Captura de pantalla — Formulario de nueva lección con campos: título, nivel, URL de vídeo, vocabulario</p>
+      </div>
+
+      <h3>Editar una lección existente</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Lecciones</strong>Localiza la lección en la lista (están agrupadas por nivel).</div></li>
+        <li><div><strong>Haz clic en «Editar»</strong>Se abrirá el formulario con los datos actuales de la lección.</div></li>
+        <li><div><strong>Realiza los cambios</strong>Modifica los campos que necesites y haz clic en «Guardar cambios».</div></li>
+      </ol>
+
+      <h3>Eliminar una lección</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Lecciones</strong>Localiza la lección.</div></li>
+        <li><div><strong>Haz clic en el icono de papelera</strong>Confirma la eliminación en el diálogo que aparece.</div></li>
+      </ol>
+
+      <div class="warn">
+        <strong>Atención:</strong> Eliminar una lección borra también todo su historial de visualizaciones
+        y comentarios de alumnos. Esta acción no se puede deshacer.
+      </div>
+
+      <h3>Obtener un enlace de YouTube embebido</h3>
+      <p>En YouTube, abre el vídeo, haz clic en <strong>Compartir → Insertar</strong>.
+        Copia sólo la parte de la URL dentro de <code>src="..."</code>, que tendrá esta forma:<br/>
+        <code>https://www.youtube.com/embed/CÓDIGO_DEL_VÍDEO</code></p>
+    </section>
+
+    <!-- 3. Exámenes -->
+    <section id="examenes">
+      <h2><span class="section-num">3</span>Gestionar exámenes</h2>
+      <p>La plataforma admite dos tipos de examen. Elige el que mejor se adapte a cada prueba:</p>
+      <table>
+        <tr><th>Tipo</th><th>Cuándo usarlo</th><th>Cómo funciona</th></tr>
+        <tr><td><strong>PDF + redacción</strong></td><td>Exámenes tipo Cambridge (Reading, Writing...)</td><td>El alumno ve el PDF y escribe su respuesta en un editor de texto. Claude la corrige.</td></tr>
+        <tr><td><strong>Interactivo</strong></td><td>Vocabulario, gramática, test de opción múltiple</td><td>Tú creas las preguntas directamente en la plataforma. Se corrigen al instante.</td></tr>
+      </table>
+
+      <h3>Crear un examen tipo PDF</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Exámenes → «Nuevo examen»</strong></div></li>
+        <li><div><strong>Selecciona tipo «PDF»</strong>e introduce el título, nivel y la URL del PDF del examen (súbelo primero a Google Drive o Supabase Storage y copia el enlace público).</div></li>
+        <li><div><strong>Guarda y publica</strong> cuando esté listo para los alumnos.</div></li>
+      </ol>
+
+      <h3>Crear un examen interactivo</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Exámenes → «Nuevo examen»</strong></div></li>
+        <li><div><strong>Selecciona tipo «Interactivo»</strong></div></li>
+        <li><div><strong>Añade las preguntas</strong>Para cada pregunta, indica:
+          <ul style="margin-top:6px">
+            <li><strong>Tipo:</strong> opción múltiple, rellenar hueco, o texto abierto</li>
+            <li><strong>Enunciado:</strong> el texto de la pregunta</li>
+            <li><strong>Opciones</strong> (para opción múltiple) y la respuesta correcta</li>
+            <li><strong>Puntuación</strong> de la pregunta</li>
+          </ul>
+        </div></li>
+        <li><div><strong>Guarda y publica</strong></div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">📝</div>
+        <p>Captura de pantalla — Panel de creación de examen interactivo con lista de preguntas y botón «Añadir pregunta»</p>
+      </div>
+
+      <div class="tip">
+        <strong>Consejo:</strong> Deja el examen como borrador (no publicado) mientras lo estás construyendo.
+        Así los alumnos no lo verán hasta que esté completo.
+      </div>
+    </section>
+
+    <!-- 4. Deberes -->
+    <section id="deberes">
+      <h2><span class="section-num">4</span>Revisar y corregir deberes</h2>
+
+      <p>Cuando un alumno sube un archivo de deberes, tú recibes una notificación y puedes revisarlo desde el panel.</p>
+
+      <h3>Ver los deberes pendientes</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Deberes</strong>Verás tres columnas: <span class="badge pending">Pendiente</span>, <span class="badge review">En revisión</span> y <span class="badge corrected">Corregido</span>.</div></li>
+        <li><div><strong>Haz clic en cualquier entrega</strong>para ver el archivo del alumno, su descripción y el <strong>análisis previo de Claude AI</strong>.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">📋</div>
+        <p>Captura de pantalla — Cola de deberes agrupada por estado: Pendiente / En revisión / Corregido</p>
+      </div>
+
+      <h3>Procesar una entrega</h3>
+      <ol class="steps">
+        <li><div><strong>Descarga el archivo del alumno</strong>Haz clic en el botón de descarga para abrir el documento original.</div></li>
+        <li><div><strong>Lee el informe de Claude</strong>La IA ya ha marcado los errores gramaticales y dado una puntuación provisional. Úsalo como punto de partida.</div></li>
+        <li><div><strong>Cambia el estado a «En revisión»</strong>para que el alumno sepa que lo estás procesando.</div></li>
+        <li><div><strong>Añade tu nota de feedback</strong>en el campo «Comentarios del profesor». Sé específico: qué ha hecho bien, qué debe mejorar.</div></li>
+        <li><div><strong>(Opcional) Sube el archivo corregido</strong>Si has anotado el documento, súbelo aquí. El alumno podrá descargarlo.</div></li>
+        <li><div><strong>Cambia el estado a «Corregido»</strong>El alumno recibirá una notificación.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">✏️</div>
+        <p>Captura de pantalla — Vista de revisión de deberes: feedback de Claude a la izquierda, campo de notas del profesor a la derecha</p>
+      </div>
+    </section>
+
+    <!-- 5. Anuncios -->
+    <section id="comunidad">
+      <h2><span class="section-num">5</span>Publicar anuncios en la comunidad</h2>
+
+      <p>Los anuncios aparecen fijados en la parte superior del feed de la comunidad, destacados con un color diferente al de las publicaciones normales. Los alumnos pueden reaccionar pero no responder.</p>
+
+      <ol class="steps">
+        <li><div><strong>Ve a «Comunidad»</strong> en la barra lateral del dashboard.</div></li>
+        <li><div><strong>Haz clic en «Nuevo anuncio»</strong>(disponible sólo para administradores).</div></li>
+        <li><div><strong>Escribe el mensaje</strong>Puedes incluir emojis, negritas y listas con Markdown básico.</div></li>
+        <li><div><strong>Publica</strong>El anuncio aparecerá inmediatamente fijado en el feed. Todos los alumnos recibirán una notificación.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">📢</div>
+        <p>Captura de pantalla — Formulario de nuevo anuncio con campo de texto y botón «Publicar anuncio»</p>
+      </div>
+
+      <div class="tip">
+        <strong>Consejo:</strong> Usa los anuncios para comunicar fechas de exámenes, cierres por festivos,
+        retos semanales de escritura o noticias importantes de la academia.
+      </div>
+    </section>
+
+    <!-- 6. Alumnos -->
+    <section id="estudiantes">
+      <h2><span class="section-num">6</span>Gestionar cuentas de alumnos</h2>
+
+      <h3>Ver todos los alumnos</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Alumnos</strong>Verás una tabla con nombre, email, nivel actual y estado (activo / suspendido).</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">👥</div>
+        <p>Captura de pantalla — Tabla de alumnos con columnas: nombre, email, nivel, estado, acciones</p>
+      </div>
+
+      <h3>Cambiar el nivel de un alumno</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Alumnos</strong>Localiza al alumno en la lista.</div></li>
+        <li><div><strong>Haz clic en el selector de nivel</strong>(junto al nombre del alumno) y elige el nuevo nivel: A1, A2, B1, B2, C1 o C2.</div></li>
+        <li><div><strong>El cambio se aplica inmediatamente.</strong>El alumno verá las lecciones y exámenes de su nuevo nivel la próxima vez que entre.</div></li>
+      </ol>
+
+      <h3>Suspender o reactivar una cuenta</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Alumnos</strong>Localiza al alumno.</div></li>
+        <li><div><strong>Haz clic en «Suspender»</strong>El alumno no podrá entrar a la plataforma hasta que reactives su cuenta. Sus datos se conservan.</div></li>
+        <li><div>Para reactivarla, haz clic en <strong>«Activar»</strong>.</div></li>
+      </ol>
+
+      <div class="info">
+        <strong>Registro abierto:</strong> Por defecto cualquier persona puede registrarse con un email.
+        Si quieres restringir el registro a invitación, díselo a Germán para que active esa opción en la configuración.
+      </div>
+    </section>
+
+    <!-- 7. Mensajes -->
+    <section id="mensajes">
+      <h2><span class="section-num">7</span>Enviar mensajes</h2>
+
+      <h3>Mensaje privado a un alumno</h3>
+      <ol class="steps">
+        <li><div><strong>Ve a «Mensajes»</strong> en la barra lateral.</div></li>
+        <li><div><strong>Haz clic en «Nueva conversación»</strong>y selecciona el alumno de la lista.</div></li>
+        <li><div><strong>Escribe y envía</strong>El alumno verá el mensaje en tiempo real si está conectado, o la próxima vez que entre.</div></li>
+      </ol>
+
+      <h3>Mensaje grupal a un nivel</h3>
+      <p>Puedes enviar un mensaje a <em>todos los alumnos</em> de un nivel al mismo tiempo (útil para avisar del próximo examen, cambios de horario, etc.).</p>
+      <ol class="steps">
+        <li><div><strong>Mensajes → «Nueva difusión»</strong></div></li>
+        <li><div><strong>Selecciona el nivel de destino</strong>(A1, A2, B1, B2, C1, C2 — o todos).</div></li>
+        <li><div><strong>Escribe el mensaje y envía.</strong>Aparecerá como una conversación de «difusión» en la bandeja de los alumnos del nivel seleccionado.</div></li>
+      </ol>
+
+      <div class="screenshot">
+        <div class="icon">💬</div>
+        <p>Captura de pantalla — Bandeja de mensajes con lista de conversaciones a la izquierda y chat en tiempo real a la derecha</p>
+      </div>
+
+      <div class="tip">
+        <strong>Consejo:</strong> También puedes adjuntar archivos en los mensajes (por ejemplo, un PDF de
+        ejercicios extra) haciendo clic en el icono de clip.
+      </div>
+    </section>
+
+    <!-- 8. IA -->
+    <section id="ia">
+      <h2><span class="section-num">8</span>Entender la IA de Claude</h2>
+
+      <p>La plataforma usa <strong>Claude AI</strong> (de Anthropic) para ayudarte en dos tareas: revisar deberes y corregir exámenes. Aquí te explicamos cómo funciona y cuándo debes intervenir.</p>
+
+      <h3>¿Qué hace Claude automáticamente?</h3>
+      <table>
+        <tr><th>Tarea</th><th>Lo que hace Claude</th></tr>
+        <tr><td>Revisión de deberes</td><td>Analiza el texto del alumno, detecta errores gramaticales, da una puntuación provisional (0–100) y un nivel CEFR estimado.</td></tr>
+        <tr><td>Corrección de exámenes</td><td>Lee la redacción del alumno, la puntúa según descriptores Cambridge, señala errores concretos con explicaciones y asigna una banda CEFR.</td></tr>
+      </table>
+
+      <h3>¿Cuándo debes corregir o sobreescribir a la IA?</h3>
+      <ul style="list-style:disc; padding-left:20px; margin-bottom:12px">
+        <li>Cuando el alumno comete un error de <strong>vocabulario técnico</strong> que Claude no domina (frases hechas locales, lenguaje de negocio muy específico).</li>
+        <li>Cuando la puntuación de Claude parece <strong>demasiado alta o baja</strong> para el nivel real del alumno. Tú conoces al alumno; Claude no.</li>
+        <li>Cuando la respuesta del alumno es <strong>correcta pero inusual</strong> y Claude la ha marcado como error.</li>
+        <li>Siempre que tu criterio pedagógico difiera del análisis automático.</li>
+      </ul>
+
+      <h3>Cómo corregir la nota de Claude en un examen</h3>
+      <ol class="steps">
+        <li><div><strong>Admin → Deberes</strong> (o el resultado del examen del alumno).</div></li>
+        <li><div>Verás la puntuación de Claude y un campo «<strong>Nota del profesor</strong>».</div></li>
+        <li><div>Introduce la nota que consideras correcta. Esta nota sobreescribe la de Claude en el perfil del alumno.</div></li>
+        <li><div>Añade un comentario explicando el cambio (opcional pero recomendado).</div></li>
+      </ol>
+
+      <div class="info">
+        <strong>Privacidad:</strong> Los textos de los deberes y exámenes de los alumnos se envían a
+        la API de Claude (Anthropic) para su análisis. Anthropic no utiliza estos datos para entrenar
+        sus modelos (API commercial use policy). Informa a tus alumnos de este procesamiento en tu
+        política de privacidad.
+      </div>
+    </section>
+
+    <!-- 9. Problemas -->
+    <section id="problemas">
+      <h2><span class="section-num">9</span>Solución de problemas habituales</h2>
+
+      <table>
+        <tr><th>Problema</th><th>Solución</th></tr>
+        <tr>
+          <td>Un alumno no puede entrar a la plataforma</td>
+          <td>Comprueba en Admin → Alumnos que la cuenta está <strong>activa</strong> y que el email está confirmado. Si no ha confirmado el email, dile que revise su bandeja de spam.</td>
+        </tr>
+        <tr>
+          <td>Un alumno no ve las lecciones de su nivel</td>
+          <td>Comprueba que las lecciones están <strong>publicadas</strong> (interruptor activo en Admin → Lecciones) y que el nivel del alumno está correctamente asignado.</td>
+        </tr>
+        <tr>
+          <td>El feedback de Claude no aparece en un debre</td>
+          <td>El análisis de Claude puede tardar 10–30 segundos. Recarga la página. Si tras un minuto sigue sin aparecer, puede ser un problema temporal con la API — el feedback del profesor puede añadirse igualmente.</td>
+        </tr>
+        <tr>
+          <td>No recibo el email de confirmación al registrarme</td>
+          <td>Revisa la carpeta de spam. Si el correo no llega en 5 minutos, el problema puede ser con Resend o la configuración del dominio de email. Contacta con soporte técnico.</td>
+        </tr>
+        <tr>
+          <td>Los mensajes en tiempo real no llegan</td>
+          <td>Recarga la página. La función de tiempo real requiere conexión estable a internet. Si el problema persiste en diferentes dispositivos, contacta con soporte.</td>
+        </tr>
+        <tr>
+          <td>Error al subir un archivo de deberes</td>
+          <td>El límite es 20 MB. Asegúrate de que el archivo es PDF, DOCX o imagen. Si el archivo cumple estos requisitos y sigue dando error, puede ser un problema de permisos en el almacenamiento — contacta con soporte.</td>
+        </tr>
+        <tr>
+          <td>Un alumno no puede ver el examen PDF</td>
+          <td>Comprueba que la URL del PDF es accesible públicamente (no requiere login). Si el PDF está en Google Drive, asegúrate de que el enlace es «accesible para quien tenga el enlace».</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- 10. Soporte -->
+    <section id="soporte">
+      <h2><span class="section-num">10</span>Soporte técnico</h2>
+
+      <p>Para cualquier problema técnico con la plataforma (caídas, errores inesperados, funcionalidades que no responden correctamente), contacta con el desarrollador:</p>
+
+      <div style="background: var(--navy-light); border-radius: 12px; padding: 24px; margin: 20px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:6px;">Desarrollador</div>
+          <div style="font-size:18px; font-weight:700; color:var(--navy);">Germán Hernández Mairal</div>
+        </div>
+        <div>
+          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:6px;">Email</div>
+          <div style="font-size:16px; font-weight:600;"><a href="mailto:gerhm19@gmail.com" style="color:var(--navy);">gerhm19@gmail.com</a></div>
+        </div>
+      </div>
+
+      <p>Cuando contactes, incluye siempre:</p>
+      <ul style="list-style:disc; padding-left:20px;">
+        <li>Una descripción del problema</li>
+        <li>El navegador y dispositivo que usabas</li>
+        <li>Si el error le ocurre a un alumno específico, su email</li>
+        <li>Captura de pantalla del error si es posible</li>
+      </ul>
+
+      <div class="tip">
+        <strong>Acceso de emergencia:</strong> Si no puedes entrar a la plataforma con tu cuenta de administrador,
+        Germán puede restablecer tu acceso directamente desde la base de datos.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Brit English School Platform</strong> — Guía del Propietario v1.0<br/>
+  Para soporte técnico: <a href="mailto:gerhm19@gmail.com">gerhm19@gmail.com</a> · Mayo 2026
+</footer>
+
+</body>
+</html>

@@ -18,8 +18,8 @@ export default async function HomeworkPage() {
   const { data: rows } = await supabase
     .from("homework_submissions")
     .select(
-      "id, title, description, file_name, file_url, file_size, file_type, " +
-      "claude_feedback, corrected_file_url, teacher_feedback, status, submitted_at, reviewed_at"
+      `id, title, description, file_name, file_url, file_size, file_type,
+       claude_feedback, corrected_file_url, teacher_feedback, status, submitted_at, reviewed_at`
     )
     .eq("student_id", user.id)
     .order("submitted_at", { ascending: false })

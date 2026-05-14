@@ -4,10 +4,19 @@ import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+
 export const metadata: Metadata = {
   title: "Cursos de Inglés A1–C2 | Brit English School Tarragona",
   description:
     "Cursos de inglés para todos los niveles MCER (A1, A2, B1, B2, C1, C2) en Tarragona. Clases presenciales y online. Preparación Cambridge oficial.",
+  alternates: { canonical: `${BASE}/levels` },
+  openGraph: {
+    title: "Cursos de Inglés A1 a C2 | Brit English School Tarragona",
+    description:
+      "Cursos estructurados MCER para todos los niveles. Preparación Cambridge oficial B1, B2, C1, C2 en Tarragona.",
+    url: `${BASE}/levels`,
+  },
 }
 
 const LEVELS = [

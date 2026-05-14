@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Log — Brit English School Platform</title>
+  <style>
+    :root {
+      --navy:   #012169;
+      --crimson:#C8102E;
+      --gold:   #D4A017;
+      --navy-light: #e8ecf5;
+      --text:   #1a1a2e;
+      --muted:  #6b7280;
+      --border: #e2e8f0;
+      --code-bg:#f1f5f9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fafafa;
+      line-height: 1.7;
+    }
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1A3A8C 100%);
+      color: white;
+      padding: 60px 40px 50px;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(212,160,23,0.2);
+      border: 1px solid rgba(212,160,23,0.4);
+      color: #F0C842;
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    header h1 {
+      font-size: 38px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 17px;
+      opacity: 0.75;
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+    }
+    .header-meta {
+      margin-top: 24px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      opacity: 0.6;
+      display: flex;
+      gap: 24px;
+    }
+    /* ── Layout ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+    .layout { display: grid; grid-template-columns: 240px 1fr; gap: 40px; margin: 40px auto; max-width: 1100px; padding: 0 40px; }
+    /* ── Sidebar / TOC ── */
+    nav {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+    }
+    nav h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      margin-bottom: 12px;
+    }
+    nav a {
+      display: block;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 0;
+      border-left: 2px solid var(--border);
+      padding-left: 12px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav a:hover { color: var(--navy); border-color: var(--navy); }
+    nav a.sub { padding-left: 24px; font-size: 12px; }
+    /* ── Sections ── */
+    section { margin-bottom: 56px; }
+    h2 {
+      font-size: 26px;
+      color: var(--navy);
+      border-bottom: 2px solid var(--navy-light);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    h3 {
+      font-size: 18px;
+      color: var(--text);
+      margin: 28px 0 12px;
+    }
+    h4 {
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 20px 0 8px;
+    }
+    p { margin-bottom: 14px; font-size: 15px; }
+    ul, ol { padding-left: 20px; margin-bottom: 14px; }
+    li { font-size: 15px; margin-bottom: 6px; }
+    /* ── Code ── */
+    code {
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Courier New', monospace;
+      color: var(--crimson);
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 20px 24px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+    th {
+      background: var(--navy);
+      color: white;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+    }
+    td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: var(--navy-light); }
+    /* ── Callout boxes ── */
+    .callout {
+      border-left: 4px solid var(--gold);
+      background: #fffbeb;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .callout.info { border-color: var(--navy); background: var(--navy-light); }
+    .callout.warn { border-color: var(--crimson); background: #fff1f2; }
+    .callout strong { display: block; margin-bottom: 4px; }
+    /* ── Decision cards ── */
+    .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .decision-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: white;
+    }
+    .decision-card .label {
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .decision-card.chosen { border-color: var(--navy); }
+    .decision-card.chosen .label { color: var(--navy); }
+    /* ── Tag pills ── */
+    .tag {
+      display: inline-block;
+      background: var(--navy-light);
+      color: var(--navy);
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin: 2px;
+    }
+    /* ── Footer ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      margin-top: 60px;
+    }
+    footer strong { color: white; }
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .decision-grid { grid-template-columns: 1fr; }
+      header { padding: 40px 20px; }
+      .container, .layout { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Technical Documentation</div>
+  <h1>Developer Log</h1>
+  <p>Brit English School — Full-Stack Web Platform + Private Community</p>
+  <div class="header-meta">
+    <span>Version 1.0</span>
+    <span>May 2026</span>
+    <span>Author: Germán Hernández Mairal</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar TOC -->
+  <nav>
+    <h3>Contents</h3>
+    <a href="#overview">1. Project Overview</a>
+    <a href="#architecture">2. Architecture</a>
+    <a href="#tech-choices">3. Tech Choices</a>
+    <a href="#schema">4. Database Schema</a>
+    <a class="sub" href="#schema-tables">Tables</a>
+    <a class="sub" href="#schema-rls">RLS Policies</a>
+    <a href="#ai">5. AI Integration</a>
+    <a class="sub" href="#ai-homework">Homework Pre-scan</a>
+    <a class="sub" href="#ai-exams">Exam Grading</a>
+    <a href="#auth">6. Authentication</a>
+    <a href="#realtime">7. Realtime</a>
+    <a href="#env">8. Environment Variables</a>
+    <a href="#deployment">9. Deployment Pipeline</a>
+    <a href="#seo">10. SEO</a>
+    <a href="#limitations">11. Known Limitations</a>
+    <a href="#roadmap">12. Future Roadmap</a>
+  </nav>
+
+  <!-- Main content -->
+  <main>
+
+    <!-- 1. Overview -->
+    <section id="overview">
+      <h2>1. Project Overview</h2>
+      <p>
+        Brit English School is a Cambridge-certified English school in Tarragona, Spain. Before this project,
+        operations ran across three disconnected tools: a static website for marketing, WhatsApp groups for
+        student communication, and PDF emails for homework/exams. This platform unifies all three into a
+        single, production-ready web application.
+      </p>
+      <h3>Dual-Zone Architecture</h3>
+      <ul>
+        <li><strong>Zone 1 — Public Website:</strong> SEO-optimised marketing site at the root domain. Built
+          for conversion (visitor → registered student). Routes: <code>/</code>, <code>/levels</code>,
+          <code>/about</code>, <code>/blog</code>, <code>/contact</code>.</li>
+        <li><strong>Zone 2 — Private Community:</strong> Full learning management system behind authentication.
+          Routes under <code>/(app)/</code>: dashboard, lessons, homework, exams, community, messages, admin.</li>
+      </ul>
+    </section>
+
+    <!-- 2. Architecture -->
+    <section id="architecture">
+      <h2>2. Architecture</h2>
+
+      <h3>Route Group Strategy</h3>
+      <p>Next.js App Router route groups are used to share layouts without affecting URL structure:</p>
+      <ul>
+        <li><code>app/(auth)/</code> — login, signup, onboarding. No shared layout.</li>
+        <li><code>app/(app)/</code> — all authenticated routes. Shared layout provides the sidebar and auth
+          guard server-side (redirects unauthenticated users to <code>/login</code>).</li>
+        <li><code>app/</code> root — public pages share <code>SiteHeader</code> + <code>SiteFooter</code>
+          individually (not via a shared layout) so each public page controls its own full-page structure.</li>
+      </ul>
+
+      <h3>Server vs. Client Components</h3>
+      <table>
+        <tr><th>Pattern</th><th>Used For</th><th>Reason</th></tr>
+        <tr><td>Server Components (default)</td><td>All pages, data fetching</td><td>Enables <code>export const metadata</code>, direct Supabase calls, no client JS overhead</td></tr>
+        <tr><td>Client Components (<code>"use client"</code>)</td><td>SiteHeader, DashboardSidebar, forms, interactive exam, file upload</td><td>Requires <code>useState</code>, <code>usePathname</code>, or browser APIs</td></tr>
+        <tr><td>AnimateIn wrapper</td><td>Framer Motion scroll reveals on public pages</td><td>Children are rendered on server; only the motion wrapper is client</td></tr>
+        <tr><td>Server Actions</td><td>Contact form, admin operations, homework actions</td><td>Keeps logic on the server, avoids API route boilerplate</td></tr>
+      </table>
+
+      <h3>Data Fetching Pattern</h3>
+      <p>All authenticated pages fetch data directly in the server component using the Supabase server client
+        (<code>createClient()</code> from <code>lib/supabase/server.ts</code>). This client reads the session
+        from HTTP-only cookies set by the Supabase SSR helper, so no client-side hydration is needed for
+        initial data.</p>
+
+      <div class="callout info">
+        <strong>Admin-level storage access</strong>
+        Pages that need to generate signed URLs for private Supabase Storage files (e.g. homework downloads)
+        use the service-role admin client (<code>createAdminClient()</code>) server-side only. The service
+        role key is never sent to the browser.
+      </div>
+    </section>
+
+    <!-- 3. Tech Choices -->
+    <section id="tech-choices">
+      <h2>3. Tech Choices &amp; Trade-offs</h2>
+
+      <h3>Framework: Next.js 16 App Router</h3>
+      <div class="decision-grid">
+        <div class="decision-card chosen">
+          <div class="label">✓ Chosen</div>
+          <strong>Next.js App Router</strong>
+          <p style="font-size:13px;margin:6px 0 0">First-class SSR + SSG, metadata API, route groups, server actions. Native Vercel deployment. Single repo for both public site and authenticated app.</p>
+        </div>
+        <div class="decision-card">
+          <div class="label">Alternative</div>
+          <strong>Separate SPA + API</strong>
+          <p style="font-size:13px;margin:6px 0 0">React SPA + Fastify. More complex CORS setup, no SSR for SEO, two repos to maintain.</p>
+        </div>
+      </div>
+
+      <h3>Database: Supabase (PostgreSQL)</h3>
+      <div class="decision-grid">
+        <div class="decision-card chosen">
+          <div class="label">✓ Chosen</div>
+          <strong>Supabase</strong>
+          <p style="font-size:13px;margin:6px 0 0">Managed PostgreSQL + Auth + Storage + Realtime in one service. Row-Level Security enforced at the database layer. Free tier covers early-stage load.</p>
+        </div>
+        <div class="decision-card">
+          <div class="label">Alternative</div>
+          <strong>PlanetScale / Neon + Auth.js</strong>
+          <p style="font-size:13px;margin:6px 0 0">More flexible but requires separate auth, storage, and realtime solutions. Higher integration cost.</p>
+        </div>
+      </div>
+
+      <h3>Styling: Tailwind CSS v4 + shadcn/ui</h3>
+      <p>Tailwind v4 uses a CSS-first configuration via <code>@import "tailwindcss"</code> in
+        <code>globals.css</code>. Brand tokens (navy, crimson, gold) are defined as CSS custom properties and
+        referenced throughout the app as <code>var(--color-primary)</code> etc. shadcn/ui components use the
+        <code>base-nova</code> style, which is compatible with Tailwind v4.</p>
+      <div class="callout">
+        <strong>Note:</strong> Tailwind v4 differs significantly from v3. The <code>tailwind.config.ts</code>
+        file is minimal — most configuration lives in <code>globals.css</code>.
+      </div>
+
+      <h3>AI: Claude API (claude-sonnet-4-6)</h3>
+      <p>Claude was chosen over OpenAI GPT-4 for this project because:</p>
+      <ul>
+        <li>Superior instruction-following for structured JSON output (exam grading rubrics)</li>
+        <li>200K context window — can process long homework submissions in one call</li>
+        <li>Anthropic's model family aligns with the owner's preference</li>
+      </ul>
+
+      <h3>Email: Resend</h3>
+      <p>Resend was chosen over SendGrid/Mailgun for its clean developer experience and Next.js-first SDK.
+        In development, the email server action falls back to <code>console.log</code> so no real emails
+        are sent during local testing.</p>
+
+      <h3>Rate Limiting: Upstash Redis</h3>
+      <p>Upstash provides serverless Redis via HTTP — compatible with Vercel Edge functions and Node.js
+        environments. Rate limiting is applied to auth endpoints in <code>middleware.ts</code> using the
+        <code>@upstash/ratelimit</code> sliding window algorithm.</p>
+    </section>
+
+    <!-- 4. Database Schema -->
+    <section id="schema">
+      <h2>4. Database Schema</h2>
+
+      <div class="callout warn">
+        <strong>Important: schema.sql is partially stale.</strong>
+        The actual live schema differs from <code>supabase/schema.sql</code> in column names for some tables
+        (see the "Column name notes" section below). Always check the live Supabase schema as the source
+        of truth.
+      </div>
+
+      <h3 id="schema-tables">Tables (16 total)</h3>
+
+      <h4>profiles</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td>References <code>auth.users.id</code></td></tr>
+        <tr><td>email</td><td>text</td><td></td></tr>
+        <tr><td>full_name</td><td>text</td><td></td></tr>
+        <tr><td>avatar_url</td><td>text</td><td>Nullable</td></tr>
+        <tr><td>role</td><td>text</td><td>'student' | 'admin'</td></tr>
+        <tr><td>level</td><td>text</td><td>'A1'|'A2'|'B1'|'B2'|'C1'|'C2' — nullable until onboarding</td></tr>
+        <tr><td>is_active</td><td>boolean</td><td>Default true. Admin can suspend.</td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>lessons</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>title</td><td>text</td><td></td></tr>
+        <tr><td>description</td><td>text</td><td></td></tr>
+        <tr><td>level</td><td>text</td><td>CEFR level</td></tr>
+        <tr><td>video_url</td><td>text</td><td>YouTube embed URL or Supabase Storage URL</td></tr>
+        <tr><td>thumbnail_url</td><td>text</td><td>Added post-initial schema</td></tr>
+        <tr><td>vocabulary</td><td>jsonb</td><td>Array of vocabulary items</td></tr>
+        <tr><td>pdf_url</td><td>text</td><td>Nullable — downloadable resource</td></tr>
+        <tr><td>is_published</td><td>boolean</td><td>Unpublished = admin-only visibility</td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>lesson_completions</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>student_id</td><td>uuid (FK → profiles)</td><td></td></tr>
+        <tr><td>lesson_id</td><td>uuid (FK → lessons)</td><td></td></tr>
+        <tr><td>completed_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>lesson_comments</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>lesson_id</td><td>uuid (FK → lessons)</td><td></td></tr>
+        <tr><td>author_id</td><td>uuid (FK → profiles)</td><td></td></tr>
+        <tr><td>content</td><td>text</td><td></td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>homework_submissions</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>student_id</td><td>uuid (FK → profiles)</td><td></td></tr>
+        <tr><td>title</td><td>text</td><td></td></tr>
+        <tr><td>description</td><td>text</td><td>Student's notes</td></tr>
+        <tr><td>file_url</td><td>text</td><td>Supabase Storage path (not a public URL)</td></tr>
+        <tr><td>file_name</td><td>text</td><td>Original filename</td></tr>
+        <tr><td>file_size</td><td>bigint</td><td>Bytes</td></tr>
+        <tr><td>file_type</td><td>text</td><td>MIME type</td></tr>
+        <tr><td>status</td><td>text</td><td>'pending' | 'under_review' | 'corrected'</td></tr>
+        <tr><td>submitted_at</td><td>timestamptz</td><td></td></tr>
+        <tr><td>reviewed_at</td><td>timestamptz</td><td>Nullable</td></tr>
+        <tr><td>claude_feedback</td><td>jsonb</td><td>AI pre-scan result</td></tr>
+        <tr><td>teacher_feedback</td><td>text</td><td>Nullable — teacher notes</td></tr>
+        <tr><td>corrected_file_url</td><td>text</td><td>Nullable — corrected file path in Storage</td></tr>
+      </table>
+
+      <h4>exams</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>title</td><td>text</td><td></td></tr>
+        <tr><td>description</td><td>text</td><td></td></tr>
+        <tr><td>level</td><td>text</td><td>CEFR level</td></tr>
+        <tr><td>exam_type</td><td>text</td><td>'pdf' | 'interactive'</td></tr>
+        <tr><td>pdf_url</td><td>text</td><td>Nullable — for PDF exams</td></tr>
+        <tr><td>questions</td><td>jsonb</td><td>Nullable — for interactive exams</td></tr>
+        <tr><td>time_limit_minutes</td><td>integer</td><td>Nullable</td></tr>
+        <tr><td>max_score</td><td>integer</td><td>Default 100</td></tr>
+        <tr><td>is_published</td><td>boolean</td><td></td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>exam_submissions</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>exam_id</td><td>uuid (FK → exams)</td><td></td></tr>
+        <tr><td>student_id</td><td>uuid (FK → profiles)</td><td></td></tr>
+        <tr><td>score</td><td>integer</td><td>Claude's raw score</td></tr>
+        <tr><td>band_score</td><td>text</td><td>CEFR band (A1–C2)</td></tr>
+        <tr><td>status</td><td>text</td><td>'graded' | 'pending_review'</td></tr>
+        <tr><td>answers</td><td>jsonb</td><td>Student's answers</td></tr>
+        <tr><td>claude_feedback</td><td>jsonb</td><td>Full AI grading result</td></tr>
+        <tr><td>teacher_feedback</td><td>text</td><td>Nullable</td></tr>
+        <tr><td>teacher_override_score</td><td>integer</td><td>Nullable — overrides Claude's score</td></tr>
+        <tr><td>submitted_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>community_posts</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>author_id</td><td>uuid (FK → profiles)</td><td></td></tr>
+        <tr><td>content</td><td>text</td><td></td></tr>
+        <tr><td>image_url</td><td>text</td><td>Nullable</td></tr>
+        <tr><td>is_pinned</td><td>boolean</td><td>Admin-pinned posts</td></tr>
+        <tr><td>is_challenge</td><td>boolean</td><td>Weekly challenge flag</td></tr>
+        <tr><td>reactions</td><td>jsonb</td><td>Map of emoji → count</td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+      </table>
+
+      <h4>post_reactions, post_comments, announcements</h4>
+      <p>Standard junction/child tables. <code>announcements</code> are separate from <code>community_posts</code>
+        to allow different display treatment and to prevent students from replying.</p>
+
+      <h4>conversations</h4>
+      <table>
+        <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        <tr><td>id</td><td>uuid (PK)</td><td></td></tr>
+        <tr><td>type</td><td>text</td><td>'direct' | 'broadcast'</td></tr>
+        <tr><td>subject</td><td>text</td><td>Nullable</td></tr>
+        <tr><td>level_filter</td><td>text</td><td>For broadcast: target CEFR level</td></tr>
+        <tr><td>updated_at</td><td>timestamptz</td><td>Updated on new message</td></tr>
+      </table>
+
+      <h4>conversation_participants, messages, notifications, push_subscriptions</h4>
+      <p>Added via <code>supabase/migrations/001_messaging.sql</code>. Note:
+        <code>conversation_participants</code> uses <code>user_id</code> (not <code>profile_id</code>)
+        with a composite primary key <code>(conversation_id, user_id)</code>.</p>
+
+      <h3 id="schema-rls">RLS Policies</h3>
+      <p>Every table has Row-Level Security enabled. Key policy patterns:</p>
+      <ul>
+        <li><strong>Students read own data:</strong> <code>auth.uid() = student_id</code> on homework, exam submissions, etc.</li>
+        <li><strong>Students read published content:</strong> <code>is_published = true</code> on lessons and exams, filtered to <code>level &lt;= profile.level</code> at the application layer.</li>
+        <li><strong>Admin access:</strong> Uses a <code>current_user_role()</code> security-definer function to avoid infinite recursion when checking the <code>profiles</code> table from within a profiles RLS policy.</li>
+        <li><strong>Community posts:</strong> All authenticated users can read; only the author or admin can delete.</li>
+        <li><strong>Messages:</strong> Participants can only read conversations they are a member of.</li>
+      </ul>
+
+      <pre><code>-- Security-definer function (avoids RLS recursion on profiles)
+CREATE OR REPLACE FUNCTION current_user_role()
+RETURNS text
+LANGUAGE sql
+SECURITY DEFINER
+STABLE
+AS $$
+  SELECT role FROM profiles WHERE id = auth.uid()
+$$;</code></pre>
+    </section>
+
+    <!-- 5. AI Integration -->
+    <section id="ai">
+      <h2>5. AI Integration</h2>
+
+      <h3 id="ai-homework">Homework Pre-scan</h3>
+      <p>When a student submits homework, the server action in
+        <code>app/actions/homework.ts</code> calls Claude to generate a preliminary grammar/structure report
+        before the teacher reviews. This gives students instant feedback and saves teacher time.</p>
+
+      <h4>Implementation</h4>
+      <pre><code>// Prompt sent to Claude for homework pre-scan
+const prompt = `
+You are an expert English language teacher.
+Analyse the following student homework submission and provide feedback.
+Return a JSON object with this exact structure:
+{
+  "overall_score": number (0-100),
+  "cefr_level": string (A1-C2),
+  "grammar_errors": [{ "text": string, "correction": string, "explanation": string }],
+  "vocabulary_feedback": string,
+  "structure_feedback": string,
+  "positive_points": [string],
+  "improvement_areas": [string],
+  "summary": string
+}
+
+Student submission:
+${submissionText}
+`</code></pre>
+
+      <h4>Response parsing</h4>
+      <p>Claude's response is extracted from the text content and parsed with <code>JSON.parse()</code>.
+        The parsed object is stored in the <code>claude_feedback</code> jsonb column on
+        <code>homework_submissions</code>. If parsing fails, a fallback object with the raw text is stored.</p>
+
+      <h3 id="ai-exams">Exam Grading</h3>
+      <p>Interactive exam open-text answers and PDF exam essays are graded by Claude. The prompt includes
+        CEFR descriptors to ensure band scores are calibrated correctly.</p>
+
+      <h4>Interactive exam prompt</h4>
+      <pre><code>// Claude grades each open-text question individually
+const prompt = `
+You are a Cambridge English examiner.
+Grade the following student answer to this question.
+Return JSON: {
+  "score": number (0-100),
+  "band": string (A1-C2),
+  "feedback": string,
+  "corrections": [{ "original": string, "corrected": string, "explanation": string }]
+}
+
+Question: ${question.text}
+Student answer: ${studentAnswer}
+`</code></pre>
+
+      <h4>Teacher override</h4>
+      <p>Teachers can override Claude's score at any time from the admin homework review panel.
+        The <code>teacher_override_score</code> field on <code>exam_submissions</code> takes precedence
+        over <code>score</code> in all UI displays.</p>
+    </section>
+
+    <!-- 6. Auth -->
+    <section id="auth">
+      <h2>6. Authentication</h2>
+      <p>Authentication uses Supabase Auth with the <code>@supabase/ssr</code> package for cookie-based
+        sessions compatible with Next.js server components.</p>
+
+      <h3>Flow</h3>
+      <ol>
+        <li>User signs up → Supabase sends confirmation email</li>
+        <li>User clicks link → <code>/auth/callback</code> route exchanges code for session</li>
+        <li>After session is set → redirects to <code>/onboarding</code> if no level selected, else <code>/dashboard</code></li>
+        <li>All <code>/(app)/</code> routes check auth in the shared layout server component — unauthenticated requests are redirected to <code>/login</code></li>
+      </ol>
+
+      <h3>Middleware</h3>
+      <p><code>middleware.ts</code> runs on every request matching protected routes. It refreshes the
+        session cookie (required by Supabase SSR), applies Upstash Redis rate limiting on auth endpoints,
+        and guards <code>/admin/*</code> routes (redirects non-admin users to <code>/dashboard</code>).</p>
+
+      <div class="callout info">
+        <strong>Google OAuth</strong>
+        Enabled in Supabase → Authentication → Providers. The callback URL must be added to the
+        Google Cloud Console OAuth application's authorised redirect URIs:
+        <code>https://[supabase-ref].supabase.co/auth/v1/callback</code>
+      </div>
+    </section>
+
+    <!-- 7. Realtime -->
+    <section id="realtime">
+      <h2>7. Realtime (Messaging)</h2>
+      <p>Private messaging uses Supabase Realtime channels. Each conversation has a dedicated channel
+        named <code>conversation:{id}</code>. Messages are inserted into the database and the channel
+        broadcasts the new message to all connected participants.</p>
+      <pre><code>// Subscribe to a conversation channel
+const channel = supabase
+  .channel(`conversation:${conversationId}`)
+  .on(
+    'postgres_changes',
+    { event: 'INSERT', schema: 'public', table: 'messages', filter: `conversation_id=eq.${conversationId}` },
+    (payload) => setMessages(prev => [...prev, payload.new as Message])
+  )
+  .subscribe()</code></pre>
+    </section>
+
+    <!-- 8. Env Vars -->
+    <section id="env">
+      <h2>8. Environment Variables</h2>
+      <div class="callout warn">
+        <strong>Security rule:</strong> Never commit values to git. Never hardcode in source. All secrets
+        live in <code>.env.local</code> locally and in Vercel Environment Variables in production.
+      </div>
+      <table>
+        <tr><th>Variable</th><th>Scope</th><th>Description</th></tr>
+        <tr><td><code>NEXT_PUBLIC_SUPABASE_URL</code></td><td>Public</td><td>Supabase project API URL</td></tr>
+        <tr><td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td><td>Public</td><td>Anon key — safe for browser use, RLS enforced</td></tr>
+        <tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>Server only</td><td>Bypasses RLS — never expose to client</td></tr>
+        <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Server only</td><td>Claude API — homework + exam AI</td></tr>
+        <tr><td><code>UPSTASH_REDIS_REST_URL</code></td><td>Server only</td><td>Redis endpoint for rate limiting</td></tr>
+        <tr><td><code>UPSTASH_REDIS_REST_TOKEN</code></td><td>Server only</td><td>Redis auth token</td></tr>
+        <tr><td><code>RESEND_API_KEY</code></td><td>Server only</td><td>Transactional email (contact form)</td></tr>
+        <tr><td><code>RESEND_FROM_EMAIL</code></td><td>Server only</td><td>Sender address</td></tr>
+        <tr><td><code>NEXT_PUBLIC_APP_URL</code></td><td>Public</td><td>Base URL — used in sitemap, OG images, canonical URLs</td></tr>
+        <tr><td><code>NEXT_PUBLIC_SITE_NAME</code></td><td>Public</td><td>Site name for UI labels</td></tr>
+        <tr><td><code>REPLICATE_API_TOKEN</code></td><td>Server only</td><td>AI image generation (optional)</td></tr>
+        <tr><td><code>NEXT_PUBLIC_VAPID_PUBLIC_KEY</code></td><td>Public</td><td>Web push — browser service worker</td></tr>
+        <tr><td><code>VAPID_PRIVATE_KEY</code></td><td>Server only</td><td>Web push signing key</td></tr>
+        <tr><td><code>VAPID_EMAIL</code></td><td>Server only</td><td>Contact email for VAPID</td></tr>
+      </table>
+    </section>
+
+    <!-- 9. Deployment -->
+    <section id="deployment">
+      <h2>9. Deployment Pipeline</h2>
+      <ol>
+        <li>
+          <strong>Supabase (production project)</strong>
+          <ul>
+            <li>Create production Supabase project (separate from dev)</li>
+            <li>Run <code>supabase/schema.sql</code> + <code>supabase/migrations/001_messaging.sql</code> in SQL Editor</li>
+            <li>Create Storage buckets: <code>homework</code> (private), <code>lessons</code> (private)</li>
+            <li>Enable Google OAuth provider, add production callback URL</li>
+            <li>Add production domain to Authentication → URL Configuration → Redirect URLs</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Vercel</strong>
+          <ul>
+            <li>Connect GitHub repo (private) to Vercel</li>
+            <li>Set all environment variables in Settings → Environment Variables</li>
+            <li>Set <code>NEXT_PUBLIC_APP_URL</code> to <code>https://www.britenglishschool.com</code></li>
+            <li>Deploy — Vercel auto-detects Next.js, zero config needed</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Custom domain</strong>
+          <ul>
+            <li>Add domain in Vercel → Settings → Domains</li>
+            <li>Point DNS CNAME <code>www</code> → <code>cname.vercel-dns.com</code></li>
+            <li>SSL certificate provisioned automatically</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Resend domain verification</strong>
+          <ul>
+            <li>Add <code>britenglishschool.com</code> as a sending domain in Resend</li>
+            <li>Add DNS TXT + MX records as instructed by Resend</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 10. SEO -->
+    <section id="seo">
+      <h2>10. SEO</h2>
+      <p>Implemented in Step 17. Key deliverables:</p>
+      <ul>
+        <li><code>app/sitemap.ts</code> — generates <code>/sitemap.xml</code> with all 5 public routes</li>
+        <li><code>app/robots.ts</code> — generates <code>/robots.txt</code> with explicit allow/disallow rules</li>
+        <li><code>app/opengraph-image.tsx</code> — Edge-rendered dynamic OG image (1200×630)</li>
+        <li>Root layout: <code>metadataBase</code>, title template, keywords, Twitter card, robots directives</li>
+        <li>Each public page: <code>alternates.canonical</code> + per-page <code>openGraph</code> title/description/url</li>
+        <li>Homepage: <code>LocalBusiness</code> + <code>EducationalOrganization</code> JSON-LD schema</li>
+      </ul>
+    </section>
+
+    <!-- 11. Known Limitations -->
+    <section id="limitations">
+      <h2>11. Known Limitations</h2>
+      <ul>
+        <li><strong>Blog is static:</strong> The <code>/blog</code> page uses hardcoded post data. A Supabase-backed CMS was specified but not implemented. Adding a <code>blog_posts</code> table and dynamic <code>/blog/[slug]</code> route is the natural next step.</li>
+        <li><strong>No image generation in production:</strong> The Replicate AI image generation integration scaffold is in place but requires a funded Replicate account and is not wired to any live UI trigger.</li>
+        <li><strong>Lottie animations are basic:</strong> A service worker stub exists and placeholder JSON files are in <code>public/animations/</code>. Full Lottie integration on lesson completion and level-up events is partial.</li>
+        <li><strong>PDF viewer:</strong> The PDF exam mode renders the PDF URL in an <code>&lt;iframe&gt;</code>. A dedicated PDF.js viewer would provide better cross-browser consistency.</li>
+        <li><strong>No video upload to Supabase Storage:</strong> Lessons currently accept YouTube embed URLs. Direct video uploads would require a large-file multipart upload flow.</li>
+        <li><strong>Homework file content extraction:</strong> Claude pre-scans the homework submission description (text field) rather than the actual file content. Extracting text from PDF/DOCX uploads requires a server-side parsing library (e.g. <code>pdf-parse</code>, <code>mammoth</code>).</li>
+        <li><strong>Streak tracker:</strong> The dashboard displays a streak stat but the streak is calculated from <code>lesson_completions</code> timestamps. There is no dedicated daily-login tracking table.</li>
+      </ul>
+    </section>
+
+    <!-- 12. Roadmap -->
+    <section id="roadmap">
+      <h2>12. Future Roadmap</h2>
+      <table>
+        <tr><th>Priority</th><th>Feature</th><th>Effort</th></tr>
+        <tr><td><span class="tag">High</span></td><td>Supabase-backed blog CMS + <code>/blog/[slug]</code> pages</td><td>2–3 days</td></tr>
+        <tr><td><span class="tag">High</span></td><td>Homework file text extraction (pdf-parse + mammoth)</td><td>1–2 days</td></tr>
+        <tr><td><span class="tag">High</span></td><td>Email notifications on homework status change</td><td>1 day</td></tr>
+        <tr><td><span class="tag">Medium</span></td><td>Full Lottie animations (completion, level-up, streak)</td><td>2 days</td></tr>
+        <tr><td><span class="tag">Medium</span></td><td>Score timeline chart on student dashboard (Recharts)</td><td>1 day</td></tr>
+        <tr><td><span class="tag">Medium</span></td><td>GDPR data deletion flow</td><td>1–2 days</td></tr>
+        <tr><td><span class="tag">Low</span></td><td>Dark mode for the private community</td><td>2 days</td></tr>
+        <tr><td><span class="tag">Low</span></td><td>AI-generated community challenge banner images</td><td>1 day</td></tr>
+        <tr><td><span class="tag">Low</span></td><td>PDF.js viewer for exam PDFs</td><td>1–2 days</td></tr>
+        <tr><td><span class="tag">Low</span></td><td>Direct Supabase Storage video upload for lessons</td><td>3–4 days</td></tr>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Brit English School Platform</strong> — Developer Log v1.0<br/>
+  Built by Germán Hernández Mairal · May 2026
+</footer>
+
+</body>
+</html>

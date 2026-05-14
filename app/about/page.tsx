@@ -4,10 +4,19 @@ import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+
 export const metadata: Metadata = {
   title: "Sobre Nosotros | Brit English School Tarragona",
   description:
     "Conoce al equipo de Brit English School. Centro preparador Cambridge oficial en Tarragona desde 2014. Profesores nativos y CELTA certificados.",
+  alternates: { canonical: `${BASE}/about` },
+  openGraph: {
+    title: "Sobre Nosotros — Brit English School",
+    description:
+      "Más de 10 años formando a alumnos en Tarragona. Profesores nativos CELTA, 98% tasa de éxito Cambridge, centro preparador oficial.",
+    url: `${BASE}/about`,
+  },
 }
 
 const STATS = [

@@ -3,10 +3,73 @@ import type { Metadata } from "next"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+
 export const metadata: Metadata = {
   title: "Brit English School | Academia de Inglés Cambridge en Tarragona",
   description:
     "Centro preparador oficial Cambridge en Tarragona. Clases de inglés para niños, teens, adultos y empresas. B1, B2, C1, C2. 4.9/5 en Google.",
+  alternates: { canonical: BASE },
+  openGraph: {
+    title: "Brit English School | Academia de Inglés Cambridge en Tarragona",
+    description:
+      "Centro preparador oficial Cambridge en Tarragona. Grupos reducidos, IA integrada y preparación oficial para B1, B2, C1 y C2.",
+    url: BASE,
+  },
+}
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["EducationalOrganization", "LocalBusiness"],
+  name: "Brit English School",
+  description:
+    "Centro preparador Cambridge oficial en Tarragona. Clases de inglés para todos los niveles MCER (A1–C2).",
+  url: BASE,
+  telephone: "+34877072975",
+  email: "info@britenglishschool.com",
+  priceRange: "€€",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Rambla Nova 62, 4ª planta",
+    addressLocality: "Tarragona",
+    postalCode: "43003",
+    addressCountry: "ES",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 41.119,
+    longitude: 1.245,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "21:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Saturday"],
+      opens: "09:00",
+      closes: "14:00",
+    },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    bestRating: "5",
+    reviewCount: "80",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Cursos de Inglés",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Course", name: "Cambridge B1 Preliminary" } },
+      { "@type": "Offer", itemOffered: { "@type": "Course", name: "Cambridge B2 First" } },
+      { "@type": "Offer", itemOffered: { "@type": "Course", name: "Cambridge C1 Advanced" } },
+      { "@type": "Offer", itemOffered: { "@type": "Course", name: "Cambridge C2 Proficiency" } },
+    ],
+  },
 }
 
 const LEVELS = [
@@ -75,6 +138,10 @@ const TESTIMONIALS = [
 export default function HomePage() {
   return (
     <div style={{ background: "var(--color-bg)", color: "var(--color-text)" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
       <SiteHeader />
 
       {/* ── Hero ──────────────────────────────────────────────── */}

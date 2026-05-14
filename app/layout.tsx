@@ -41,16 +41,8 @@ export const metadata: Metadata = {
     locale: "es_ES",
     alternateLocale: "en_GB",
     siteName: "Brit English School",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Brit English School — Academia de Inglés Cambridge en Tarragona",
-      },
-    ],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", site: "@BritEnglishSchool" },
   robots: {
     index: true,
     follow: true,

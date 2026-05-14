@@ -81,7 +81,7 @@ export function PdfExam({
     startTransition(async () => {
       const res = await submitPdfExam(exam.id, essay)
       if ("error" in res) {
-        setError(res.error)
+        setError(res.error ?? null)
         return
       }
       const attempt: Attempt = {
