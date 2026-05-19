@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 const ERROR_MESSAGES: Record<string, string> = {
   invalid_credentials: "Email o contraseña incorrectos. Inténtalo de nuevo.",
   oauth_failed: "Error al conectar con Google. Inténtalo de nuevo.",
+  rate_limited: "Demasiados intentos. Espera 15 minutos antes de volver a intentarlo.",
 }
 
 export default async function LoginPage({

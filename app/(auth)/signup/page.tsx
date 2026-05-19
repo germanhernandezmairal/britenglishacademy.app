@@ -12,6 +12,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   validation_failed: "Por favor revisa los datos introducidos.",
   already_exists: "Ya existe una cuenta con este email.",
   signup_failed: "Error al crear la cuenta. Inténtalo de nuevo.",
+  rate_limited: "Demasiados intentos de registro. Espera una hora antes de volver a intentarlo.",
 }
 
 export default async function SignupPage({
