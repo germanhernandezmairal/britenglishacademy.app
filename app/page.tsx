@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { Metadata } from "next"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
@@ -72,6 +73,78 @@ const localBusinessSchema = {
   },
 }
 
+const AUTHORITY_STATS = [
+  { value: "4.9/5", label: "Google Reviews" },
+  { value: "+80", label: "Opiniones verificadas" },
+  { value: "Máx. 8", label: "Alumnos por clase" },
+  { value: "B1–C2", label: "Exámenes Cambridge" },
+]
+
+const FEATURES = [
+  {
+    icon: "👥",
+    title: "Grupos reducidos",
+    desc: "Clases con pocos alumnos para garantizar participación, atención real y progreso constante.",
+  },
+  {
+    icon: "🎓",
+    title: "Centro Cambridge oficial",
+    desc: "Centro homologado para la preparación de exámenes oficiales Cambridge, con simulacros reales y seguimiento individual.",
+  },
+  {
+    icon: "🤖",
+    title: "IA integrada",
+    desc: "Feedback instantáneo con Claude AI en deberes y exámenes. Progreso acelerado y visible.",
+  },
+  {
+    icon: "🏡",
+    title: "Un entorno donde se sienten cómodos",
+    desc: "Clases dinámicas, trato cercano y un ambiente donde aprender no genera presión, sino motivación.",
+  },
+  {
+    icon: "💬",
+    title: "Seguimiento individual",
+    desc: "Evaluación continua y comunicación directa y cercana con las familias durante todo el curso.",
+  },
+  {
+    icon: "🌟",
+    title: "4.9/5 en Google",
+    desc: "Más de 80 reseñas verificadas. Resultados que hablan por sí solos.",
+  },
+]
+
+const COURSES = [
+  {
+    image: "/imgs/fotoclasecyndi.heic-scaled.webp",
+    title: "Inglés para Niños",
+    desc: "Clases dinámicas y cercanas adaptadas a los más pequeños. Aprenden con motivación, sin presión.",
+    href: "/levels",
+    tag: "3–12 años",
+    imageClassName: "scale-[1.2] group-hover:scale-[1.25]",
+  },
+  {
+    image: "/imgs/INSTAGRAM-CASI-DEFINITIVO-2-copia.webp",
+    title: "Adultos y Universitarios",
+    desc: "Avanza en tu carrera con un inglés certificado. Grupos reducidos, trato cercano y horarios flexibles.",
+    href: "/levels",
+    tag: "Todos los niveles",
+  },
+  {
+    image: "/imgs/cursos-verano-1.webp",
+    title: "Preparación Cambridge",
+    desc: "Supera el B1, B2, C1 o C2 con nuestro método probado y una alta tasa de éxito.",
+    href: "/levels",
+    tag: "B1 · B2 · C1 · C2",
+  },
+  {
+    image: "/imgs/cursos-individuales-clases-de-dos-familiares-ingles-tarragona-800x534.webp",
+    title: "Clases Particulares",
+    desc: "Atención real y 100% personalizada. Avanza a tu ritmo con seguimiento individual constante.",
+    href: "/contact",
+    tag: "1-a-1 · Semi-privado",
+  },
+]
+
 const LEVELS = [
   { code: "A1", name: "Principiante", color: "#D4A017" },
   { code: "A2", name: "Elemental", color: "#D4A017" },
@@ -81,56 +154,23 @@ const LEVELS = [
   { code: "C2", name: "Maestría", color: "#012169" },
 ]
 
-const FEATURES = [
-  {
-    icon: "👥",
-    title: "Grupos reducidos",
-    desc: "Máximo 8 alumnos por clase. Atención real y personalizada garantizada.",
-  },
-  {
-    icon: "🎓",
-    title: "Centro Cambridge oficial",
-    desc: "Preparamos para B1, B2, C1 y C2. Somos Prep Centre autorizado.",
-  },
-  {
-    icon: "🤖",
-    title: "IA integrada",
-    desc: "Feedback instantáneo con Claude AI en deberes y exámenes. Progreso acelerado.",
-  },
-  {
-    icon: "📱",
-    title: "Plataforma digital",
-    desc: "Accede a tus clases, deberes y comunidad desde cualquier dispositivo.",
-  },
-  {
-    icon: "💬",
-    title: "Seguimiento individual",
-    desc: "Mensajería directa con tu profesor y corrección de deberes personalizada.",
-  },
-  {
-    icon: "🌟",
-    title: "4.9/5 en Google",
-    desc: "Más de 80 reseñas verificadas. El mejor valorado de Tarragona.",
-  },
-]
-
 const TESTIMONIALS = [
   {
-    name: "María G.",
-    level: "C1 Advanced",
-    text: "Aprobé el C1 a la primera. Los grupos reducidos hacen una diferencia enorme. Mi profesora conocía exactamente mis puntos débiles.",
+    name: "Naïm El Ouariachi",
+    level: "Examen Cambridge",
+    text: "Me apunté porque siempre he tenido problemas con el inglés. Tenía solo un mes para preparar el examen y gracias a la profesora Ana Mariuta conseguí aprobar y obtener el título. Muy recomendable.",
     stars: 5,
   },
   {
-    name: "Carlos M.",
-    level: "B2 First",
-    text: "La plataforma digital es fantástica. Puedo ver mis clases grabadas, subir mis deberes y recibir correcciones con inteligencia artificial. Increíble.",
+    name: "Jesús Molinero",
+    level: "Padre de alumnos",
+    text: "Mis dos hijos de 20 y 15 años han podido examinarse de sus respectivos títulos, no sólo aprobándolo, sino que además con muy buena nota.",
     stars: 5,
   },
   {
-    name: "Laura P.",
-    level: "B1 Preliminary",
-    text: "Mi hijo empezó desde cero y en un año ya tiene el A2. Los profesores son cercanos y la metodología funciona de verdad.",
+    name: "Anabel Martínez",
+    level: "Alumna",
+    text: "No podemos estar más contentos y satisfechos con Brit English: Profesionalidad, didáctica y vocación son un cocktail perfecto.",
     stars: 5,
   },
 ]
@@ -144,12 +184,11 @@ export default function HomePage() {
       />
       <SiteHeader />
 
-      {/* ── Hero ──────────────────────────────────────────────── */}
+      {/* ── 1. HERO — Promise ─────────────────────────────────── */}
       <section
         className="relative overflow-hidden py-24 md:py-36"
         style={{ background: "linear-gradient(135deg, var(--color-primary) 0%, #1A3A8C 60%, #012169 100%)" }}
       >
-        {/* Union Jack subtle pattern */}
         <div className="absolute inset-0 opacity-5"
           style={{
             backgroundImage: "repeating-linear-gradient(0deg, white 0px, white 2px, transparent 2px, transparent 40px), repeating-linear-gradient(90deg, white 0px, white 2px, transparent 2px, transparent 40px)",
@@ -157,109 +196,135 @@ export default function HomePage() {
         />
 
         <div className="container-wide relative z-10">
-          <div className="max-w-3xl">
-            {/* Cambridge badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
-              style={{ background: "rgba(212,160,23,0.2)", color: "#F0C842", border: "1px solid rgba(212,160,23,0.3)" }}>
-              🎓 Centro Preparador Cambridge Oficial · Tarragona
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
+                style={{ background: "rgba(212,160,23,0.2)", color: "#F0C842", border: "1px solid rgba(212,160,23,0.3)" }}>
+                🎓 Centro Preparador Cambridge Oficial · Tarragona
+              </div>
 
-            <h1
-              className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Domina el inglés.
-              <br />
-              <span style={{ color: "#F0C842" }}>Certifícate Cambridge.</span>
-            </h1>
+              <h1
+                className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Domina el inglés.
+                <br />
+                <span style={{ color: "#F0C842" }}>Certifícate Cambridge.</span>
+              </h1>
 
-            <p className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.82)" }}>
-              La academia mejor valorada de Tarragona. Grupos reducidos, seguimiento
-              individual real, plataforma digital con IA y preparación oficial
-              para B1, B2, C1 y C2.
-            </p>
+              <p className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
+                style={{ color: "rgba(255,255,255,0.82)" }}>
+                Academia de inglés en Tarragona para niños, adolescentes y adultos.
+                Grupos reducidos, seguimiento individual real y comunicación cercana
+                y constante con las familias. Centro homologado Cambridge.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/signup"
-                className="btn btn-accent text-base px-8 py-4 rounded-xl">
-                Empieza ahora — gratis
-              </Link>
-              <Link href="/contact"
-                className="btn btn-outline text-base px-8 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169]">
-                Habla con nosotros
-              </Link>
-            </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/contact"
+                  className="btn btn-accent text-base px-8 py-4 rounded-xl">
+                  Haz una prueba de nivel
+                </Link>
+                <Link href="/contact"
+                  className="btn btn-outline text-base px-8 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169]">
+                  Habla con nosotros
+                </Link>
+              </div>
 
-            {/* Social proof */}
-            <div className="flex items-center gap-6 mt-10">
-              <div className="flex items-center gap-1.5">
-                <span className="text-yellow-400 text-lg">★★★★★</span>
-                <span className="text-white font-bold">4.9/5</span>
-                <span style={{ color: "rgba(255,255,255,0.6)" }} className="text-sm">
-                  Google Reviews
+              <div className="flex items-center gap-6 mt-10">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-yellow-400 text-lg">★★★★★</span>
+                  <span className="text-white font-bold">4.9/5</span>
+                  <span style={{ color: "rgba(255,255,255,0.6)" }} className="text-sm">
+                    Google Reviews
+                  </span>
+                </div>
+                <div className="w-px h-5" style={{ background: "rgba(255,255,255,0.2)" }} />
+                <span style={{ color: "rgba(255,255,255,0.7)" }} className="text-sm">
+                  +80 opiniones verificadas
                 </span>
               </div>
-              <div className="w-px h-5" style={{ background: "rgba(255,255,255,0.2)" }} />
-              <span style={{ color: "rgba(255,255,255,0.7)" }} className="text-sm">
-                +80 opiniones verificadas
-              </span>
+            </div>
+
+            <div className="hidden lg:flex justify-center items-center">
+              <div className="relative">
+                <Image
+                  src="/imgs/Ninos-balcon-.webp"
+                  alt="Alumnos disfrutando en Brit English School Tarragona"
+                  width={580}
+                  height={435}
+                  className="rounded-2xl shadow-2xl object-cover"
+                  priority
+                />
+                <div
+                  className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl -z-10"
+                  style={{ background: "rgba(212,160,23,0.3)" }}
+                />
+                <div
+                  className="absolute -top-4 -right-4 w-16 h-16 rounded-xl -z-10"
+                  style={{ background: "rgba(255,255,255,0.1)" }}
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── CEFR Levels ───────────────────────────────────────── */}
+      {/* ── 2. AUTHORITY — Cambridge trust strip ──────────────── */}
+      <section style={{ background: "var(--color-bg)", borderBottom: "1px solid var(--color-border)" }}>
+        <div className="container-wide">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-8">
+            {/* Cambridge badge */}
+            <div className="flex items-center gap-4 shrink-0">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0"
+                style={{ background: "var(--color-primary)" }}
+              >
+                C
+              </div>
+              <div>
+                <div className="font-bold text-sm" style={{ color: "var(--color-text)" }}>
+                  Cambridge Prep Centre Oficial
+                </div>
+                <div className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                  Centro homologado por Cambridge Assessment English
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden md:block w-px self-stretch" style={{ background: "var(--color-border)" }} />
+
+            {/* Stats row */}
+            <div className="flex flex-wrap justify-center md:justify-end gap-8">
+              {AUTHORITY_STATS.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div
+                    className="text-xl font-bold"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. FEATURES — Problem → Solution ─────────────────── */}
       <section className="py-20" style={{ background: "var(--color-bg-alt)" }}>
         <div className="container-wide">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4"
               style={{ fontFamily: "var(--font-display)" }}>
-              Desde A1 hasta C2
+              Por qué cada año más familias confían en nosotros
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
-              Cursos estructurados siguiendo el Marco Común Europeo de Referencia (MCER).
-              Sea cual sea tu nivel, tenemos el curso para ti.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {LEVELS.map((level) => (
-              <Link
-                key={level.code}
-                href={`/levels#${level.code.toLowerCase()}`}
-                className="group flex flex-col items-center p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 hover:shadow-lg"
-                style={{
-                  background: "var(--color-bg)",
-                  borderColor: "var(--color-border)",
-                }}
-              >
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg mb-3 transition-transform group-hover:scale-110"
-                  style={{ background: level.color }}
-                >
-                  {level.code}
-                </div>
-                <div className="text-xs font-medium" style={{ color: "var(--color-text-muted)" }}>
-                  {level.name}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Features ──────────────────────────────────────────── */}
-      <section className="py-20">
-        <div className="container-wide">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4"
-              style={{ fontFamily: "var(--font-display)" }}>
-              Por qué elegir Brit English
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
-              No somos una academia más. Somos el centro que realmente te acompaña
-              hasta donde quieres llegar.
+              No somos una academia más. Somos el centro cercano que realmente te acompaña
+              y se preocupa por tu progreso.
             </p>
           </div>
 
@@ -286,7 +351,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── AI Platform Preview ───────────────────────────────── */}
+      {/* ── 4. COURSES — Choice ───────────────────────────────── */}
+      <section className="py-20">
+        <div className="container-wide">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4"
+              style={{ fontFamily: "var(--font-display)" }}>
+              Nuestros Cursos
+            </h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
+              Un programa para cada etapa y objetivo. Encuentra el curso que encaja contigo.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {COURSES.map((course) => (
+              <Link
+                key={course.title}
+                href={course.href}
+                className="group rounded-2xl overflow-hidden border transition-all hover:-translate-y-1 hover:shadow-xl"
+                style={{
+                  background: "var(--color-bg)",
+                  borderColor: "var(--color-border)",
+                }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={course.image}
+                    alt={course.title}
+                    fill
+                    className={`object-cover transition-transform duration-300 ${course.imageClassName ?? "group-hover:scale-105"}`}
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(1,33,105,0.5) 0%, transparent 60%)" }} />
+                  <span
+                    className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: "rgba(212,160,23,0.85)" }}
+                  >
+                    {course.tag}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-base mb-2 group-hover:text-[var(--color-primary)] transition-colors"
+                    style={{ color: "var(--color-text)" }}>
+                    {course.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                    {course.desc}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. AI PLATFORM — Differentiation ─────────────────── */}
       <section
         className="py-20"
         style={{ background: "var(--color-surface)" }}
@@ -397,7 +516,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Testimonials ──────────────────────────────────────── */}
+      {/* ── 6. CEFR LEVELS — Decision tool ───────────────────── */}
+      <section className="py-20" style={{ background: "var(--color-bg-alt)" }}>
+        <div className="container-wide">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4"
+              style={{ fontFamily: "var(--font-display)" }}>
+              Desde A1 hasta C2
+            </h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
+              Cursos estructurados siguiendo el Marco Común Europeo de Referencia (MCER).
+              Sea cual sea tu nivel, tenemos el curso para ti.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {LEVELS.map((level) => (
+              <Link
+                key={level.code}
+                href={`/levels#${level.code.toLowerCase()}`}
+                className="group flex flex-col items-center p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+                style={{
+                  background: "var(--color-bg)",
+                  borderColor: "var(--color-border)",
+                }}
+              >
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg mb-3 transition-transform group-hover:scale-110"
+                  style={{ background: level.color }}
+                >
+                  {level.code}
+                </div>
+                <div className="text-xs font-medium" style={{ color: "var(--color-text-muted)" }}>
+                  {level.name}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. TESTIMONIALS — Proof ───────────────────────────── */}
       <section className="py-20">
         <div className="container-wide">
           <div className="text-center mb-12">
@@ -453,34 +612,55 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────── */}
+      {/* ── 8. CTA — Capture ──────────────────────────────────── */}
       <section
         className="py-20"
         style={{
           background: "linear-gradient(135deg, var(--color-primary) 0%, #1A3A8C 100%)",
         }}
       >
-        <div className="container-wide text-center">
-          <h2
-            className="text-3xl md:text-5xl font-bold text-white mb-5"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            ¿Listo para empezar?
-          </h2>
-          <p className="text-lg mb-10 max-w-2xl mx-auto"
-            style={{ color: "rgba(255,255,255,0.8)" }}>
-            Únete a la comunidad de Brit English School. Primera semana gratis.
-            Sin compromiso.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup" className="btn btn-accent text-base px-10 py-4 rounded-xl">
-              Crear cuenta gratis
-            </Link>
-            <Link href="/contact"
-              className="btn text-base px-10 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
-              style={{ border: "2px solid rgba(255,255,255,0.5)" }}>
-              Contactar
-            </Link>
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h2
+                className="text-3xl md:text-5xl font-bold text-white mb-5"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                ¿Listo para empezar?
+              </h2>
+              <p className="text-lg mb-10"
+                style={{ color: "rgba(255,255,255,0.8)" }}>
+                Únete a la comunidad de Brit English School. Primera semana gratis.
+                Sin compromiso.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="/signup" className="btn btn-accent text-base px-10 py-4 rounded-xl">
+                  Crear cuenta gratis
+                </Link>
+                <Link href="/contact"
+                  className="btn text-base px-10 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
+                  style={{ border: "2px solid rgba(255,255,255,0.5)" }}>
+                  Contactar
+                </Link>
+              </div>
+            </div>
+
+            <div className="hidden lg:flex justify-center">
+              <div className="relative">
+                <Image
+                  src="/imgs/Profesora-hablando-estudiante-800x1200.png"
+                  alt="Profesora con alumno en Brit English School"
+                  width={340}
+                  height={510}
+                  className="rounded-2xl shadow-2xl object-cover"
+                  style={{ opacity: 0.92 }}
+                />
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{ background: "linear-gradient(to top, rgba(1,33,105,0.3) 0%, transparent 60%)" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
