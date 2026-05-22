@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 export function SiteFooter() {
@@ -9,19 +10,13 @@ export function SiteFooter() {
       <div className="container-wide">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                style={{ background: "var(--color-accent)" }}
-              >
-                B
-              </div>
-              <span
-                className="text-white font-bold text-sm"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Brit English School
-              </span>
+            <div className="mb-4">
+              <Image
+                src="/imgs/english-school-logo.webp"
+                alt="Brit English School"
+                width={56}
+                height={56}
+              />
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
               Centro preparador Cambridge oficial en Tarragona.

@@ -170,7 +170,7 @@ export default async function LessonDetailPage({ params }: Props) {
             className="text-base font-bold mb-4 flex items-center gap-2"
             style={{ color: "var(--color-text)", fontFamily: "var(--font-display)" }}
           >
-            <FileText size={18} style={{ color: "#C8102E" }} />
+            <FileText size={18} style={{ color: "var(--color-primary)" }} />
             Recursos descargables
           </h2>
           <div className="space-y-2">
@@ -185,7 +185,7 @@ export default async function LessonDetailPage({ params }: Props) {
               >
                 <div
                   className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: "#FEE2E2" }}
+                  style={{ background: "var(--color-primary-50)" }}
                 >
                   <FileText size={16} style={{ color: "#C8102E" }} />
                 </div>

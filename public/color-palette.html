@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brit English School — Color Palette Reference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:        #012169;
+      --primary-dark:   #00154D;
+      --primary-light:  #1A3A8C;
+      --primary-50:     #EEF1FA;
+      --primary-100:    #D5DCF3;
+      --accent:         #C8102E;
+      --accent-dark:    #9B0D23;
+      --accent-light:   #E8324E;
+      --gold:           #D4A017;
+      --gold-light:     #F0C842;
+      --gold-50:        #FFF8E7;
+      --bg:             #FFFFFF;
+      --bg-alt:         #F8F9FC;
+      --surface:        #F0F4FF;
+      --border:         #E2E8F0;
+      --text:           #0D1B3E;
+      --text-secondary: #4A5568;
+      --text-muted:     #94A3B8;
+      --font-body:      'Inter', system-ui, sans-serif;
+      --font-display:   'Playfair Display', Georgia, serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-alt);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 48px 24px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .page-title h1 {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .page-title p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .logo img { height: 48px; }
+
+    /* ── Section wrapper ── */
+    .section {
+      max-width: 960px;
+      margin: 0 auto 64px;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── Color swatches ── */
+    .swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .swatch {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .swatch-color {
+      height: 72px;
+      width: 100%;
+    }
+    .swatch-info {
+      padding: 10px 12px;
+    }
+    .swatch-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .swatch-hex {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+    .swatch-role {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Background example cards ── */
+    .bg-example {
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 16px;
+    }
+    .bg-example h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+    .bg-example p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 6px;
+    }
+    .bg-example .muted {
+      font-size: 0.82rem;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 10px 22px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+    .btn-accent   { background: var(--accent); color: white; border-color: var(--accent); }
+    .btn-primary  { background: var(--primary); color: white; border-color: var(--primary); }
+    .btn-outline  { background: transparent; color: var(--primary); border-color: var(--primary); }
+    .btn-outline-white { background: transparent; color: white; border-color: white; }
+
+    /* Dark bg */
+    .bg-dark {
+      background: linear-gradient(135deg, var(--primary) 0%, #1A3A8C 100%);
+    }
+    .bg-dark h2  { color: white; }
+    .bg-dark .body-text   { color: rgba(255,255,255,0.82); }
+    .bg-dark .muted       { color: rgba(255,255,255,0.5); }
+    .bg-dark .gold-accent { color: var(--gold-light); }
+
+    /* White bg */
+    .bg-white-ex { background: var(--bg); border: 1px solid var(--border); }
+    .bg-white-ex h2 { color: var(--text); }
+    .bg-white-ex .body-text   { color: var(--text-secondary); }
+    .bg-white-ex .muted       { color: var(--text-muted); }
+    .bg-white-ex .gold-accent { color: var(--gold); }
+
+    /* Light tinted bg */
+    .bg-tinted { background: var(--bg-alt); border: 1px solid var(--border); }
+    .bg-tinted h2 { color: var(--text); }
+    .bg-tinted .body-text   { color: var(--text-secondary); }
+    .bg-tinted .muted       { color: var(--text-muted); }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .card h4 { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .card p  { font-size: 0.78rem; color: var(--text-secondary); }
+
+    /* ── Typography scale ── */
+    .type-scale {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta { width: 140px; shrink: 0; }
+    .type-meta span { font-size: 0.68rem; font-family: monospace; color: var(--text-muted); display: block; }
+    .t-h1  { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .t-h2  { font-family: var(--font-display); font-size: 1.875rem; font-weight: 700; color: var(--text); }
+    .t-h3  { font-family: var(--font-display); font-size: 1.375rem; font-weight: 700; color: var(--text); }
+    .t-body      { font-size: 1rem; color: var(--text-secondary); }
+    .t-small     { font-size: 0.875rem; color: var(--text-secondary); }
+    .t-muted     { font-size: 0.8rem; color: var(--text-muted); }
+    .t-label     { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* ── Do / Don't ── */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) { .do-dont { grid-template-columns: 1fr; } }
+    .do-card, .dont-card {
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .do-card   { background: #F0FBF4; border: 1.5px solid #2D6A4F; }
+    .dont-card { background: #FFF0F0; border: 1.5px solid var(--accent); }
+    .do-card   h4 { color: #2D6A4F; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .dont-card h4 { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .do-card li, .dont-card li { font-size: 0.85rem; color: var(--text-secondary); margin-left: 16px; margin-bottom: 6px; }
+
+    /* ── Status colors ── */
+    .status-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .status-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+    }
+    .chip-success { background: #D1FAE5; color: #2D6A4F; }
+    .chip-warning { background: #FEF3C7; color: #D97706; }
+    .chip-error   { background: #FEE2E2; color: #DC2626; }
+    .chip-primary { background: var(--primary-50); color: var(--primary); }
+    .chip-gold    { background: var(--gold-50); color: var(--gold); }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="page-title">
+    <div class="logo">
+      <img src="../public/imgs/english-school-logo.webp" alt="Brit English School" />
+    </div>
+    <h1>Color Palette Reference</h1>
+    <p>Design system rules for Brit English School web platform</p>
+  </div>
+
+  <!-- ── 1. COLOR SWATCHES ──────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">1 — Full Palette</p>
+    <div class="swatches-grid">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#012169"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Primary</div>
+          <div class="swatch-hex">#012169</div>
+          <div class="swatch-role">Royal Navy — dominant brand</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#00154D"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Primary Dark</div>
+          <div class="swatch-hex">#00154D</div>
+          <div class="swatch-role">Hover state for navy</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1A3A8C"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Primary Light</div>
+          <div class="swatch-hex">#1A3A8C</div>
+          <div class="swatch-role">Gradient mid-tone</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#EEF1FA"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Primary 50</div>
+          <div class="swatch-hex">#EEF1FA</div>
+          <div class="swatch-role">Tinted backgrounds, badges</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C8102E"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Accent (Red)</div>
+          <div class="swatch-hex">#C8102E</div>
+          <div class="swatch-role">CTAs only — Union Jack</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#9B0D23"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Accent Dark</div>
+          <div class="swatch-hex">#9B0D23</div>
+          <div class="swatch-role">Hover state for red</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D4A017"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gold</div>
+          <div class="swatch-hex">#D4A017</div>
+          <div class="swatch-role">British Lion — light bg</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0C842"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gold Light</div>
+          <div class="swatch-hex">#F0C842</div>
+          <div class="swatch-role">Stars, accents on dark bg</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid #E2E8F0"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Background</div>
+          <div class="swatch-hex">#FFFFFF</div>
+          <div class="swatch-role">Main sections</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F8F9FC"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">BG Alt</div>
+          <div class="swatch-hex">#F8F9FC</div>
+          <div class="swatch-role">Alternating sections</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0F4FF"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface</div>
+          <div class="swatch-hex">#F0F4FF</div>
+          <div class="swatch-role">Feature/platform sections</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0D1B3E"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Text</div>
+          <div class="swatch-hex">#0D1B3E</div>
+          <div class="swatch-role">Headings, footer bg</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4A5568"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Text Secondary</div>
+          <div class="swatch-hex">#4A5568</div>
+          <div class="swatch-role">Body paragraphs</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#94A3B8"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Text Muted</div>
+          <div class="swatch-hex">#94A3B8</div>
+          <div class="swatch-role">Labels, captions</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 2. DARK BACKGROUND ──────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">2 — Dark Navy Background (Hero, CTA sections)</p>
+    <div class="bg-example bg-dark">
+      <h2>Domina el inglés. <span class="gold-accent">Certifícate Cambridge.</span></h2>
+      <p class="body-text">Academia de inglés en Tarragona para niños, adolescentes y adultos. Grupos reducidos, seguimiento individual real.</p>
+      <p class="muted">Centro homologado por Cambridge Assessment English · Tarragona</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="#">Haz una prueba de nivel</a>
+        <a class="btn btn-outline-white" href="#">Habla con nosotros</a>
+      </div>
+      <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.12)">
+        <p class="muted" style="font-size:0.72rem; margin-bottom:8px">TEXT COLOUR RULES ON DARK BG:</p>
+        <p class="muted">Headings → <strong style="color:white">white</strong> &nbsp;|&nbsp; Body → <strong style="color:rgba(255,255,255,0.82)">rgba(255,255,255,0.82)</strong> &nbsp;|&nbsp; Muted → <strong style="color:rgba(255,255,255,0.5)">rgba(255,255,255,0.5)</strong> &nbsp;|&nbsp; Accent → <strong style="color:#F0C842">#F0C842 gold-light</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. WHITE BACKGROUND ──────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">3 — White Background (Main content sections)</p>
+    <div class="bg-example bg-white-ex">
+      <h2>Nuestros Cursos</h2>
+      <p class="body-text">Un programa para cada etapa y objetivo. Encuentra el curso que encaja contigo y avanza al ritmo que necesitas.</p>
+      <p class="muted">Niveles A1–C2 · Grupos reducidos · Seguimiento individual</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="#">Ver cursos</a>
+        <a class="btn btn-outline" href="#">Contactar</a>
+      </div>
+      <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border)">
+        <p style="font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px">TEXT COLOUR RULES ON WHITE BG:</p>
+        <p style="font-size:0.8rem; color:var(--text-muted)">Headings → <strong style="color:var(--text)">#0D1B3E text</strong> &nbsp;|&nbsp; Body → <strong style="color:var(--text-secondary)">#4A5568 text-secondary</strong> &nbsp;|&nbsp; Muted → <strong style="color:var(--text-muted)">#94A3B8 text-muted</strong> &nbsp;|&nbsp; Links → <strong style="color:var(--primary)">#012169 primary</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. LIGHT TINTED BACKGROUND ──────────────────────── -->
+  <div class="section">
+    <p class="section-label">4 — Light Tinted Background (Alternating sections, cards)</p>
+    <div class="bg-example bg-tinted">
+      <h2>Por qué confían en nosotros</h2>
+      <p class="body-text">No somos una academia más. Somos el centro cercano que realmente te acompaña y se preocupa por tu progreso.</p>
+      <div class="card-row">
+        <div class="card">
+          <h4>Grupos reducidos</h4>
+          <p>Máximo 8 alumnos por clase para atención real.</p>
+        </div>
+        <div class="card">
+          <h4>Centro Cambridge</h4>
+          <p>Centro homologado para exámenes oficiales.</p>
+        </div>
+        <div class="card">
+          <h4>IA integrada</h4>
+          <p>Feedback instantáneo con Claude AI.</p>
+        </div>
+        <div class="card">
+          <h4>4.9/5 en Google</h4>
+          <p>Más de 80 reseñas verificadas.</p>
+        </div>
+      </div>
+      <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border)">
+        <p style="font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px">TEXT COLOUR RULES ON TINTED BG:</p>
+        <p style="font-size:0.8rem; color:var(--text-muted)">Same as white bg &nbsp;|&nbsp; Cards on top → <strong style="color:var(--text)">#FFFFFF bg</strong> with <strong style="color:var(--text-muted)">#E2E8F0 border</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. TYPOGRAPHY SCALE ──────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">5 — Typography Scale</p>
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-meta"><span>Playfair Display</span><span>700 · 2.5rem</span><span>Section heroes</span></div>
+        <div class="t-h1">Aprende inglés</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Playfair Display</span><span>700 · 1.875rem</span><span>Section headings</span></div>
+        <div class="t-h2">Nuestros Cursos</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Playfair Display</span><span>700 · 1.375rem</span><span>Card titles</span></div>
+        <div class="t-h3">Grupos reducidos</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Inter</span><span>400 · 1rem</span><span>Body copy</span></div>
+        <div class="t-body">Preparamos a niños, adolescentes y adultos para los exámenes oficiales de Cambridge con seguimiento individual.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Inter</span><span>400 · 0.875rem</span><span>Small body / cards</span></div>
+        <div class="t-small">Clases con pocos alumnos para garantizar participación y progreso constante.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Inter</span><span>400 · 0.8rem</span><span>Captions / meta</span></div>
+        <div class="t-muted">Centro homologado por Cambridge Assessment English · Tarragona</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span>Inter</span><span>700 · 0.7rem</span><span>Section labels</span></div>
+        <div class="t-label">Cambridge Preparation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. STATUS & UI CHIPS ──────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">6 — Status Colours & UI Chips</p>
+    <div class="type-scale">
+      <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:16px">Used for badges, tags, and status indicators across the platform.</p>
+      <div class="status-row">
+        <span class="status-chip chip-primary">B2 · Cambridge</span>
+        <span class="status-chip chip-gold">⭐ 4.9/5 Google</span>
+        <span class="status-chip chip-success">✓ Aprobado</span>
+        <span class="status-chip chip-warning">⏳ En progreso</span>
+        <span class="status-chip chip-error">✗ Error gramatical</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. DO / DON'T ──────────────────────────────────────── -->
+  <div class="section">
+    <p class="section-label">7 — Rules: Do & Don't</p>
+    <div class="do-dont">
+      <div class="do-card">
+        <h4>✓ Do</h4>
+        <ul>
+          <li>Use red (<strong>#C8102E</strong>) only for CTA buttons</li>
+          <li>Use gold on dark backgrounds (<strong>#F0C842</strong>)</li>
+          <li>Use gold on light backgrounds (<strong>#D4A017</strong>)</li>
+          <li>Force <strong>color: white</strong> via inline style on headings over dark bg</li>
+          <li>Use <strong>btn-outline-white</strong> for ghost buttons on dark bg</li>
+          <li>Alternate sections: white → bg-alt → white</li>
+          <li>Cards always on white bg with border <strong>#E2E8F0</strong></li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <h4>✗ Don't</h4>
+        <ul>
+          <li>Don't use red for text, icons, or decorative elements</li>
+          <li>Don't use <strong>text-yellow-400</strong> — use gold CSS variables instead</li>
+          <li>Don't use <strong>btn-outline</strong> on dark backgrounds (navy text invisible)</li>
+          <li>Don't rely on <strong>text-white</strong> Tailwind class for headings — the global h1 rule overrides it</li>
+          <li>Don't hardcode hex values — use CSS variables</li>
+          <li>Don't use gold as a background colour</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; color:var(--text-muted); font-size:0.78rem; padding-bottom:32px">
+    Brit English School · Design System v1.0 · 2026
+  </div>
+
+</body>
+</html>

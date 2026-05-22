@@ -126,8 +126,8 @@ export default function BlogPage() {
         <div className="container-wide">
           <AnimateIn>
             <h1
-              className="text-4xl md:text-5xl font-bold text-white mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl font-bold mb-5"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               Blog de inglés
             </h1>

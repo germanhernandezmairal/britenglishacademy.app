@@ -144,7 +144,7 @@ export function PdfExam({
           {result.strengths.length > 0 && (
             <div className="p-4 rounded-2xl border" style={{ background: "white", borderColor: "var(--color-border)" }}>
               <div className="flex items-center gap-2 mb-3">
-                <Star size={15} className="text-yellow-500" />
+                <Star size={15} style={{ color: "var(--color-gold-light)" }} />
                 <span className="text-sm font-bold" style={{ color: "var(--color-text)" }}>Puntos fuertes</span>
               </div>
               <ul className="space-y-1.5">
@@ -210,9 +210,9 @@ export function PdfExam({
         >
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: "#FEE2E2" }}
+            style={{ background: "var(--color-primary-50)" }}
           >
-            <FileText size={22} style={{ color: "#C8102E" }} />
+            <FileText size={22} style={{ color: "var(--color-primary)" }} />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>

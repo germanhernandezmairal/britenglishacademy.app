@@ -235,7 +235,7 @@ export function SubmissionCard({ submission, onDeleted }: {
               {feedback.strengths.length > 0 && (
                 <div>
                   <div className="flex items-center gap-1.5 mb-2">
-                    <Star size={13} className="text-yellow-500" />
+                    <Star size={13} style={{ color: "var(--color-gold-light)" }} />
                     <span className="text-xs font-bold" style={{ color: "var(--color-text)" }}>
                       Puntos fuertes
                     </span>

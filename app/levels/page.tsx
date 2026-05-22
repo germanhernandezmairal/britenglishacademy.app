@@ -193,15 +193,15 @@ export default function LevelsPage() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
               style={{
                 background: "rgba(212,160,23,0.2)",
-                color: "#F0C842",
+                color: "var(--color-gold-light)",
                 border: "1px solid rgba(212,160,23,0.3)",
               }}
             >
               📚 Niveles A1–C2 según el MCER
             </div>
             <h1
-              className="text-4xl md:text-5xl font-bold text-white mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl font-bold mb-5"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               Encuentra tu nivel
             </h1>
@@ -218,8 +218,7 @@ export default function LevelsPage() {
               </Link>
               <Link
                 href="/signup"
-                className="btn text-sm px-7 py-3.5 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
-                style={{ border: "2px solid rgba(255,255,255,0.4)" }}
+                className="btn btn-outline-white text-sm px-7 py-3.5 rounded-xl"
               >
                 Reservar plaza
               </Link>
@@ -525,8 +524,8 @@ export default function LevelsPage() {
         <div className="container-wide text-center">
           <AnimateIn>
             <h2
-              className="text-3xl md:text-4xl font-bold text-white mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-3xl md:text-4xl font-bold mb-5"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               ¿Listo para empezar?
             </h2>
@@ -546,8 +545,7 @@ export default function LevelsPage() {
               </Link>
               <Link
                 href="/signup"
-                className="btn text-sm px-8 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
-                style={{ border: "2px solid rgba(255,255,255,0.5)" }}
+                className="btn btn-outline-white text-sm px-8 py-4 rounded-xl"
               >
                 Crear cuenta
               </Link>

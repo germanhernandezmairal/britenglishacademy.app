@@ -109,12 +109,12 @@ export default function AboutPage() {
               🏴󠁧󠁢󠁥󠁮󠁧󠁿 Centro preparador Cambridge oficial desde 2014
             </div>
             <h1
-              className="text-4xl md:text-5xl font-bold text-white mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl font-bold mb-5"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               Más de una década
               <br />
-              <span style={{ color: "#F0C842" }}>formando futuros bilingües</span>
+              <span style={{ color: "var(--color-gold-light)" }}>formando futuros bilingües</span>
             </h1>
             <p className="text-lg max-w-2xl" style={{ color: "rgba(255,255,255,0.8)" }}>
               Somos una academia familiar con grandes resultados. Profesores nativos, grupos
@@ -134,7 +134,7 @@ export default function AboutPage() {
                 <div className="text-center">
                   <div
                     className="text-3xl font-bold mb-1"
-                    style={{ color: "#F0C842", fontFamily: "var(--font-display)" }}
+                    style={{ color: "var(--color-gold-light)", fontFamily: "var(--font-display)" }}
                   >
                     {stat.value}
                   </div>
@@ -345,8 +345,8 @@ export default function AboutPage() {
         <div className="container-wide text-center">
           <AnimateIn>
             <h2
-              className="text-3xl md:text-4xl font-bold text-white mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-3xl md:text-4xl font-bold mb-5"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               ¿Quieres conocernos?
             </h2>
@@ -363,8 +363,7 @@ export default function AboutPage() {
               </Link>
               <Link
                 href="/levels"
-                className="btn text-sm px-8 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
-                style={{ border: "2px solid rgba(255,255,255,0.5)" }}
+                className="btn btn-outline-white text-sm px-8 py-4 rounded-xl"
               >
                 Ver nuestros cursos
               </Link>

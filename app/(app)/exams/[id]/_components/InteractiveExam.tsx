@@ -170,7 +170,7 @@ export function InteractiveExam({
           {result.claudeFeedback.strengths.length > 0 && (
             <div className="p-4 rounded-2xl border" style={{ background: "white", borderColor: "var(--color-border)" }}>
               <div className="flex items-center gap-2 mb-3">
-                <Star size={15} className="text-yellow-500" />
+                <Star size={15} style={{ color: "var(--color-gold-light)" }} />
                 <span className="text-sm font-bold" style={{ color: "var(--color-text)" }}>Puntos fuertes</span>
               </div>
               <ul className="space-y-1.5">

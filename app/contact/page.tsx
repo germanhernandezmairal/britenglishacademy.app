@@ -87,8 +87,8 @@ export default function ContactPage() {
         <div className="container-wide">
           <AnimateIn>
             <h1
-              className="text-4xl md:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl font-bold mb-4"
+              style={{ fontFamily: "var(--font-display)", color: "white" }}
             >
               Contacto
             </h1>

@@ -294,6 +294,17 @@ a:hover {
   color: white;
 }
 
+.btn-outline-white {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+
+.btn-outline-white:hover {
+  background: white;
+  color: var(--color-primary);
+}
+
 /* ─── Focus styles (accessibility) ───────────────────────── */
 *:focus-visible {
   outline: 3px solid var(--color-primary-light);

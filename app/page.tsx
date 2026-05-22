@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
+import { Users, GraduationCap, Bot, Heart, MessageCircle, Star } from "lucide-react"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 
@@ -82,32 +83,32 @@ const AUTHORITY_STATS = [
 
 const FEATURES = [
   {
-    icon: "👥",
+    Icon: Users,
     title: "Grupos reducidos",
     desc: "Clases con pocos alumnos para garantizar participación, atención real y progreso constante.",
   },
   {
-    icon: "🎓",
+    Icon: GraduationCap,
     title: "Centro Cambridge oficial",
     desc: "Centro homologado para la preparación de exámenes oficiales Cambridge, con simulacros reales y seguimiento individual.",
   },
   {
-    icon: "🤖",
+    Icon: Bot,
     title: "IA integrada",
     desc: "Feedback instantáneo con Claude AI en deberes y exámenes. Progreso acelerado y visible.",
   },
   {
-    icon: "🏡",
+    Icon: Heart,
     title: "Un entorno donde se sienten cómodos",
     desc: "Clases dinámicas, trato cercano y un ambiente donde aprender no genera presión, sino motivación.",
   },
   {
-    icon: "💬",
+    Icon: MessageCircle,
     title: "Seguimiento individual",
     desc: "Evaluación continua y comunicación directa y cercana con las familias durante todo el curso.",
   },
   {
-    icon: "🌟",
+    Icon: Star,
     title: "4.9/5 en Google",
     desc: "Más de 80 reseñas verificadas. Resultados que hablan por sí solos.",
   },
@@ -146,12 +147,12 @@ const COURSES = [
 ]
 
 const LEVELS = [
-  { code: "A1", name: "Principiante", color: "#D4A017" },
-  { code: "A2", name: "Elemental", color: "#D4A017" },
-  { code: "B1", name: "Intermedio", color: "#1A3A8C" },
-  { code: "B2", name: "Intermedio Alto", color: "#1A3A8C" },
-  { code: "C1", name: "Avanzado", color: "#012169" },
-  { code: "C2", name: "Maestría", color: "#012169" },
+  { code: "A1", name: "Principiante", color: "var(--color-gold)" },
+  { code: "A2", name: "Elemental", color: "var(--color-gold)" },
+  { code: "B1", name: "Intermedio", color: "var(--color-primary-light)" },
+  { code: "B2", name: "Intermedio Alto", color: "var(--color-primary-light)" },
+  { code: "C1", name: "Avanzado", color: "var(--color-primary)" },
+  { code: "C2", name: "Maestría", color: "var(--color-primary)" },
 ]
 
 const TESTIMONIALS = [
@@ -204,12 +205,12 @@ export default function HomePage() {
               </div>
 
               <h1
-                className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+                style={{ fontFamily: "var(--font-display)", color: "white" }}
               >
                 Domina el inglés.
                 <br />
-                <span style={{ color: "#F0C842" }}>Certifícate Cambridge.</span>
+                <span style={{ color: "var(--color-gold-light)" }}>Certifícate Cambridge.</span>
               </h1>
 
               <p className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
@@ -225,14 +226,14 @@ export default function HomePage() {
                   Haz una prueba de nivel
                 </Link>
                 <Link href="/contact"
-                  className="btn btn-outline text-base px-8 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169]">
+                  className="btn btn-outline-white text-base px-8 py-4 rounded-xl">
                   Habla con nosotros
                 </Link>
               </div>
 
               <div className="flex items-center gap-6 mt-10">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-yellow-400 text-lg">★★★★★</span>
+                  <span style={{ color: "var(--color-gold-light)" }} className=" text-lg">★★★★★</span>
                   <span className="text-white font-bold">4.9/5</span>
                   <span style={{ color: "rgba(255,255,255,0.6)" }} className="text-sm">
                     Google Reviews
@@ -273,21 +274,22 @@ export default function HomePage() {
       <section style={{ background: "var(--color-bg)", borderBottom: "1px solid var(--color-border)" }}>
         <div className="container-wide">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-8">
-            {/* Cambridge badge */}
-            <div className="flex items-center gap-4 shrink-0">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0"
-                style={{ background: "var(--color-primary)" }}
-              >
-                C
-              </div>
+            {/* Cambridge badge + copy */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 shrink-0 max-w-xl">
+              <Image
+                src="/imgs/Prep-centre-logo_CMYK.jpg"
+                alt="We prepare for Cambridge English Qualifications"
+                width={160}
+                height={60}
+                className="object-contain shrink-0"
+              />
               <div>
-                <div className="font-bold text-sm" style={{ color: "var(--color-text)" }}>
-                  Cambridge Prep Centre Oficial
-                </div>
-                <div className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-                  Centro homologado por Cambridge Assessment English
-                </div>
+                <p className="font-bold text-sm mb-1" style={{ color: "var(--color-text)" }}>
+                  Centro Preparador homologado de Exámenes Cambridge en Tarragona
+                </p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                  Preparamos a niños, adolescentes y adultos para los exámenes oficiales de Cambridge con grupos reducidos, seguimiento individual y comunicación constante con las familias.
+                </p>
               </div>
             </div>
 
@@ -338,7 +340,7 @@ export default function HomePage() {
                   borderColor: "var(--color-border)",
                 }}
               >
-                <div className="text-3xl mb-4">{feat.icon}</div>
+                <feat.Icon size={28} className="mb-4" style={{ color: "var(--color-primary)" }} />
                 <h3 className="font-bold text-lg mb-2" style={{ color: "var(--color-text)" }}>
                   {feat.title}
                 </h3>
@@ -565,7 +567,7 @@ export default function HomePage() {
               Lo que dicen nuestros alumnos
             </h2>
             <div className="flex items-center justify-center gap-2">
-              <span className="text-yellow-400 text-xl">★★★★★</span>
+              <span style={{ color: "var(--color-gold-light)" }} className=" text-xl">★★★★★</span>
               <span className="font-bold text-lg">4.9/5</span>
               <span style={{ color: "var(--color-text-muted)" }} className="text-sm">
                 · +80 reseñas en Google
@@ -585,7 +587,7 @@ export default function HomePage() {
               >
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: t.stars }).map((_, i) => (
-                    <span key={i} className="text-yellow-400">★</span>
+                    <span key={i} style={{ color: "var(--color-gold-light)" }} className="">★</span>
                   ))}
                 </div>
                 <p className="text-sm leading-relaxed mb-5"
@@ -638,8 +640,7 @@ export default function HomePage() {
                   Crear cuenta gratis
                 </Link>
                 <Link href="/contact"
-                  className="btn text-base px-10 py-4 rounded-xl border-white text-white hover:bg-white hover:text-[#012169] transition-all"
-                  style={{ border: "2px solid rgba(255,255,255,0.5)" }}>
+                  className="btn btn-outline-white text-base px-10 py-4 rounded-xl">
                   Contactar
                 </Link>
               </div>
