@@ -625,8 +625,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h2
-                className="text-3xl md:text-5xl font-bold text-white mb-5"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="text-3xl md:text-5xl font-bold mb-5"
+                style={{ fontFamily: "var(--font-display)", color: "white" }}
               >
                 ¿Listo para empezar?
               </h2>
