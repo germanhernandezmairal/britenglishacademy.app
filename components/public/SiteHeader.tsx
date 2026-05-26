@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
+import { motion } from "framer-motion"
 
 const NAV_LINKS = [
   { href: "/levels", label: "Cursos" },
@@ -18,7 +19,10 @@ export function SiteHeader() {
   const pathname = usePathname()
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -64, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="sticky top-0 z-50 border-b"
       style={{
         background: "rgba(255,255,255,0.96)",
@@ -40,36 +44,46 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {NAV_LINKS.map((link) => (
-            <Link
+          {NAV_LINKS.map((link, i) => (
+            <motion.div
               key={link.href}
-              href={link.href}
-              className="transition-colors hover:text-[#012169]"
-              style={{
-                color: pathname === link.href
-                  ? "var(--color-primary)"
-                  : "var(--color-text-secondary)",
-                fontWeight: pathname === link.href ? 600 : 500,
-              }}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
             >
-              {link.label}
-            </Link>
+              <Link
+                href={link.href}
+                className="transition-colors hover:text-[#012169]"
+                style={{
+                  color: pathname === link.href
+                    ? "var(--color-primary)"
+                    : "var(--color-text-secondary)",
+                  fontWeight: pathname === link.href ? 600 : 500,
+                }}
+              >
+                {link.label}
+              </Link>
+            </motion.div>
           ))}
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-3">
+        <motion.div
+          className="hidden md:flex items-center gap-3"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
           <Link
             href="/login"
-            className="text-sm font-medium px-4 py-2 rounded-lg transition-colors hover:bg-gray-50"
-            style={{ color: "var(--color-primary)" }}
+            className="btn btn-outline text-sm px-4 py-2"
           >
             Entrar
           </Link>
           <Link href="/signup" className="btn btn-accent text-sm px-5 py-2.5 rounded-lg">
             Empieza gratis
           </Link>
-        </div>
+        </motion.div>
 
         {/* Mobile hamburger */}
         <button
@@ -129,6 +143,6 @@ export function SiteHeader() {
           </nav>
         </div>
       )}
-    </header>
+    </motion.header>
   )
 }

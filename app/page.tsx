@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { Users, GraduationCap, Bot, Heart, MessageCircle, Star } from "lucide-react"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
+import { AnimateIn } from "@/components/shared/AnimateIn"
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
 
@@ -84,13 +85,13 @@ const AUTHORITY_STATS = [
 const FEATURES = [
   {
     Icon: Users,
-    title: "Grupos reducidos",
-    desc: "Clases con pocos alumnos para garantizar participación, atención real y progreso constante.",
+    title: "Método estructurado por niveles",
+    desc: "Cada grupo trabaja con un programa claro adaptado a su edad y nivel. Objetivos definidos desde el primer día.",
   },
   {
     Icon: GraduationCap,
-    title: "Centro Cambridge oficial",
-    desc: "Centro homologado para la preparación de exámenes oficiales Cambridge, con simulacros reales y seguimiento individual.",
+    title: "Presencial, intensivo y online",
+    desc: "Elige el formato que mejor encaja contigo: clases regulares, cursos intensivos de verano o clases individuales 100% personalizadas.",
   },
   {
     Icon: Bot,
@@ -104,8 +105,8 @@ const FEATURES = [
   },
   {
     Icon: MessageCircle,
-    title: "Seguimiento individual",
-    desc: "Evaluación continua y comunicación directa y cercana con las familias durante todo el curso.",
+    title: "Resultados que se recomiendan",
+    desc: "Muchas familias llevan años con nosotros. El boca a boca es nuestra mayor fuente de nuevos alumnos.",
   },
   {
     Icon: Star,
@@ -146,14 +147,6 @@ const COURSES = [
   },
 ]
 
-const LEVELS = [
-  { code: "A1", name: "Principiante", color: "var(--color-gold)" },
-  { code: "A2", name: "Elemental", color: "var(--color-gold)" },
-  { code: "B1", name: "Intermedio", color: "var(--color-primary-light)" },
-  { code: "B2", name: "Intermedio Alto", color: "var(--color-primary-light)" },
-  { code: "C1", name: "Avanzado", color: "var(--color-primary)" },
-  { code: "C2", name: "Maestría", color: "var(--color-primary)" },
-]
 
 const TESTIMONIALS = [
   {
@@ -198,6 +191,7 @@ export default function HomePage() {
 
         <div className="container-wide relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimateIn direction="left" delay={0.1}>
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
                 style={{ background: "rgba(212,160,23,0.2)", color: "#F0C842", border: "1px solid rgba(212,160,23,0.3)" }}>
@@ -245,7 +239,9 @@ export default function HomePage() {
                 </span>
               </div>
             </div>
+            </AnimateIn>
 
+            <AnimateIn direction="right" delay={0.2}>
             <div className="hidden lg:flex justify-center items-center">
               <div className="relative">
                 <Image
@@ -266,6 +262,7 @@ export default function HomePage() {
                 />
               </div>
             </div>
+            </AnimateIn>
           </div>
         </div>
       </section>
@@ -275,6 +272,7 @@ export default function HomePage() {
         <div className="container-wide">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-8">
             {/* Cambridge badge + copy */}
+            <AnimateIn direction="left">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 shrink-0 max-w-xl">
               <Image
                 src="/imgs/Prep-centre-logo_CMYK.jpg"
@@ -292,11 +290,13 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
+            </AnimateIn>
 
             {/* Divider */}
             <div className="hidden md:block w-px self-stretch" style={{ background: "var(--color-border)" }} />
 
             {/* Stats row */}
+            <AnimateIn direction="right" delay={0.1}>
             <div className="flex flex-wrap justify-center md:justify-end gap-8">
               {AUTHORITY_STATS.map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -312,6 +312,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+            </AnimateIn>
           </div>
         </div>
       </section>
@@ -319,6 +320,7 @@ export default function HomePage() {
       {/* ── 3. FEATURES — Problem → Solution ─────────────────── */}
       <section className="py-20" style={{ background: "var(--color-bg-alt)" }}>
         <div className="container-wide">
+          <AnimateIn>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4"
               style={{ fontFamily: "var(--font-display)" }}>
@@ -329,12 +331,13 @@ export default function HomePage() {
               y se preocupa por tu progreso.
             </p>
           </div>
+          </AnimateIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map((feat) => (
+            {FEATURES.map((feat, i) => (
+              <AnimateIn key={feat.title} delay={i * 0.08} className="h-full">
               <div
-                key={feat.title}
-                className="p-6 rounded-2xl border transition-all hover:shadow-md"
+                className="h-full p-6 rounded-2xl border transition-all hover:shadow-md"
                 style={{
                   background: "var(--color-bg)",
                   borderColor: "var(--color-border)",
@@ -348,72 +351,20 @@ export default function HomePage() {
                   {feat.desc}
                 </p>
               </div>
+              </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 4. COURSES — Choice ───────────────────────────────── */}
-      <section className="py-20">
-        <div className="container-wide">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4"
-              style={{ fontFamily: "var(--font-display)" }}>
-              Nuestros Cursos
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
-              Un programa para cada etapa y objetivo. Encuentra el curso que encaja contigo.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {COURSES.map((course) => (
-              <Link
-                key={course.title}
-                href={course.href}
-                className="group rounded-2xl overflow-hidden border transition-all hover:-translate-y-1 hover:shadow-xl"
-                style={{
-                  background: "var(--color-bg)",
-                  borderColor: "var(--color-border)",
-                }}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    className={`object-cover transition-transform duration-300 ${course.imageClassName ?? "group-hover:scale-105"}`}
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(1,33,105,0.5) 0%, transparent 60%)" }} />
-                  <span
-                    className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-semibold text-white"
-                    style={{ background: "rgba(212,160,23,0.85)" }}
-                  >
-                    {course.tag}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-base mb-2 group-hover:text-[var(--color-primary)] transition-colors"
-                    style={{ color: "var(--color-text)" }}>
-                    {course.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-                    {course.desc}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. AI PLATFORM — Differentiation ─────────────────── */}
+      {/* ── 4. AI PLATFORM — Differentiation ─────────────────── */}
       <section
         className="py-20"
         style={{ background: "var(--color-surface)" }}
       >
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimateIn direction="left">
             <div>
               <div
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
@@ -456,8 +407,10 @@ export default function HomePage() {
                 Accede a la plataforma
               </Link>
             </div>
+            </AnimateIn>
 
             {/* Mock UI preview */}
+            <AnimateIn direction="right" delay={0.15}>
             <div
               className="rounded-2xl p-6 border shadow-xl"
               style={{
@@ -514,53 +467,72 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            </AnimateIn>
           </div>
         </div>
       </section>
 
-      {/* ── 6. CEFR LEVELS — Decision tool ───────────────────── */}
-      <section className="py-20" style={{ background: "var(--color-bg-alt)" }}>
+      {/* ── 5. COURSES — Choice ───────────────────────────────── */}
+      <section className="py-20">
         <div className="container-wide">
+          <AnimateIn>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4"
               style={{ fontFamily: "var(--font-display)" }}>
-              Desde A1 hasta C2
+              Nuestros Cursos
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
-              Cursos estructurados siguiendo el Marco Común Europeo de Referencia (MCER).
-              Sea cual sea tu nivel, tenemos el curso para ti.
+              Un programa para cada etapa y objetivo. Encuentra el curso que encaja contigo.
             </p>
           </div>
+          </AnimateIn>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {LEVELS.map((level) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {COURSES.map((course, i) => (
+              <AnimateIn key={course.title} delay={i * 0.08} className="h-full">
               <Link
-                key={level.code}
-                href={`/levels#${level.code.toLowerCase()}`}
-                className="group flex flex-col items-center p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+                href={course.href}
+                className="group flex flex-col h-full rounded-2xl overflow-hidden border transition-all hover:-translate-y-1 hover:shadow-xl"
                 style={{
                   background: "var(--color-bg)",
                   borderColor: "var(--color-border)",
                 }}
               >
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg mb-3 transition-transform group-hover:scale-110"
-                  style={{ background: level.color }}
-                >
-                  {level.code}
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={course.image}
+                    alt={course.title}
+                    fill
+                    className={`object-cover transition-transform duration-300 ${course.imageClassName ?? "group-hover:scale-105"}`}
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(1,33,105,0.5) 0%, transparent 60%)" }} />
+                  <span
+                    className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: "rgba(212,160,23,0.85)" }}
+                  >
+                    {course.tag}
+                  </span>
                 </div>
-                <div className="text-xs font-medium" style={{ color: "var(--color-text-muted)" }}>
-                  {level.name}
+                <div className="p-5 flex-1">
+                  <h3 className="font-bold text-base mb-2 group-hover:text-[var(--color-primary)] transition-colors"
+                    style={{ color: "var(--color-text)" }}>
+                    {course.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                    {course.desc}
+                  </p>
                 </div>
               </Link>
+              </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 7. TESTIMONIALS — Proof ───────────────────────────── */}
-      <section className="py-20">
+      {/* ── 6. TESTIMONIALS — Proof ───────────────────────────── */}
+      <section className="py-20" style={{ background: "var(--color-bg-alt)" }}>
         <div className="container-wide">
+          <AnimateIn>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4"
               style={{ fontFamily: "var(--font-display)" }}>
@@ -574,12 +546,13 @@ export default function HomePage() {
               </span>
             </div>
           </div>
+          </AnimateIn>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
+            {TESTIMONIALS.map((t, i) => (
+              <AnimateIn key={t.name} delay={i * 0.1} className="h-full">
               <div
-                key={t.name}
-                className="p-6 rounded-2xl border"
+                className="h-full p-6 rounded-2xl border"
                 style={{
                   background: "var(--color-bg)",
                   borderColor: "var(--color-border)",
@@ -609,12 +582,13 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+              </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 8. CTA — Capture ──────────────────────────────────── */}
+      {/* ── 7. CTA — Capture ──────────────────────────────────── */}
       <section
         className="py-20"
         style={{
@@ -623,6 +597,7 @@ export default function HomePage() {
       >
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimateIn direction="left">
             <div className="text-center lg:text-left">
               <h2
                 className="text-3xl md:text-5xl font-bold mb-5"
@@ -632,8 +607,8 @@ export default function HomePage() {
               </h2>
               <p className="text-lg mb-10"
                 style={{ color: "rgba(255,255,255,0.8)" }}>
-                Únete a la comunidad de Brit English School. Primera semana gratis.
-                Sin compromiso.
+                Únete a la academia que más familias recomiendan en Tarragona.
+                Empieza cuando quieras.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link href="/signup" className="btn btn-accent text-base px-10 py-4 rounded-xl">
@@ -645,7 +620,9 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
+            </AnimateIn>
 
+            <AnimateIn direction="right" delay={0.15}>
             <div className="hidden lg:flex justify-center">
               <div className="relative">
                 <Image
@@ -662,6 +639,7 @@ export default function HomePage() {
                 />
               </div>
             </div>
+            </AnimateIn>
           </div>
         </div>
       </section>
