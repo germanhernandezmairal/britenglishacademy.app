@@ -47,6 +47,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Proprietary image assets — exist locally, must never be pushed
+# (copyrighted photos & logos belonging to Brit English School)
+/public/imgs/
+/app/icon.png
+# scratch / debug screenshots in the repo root
+cta-fix.png
+
 # Supabase
 /supabase/.temp/
 supabase/.branches/
