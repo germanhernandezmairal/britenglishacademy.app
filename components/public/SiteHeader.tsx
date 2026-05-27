@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -31,15 +30,20 @@ export function SiteHeader() {
       }}
     >
       <div className="container-wide flex items-center justify-between h-16">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-          <Image
-            src="/imgs/english-school-logo.webp"
-            alt="Brit English School"
-            width={44}
-            height={44}
-            priority
-          />
+        {/* Logo — text mark (replaces image until owner provides logo file) */}
+        <Link href="/" className="flex items-center gap-1" onClick={() => setOpen(false)}>
+          <span
+            className="text-lg font-extrabold tracking-tight leading-none"
+            style={{ fontFamily: "var(--font-display)", color: "var(--color-primary)" }}
+          >
+            BRIT
+          </span>
+          <span
+            className="text-lg font-light tracking-widest leading-none"
+            style={{ fontFamily: "var(--font-display)", color: "var(--color-text-secondary)", letterSpacing: "0.18em" }}
+          >
+            ENGLISH
+          </span>
         </Link>
 
         {/* Desktop nav */}

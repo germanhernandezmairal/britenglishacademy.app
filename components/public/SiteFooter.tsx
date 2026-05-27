@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -29,13 +28,20 @@ export function SiteFooter() {
           viewport={{ once: true, margin: "-80px" }}
         >
           <motion.div variants={itemVariants}>
-            <div className="mb-4">
-              <Image
-                src="/imgs/english-school-logo.webp"
-                alt="Brit English School"
-                width={56}
-                height={56}
-              />
+            {/* Logo text mark — replaces image until owner provides logo file */}
+            <div className="mb-4 flex items-center gap-1">
+              <span
+                className="text-xl font-extrabold tracking-tight leading-none"
+                style={{ fontFamily: "var(--font-display)", color: "white" }}
+              >
+                BRIT
+              </span>
+              <span
+                className="text-xl font-light leading-none"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold-light)", letterSpacing: "0.18em" }}
+              >
+                ENGLISH
+              </span>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.82)" }}>
               Centro preparador Cambridge oficial en Tarragona.

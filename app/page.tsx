@@ -117,29 +117,29 @@ const FEATURES = [
 
 const COURSES = [
   {
-    image: "/imgs/fotoclasecyndi.heic-scaled.webp",
+    image: "/free-imgs/course-ninos.jpg",
     title: "Inglés para Niños",
     desc: "Clases dinámicas y cercanas adaptadas a los más pequeños. Aprenden con motivación, sin presión.",
     href: "/levels",
     tag: "3–12 años",
-    imageClassName: "scale-[1.2] group-hover:scale-[1.25]",
+    imageClassName: "scale-[1.05] group-hover:scale-[1.1]",
   },
   {
-    image: "/imgs/INSTAGRAM-CASI-DEFINITIVO-2-copia.webp",
+    image: "/free-imgs/course-adultos.jpg",
     title: "Adultos y Universitarios",
     desc: "Avanza en tu carrera con un inglés certificado. Grupos reducidos, trato cercano y horarios flexibles.",
     href: "/levels",
     tag: "Todos los niveles",
   },
   {
-    image: "/imgs/cursos-verano-1.webp",
+    image: "/free-imgs/course-verano.jpg",
     title: "Preparación Cambridge",
     desc: "Supera el B1, B2, C1 o C2 con nuestro método probado y una alta tasa de éxito.",
     href: "/levels",
     tag: "B1 · B2 · C1 · C2",
   },
   {
-    image: "/imgs/cursos-individuales-clases-de-dos-familiares-ingles-tarragona-800x534.webp",
+    image: "/free-imgs/course-particulares.jpg",
     title: "Clases Particulares",
     desc: "Atención real y 100% personalizada. Avanza a tu ritmo con seguimiento individual constante.",
     href: "/contact",
@@ -245,8 +245,8 @@ export default function HomePage() {
             <div className="hidden lg:flex justify-center items-center">
               <div className="relative">
                 <Image
-                  src="/imgs/Ninos-balcon-.webp"
-                  alt="Alumnos disfrutando en Brit English School Tarragona"
+                  src="/free-imgs/hero-classroom.jpg"
+                  alt="Alumnos en clase en Brit English School Tarragona"
                   width={580}
                   height={435}
                   className="rounded-2xl shadow-2xl object-cover"
@@ -274,13 +274,25 @@ export default function HomePage() {
             {/* Cambridge badge + copy */}
             <AnimateIn direction="left">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 shrink-0 max-w-xl">
-              <Image
-                src="/imgs/Prep-centre-logo_CMYK.jpg"
-                alt="We prepare for Cambridge English Qualifications"
-                width={160}
-                height={60}
-                className="object-contain shrink-0"
-              />
+              {/* Cambridge accreditation badge — placeholder until school provides official embed */}
+              <div
+                className="flex items-center gap-3 px-4 py-2.5 rounded-xl border shrink-0"
+                style={{
+                  borderColor: "var(--color-border)",
+                  background: "var(--color-bg-alt)",
+                  minWidth: 160,
+                }}
+              >
+                <span className="text-2xl" aria-hidden>🎓</span>
+                <div>
+                  <div className="text-xs font-bold leading-tight" style={{ color: "var(--color-primary)" }}>
+                    Cambridge English
+                  </div>
+                  <div className="text-xs leading-tight" style={{ color: "var(--color-text-muted)" }}>
+                    Authorised Prep Centre
+                  </div>
+                </div>
+              </div>
               <div>
                 <p className="font-bold text-sm mb-1" style={{ color: "var(--color-text)" }}>
                   Centro Preparador homologado de Exámenes Cambridge en Tarragona
@@ -626,8 +638,8 @@ export default function HomePage() {
             <div className="hidden lg:flex justify-center">
               <div className="relative">
                 <Image
-                  src="/imgs/Profesora-hablando-estudiante-800x1200.png"
-                  alt="Profesora con alumno en Brit English School"
+                  src="/free-imgs/cta-teacher.jpg"
+                  alt="Profesora en Brit English School Tarragona"
                   width={340}
                   height={510}
                   className="rounded-2xl shadow-2xl object-cover"
