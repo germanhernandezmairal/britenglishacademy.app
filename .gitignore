@@ -54,6 +54,10 @@ next-env.d.ts
 # scratch / debug screenshots in the repo root
 cta-fix.png
 
+# Local image drafts — kept for reference, not committed
+/public/free-imgs/Oldest ones/
+/public/free-imgs/phoenix-v1.0_*.jpg
+
 # Supabase
 /supabase/.temp/
 supabase/.branches/
