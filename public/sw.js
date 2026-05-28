@@ -1,4 +1,4 @@
-﻿self.addEventListener("push", (event) => {
+self.addEventListener("push", (event) => {
   let data = { title: "Brit English Academy", body: "", url: "/" }
   try { data = { ...data, ...event.data?.json() } } catch {}
 

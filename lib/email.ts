@@ -1,4 +1,4 @@
-﻿import { Resend } from "resend"
+import { Resend } from "resend"
 
 const FROM = `Brit English Academy <${process.env.RESEND_FROM_EMAIL ?? "noreply@BritEnglishAcademy.com"}>`
 

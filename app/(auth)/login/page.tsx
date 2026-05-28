@@ -1,4 +1,4 @@
-﻿import Link from "next/link"
+import Link from "next/link"
 import type { Metadata } from "next"
 import { login, loginWithGoogle } from "@/app/actions/auth"
 import AuthCard from "@/components/shared/AuthCard"

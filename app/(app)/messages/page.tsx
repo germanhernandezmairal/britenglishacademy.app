@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { InboxList } from "./_components/InboxList"

@@ -1,4 +1,4 @@
-﻿# Brit English Academy — Full-Stack Web Platform
+# Brit English Academy — Full-Stack Web Platform
 
 > A production-ready English school platform: public marketing website + private student community, powered by Next.js, Supabase, and Claude AI.
 

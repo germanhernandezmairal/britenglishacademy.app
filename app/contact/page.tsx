@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
