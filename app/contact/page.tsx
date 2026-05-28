@@ -1,19 +1,19 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 import { ContactForm } from "./_components/ContactForm"
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.BritEnglishAcademy.com"
 
 export const metadata: Metadata = {
-  title: "Contacto | Brit English School Tarragona",
+  title: "Contacto | Brit English Academy Tarragona",
   description:
-    "Contacta con Brit English School en Tarragona. Rambla Nova 62. Test de nivel gratuito. Clases presenciales y online de inglés A1–C2.",
+    "Contacta con Brit English Academy en Tarragona. Rambla Nova 62. Test de nivel gratuito. Clases presenciales y online de inglés A1–C2.",
   alternates: { canonical: `${BASE}/contact` },
   openGraph: {
-    title: "Contacto — Brit English School Tarragona",
+    title: "Contacto — Brit English Academy Tarragona",
     description:
       "Rambla Nova 62, Tarragona. Llámanos, escríbenos por WhatsApp o solicita tu test de nivel gratuito.",
     url: `${BASE}/contact`,
@@ -36,8 +36,8 @@ const CONTACT_INFO = [
   {
     icon: "✉️",
     label: "Email",
-    value: "info@britenglishschool.com",
-    href: "mailto:info@britenglishschool.com",
+    value: "info@BritEnglishAcademy.com",
+    href: "mailto:info@BritEnglishAcademy.com",
   },
   {
     icon: "💬",

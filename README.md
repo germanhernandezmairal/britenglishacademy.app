@@ -1,4 +1,4 @@
-# Brit English School — Full-Stack Web Platform
+﻿# Brit English Academy — Full-Stack Web Platform
 
 > A production-ready English school platform: public marketing website + private student community, powered by Next.js, Supabase, and Claude AI.
 
@@ -13,7 +13,7 @@
 
 ## Overview
 
-Brit English School is a premium English school based in Tarragona, Spain. This platform replaces scattered WhatsApp groups, PDFs by email, and a static website with a single, unified platform:
+Brit English Academy is a premium English school based in Tarragona, Spain. This platform replaces scattered WhatsApp groups, PDFs by email, and a static website with a single, unified platform:
 
 - **Zone 1 — Public website:** SEO-optimised marketing site that converts visitors into students
 - **Zone 2 — Private community:** Student dashboard with lessons, homework, exams, community feed, and direct messaging
@@ -57,8 +57,8 @@ Brit English School is a premium English school based in Tarragona, Spain. This 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/germanhernandezmairal/brit-english-school.git
-cd brit-english-school
+git clone https://github.com/germanhernandezmairal/brit-english-academy.git
+cd brit-english-academy
 ```
 
 ### 2. Install dependencies
@@ -92,11 +92,11 @@ UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_token
 
 # Resend (email)
 RESEND_API_KEY=your_resend_api_key
-RESEND_FROM_EMAIL=no-reply@britenglishschool.com
+RESEND_FROM_EMAIL=no-reply@BritEnglishAcademy.com
 
 # App
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME=Brit English School
+NEXT_PUBLIC_SITE_NAME=Brit English Academy
 
 # Replicate (AI image generation)
 REPLICATE_API_TOKEN=your_replicate_api_token
@@ -136,7 +136,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Folder Structure
 
 ```
-brit-english-school/
+brit-english-academy/
 ├── app/
 │   ├── (auth)/                # Login, signup, onboarding pages
 │   │   ├── login/
@@ -192,12 +192,12 @@ brit-english-school/
 1. Push the repository to GitHub (keep it **private**)
 2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import the repo
 3. Set all environment variables from `.env.local` in **Settings → Environment Variables**
-   - Set `NEXT_PUBLIC_APP_URL` to your production domain (e.g. `https://www.britenglishschool.com`)
+   - Set `NEXT_PUBLIC_APP_URL` to your production domain (e.g. `https://www.BritEnglishAcademy.com`)
 4. Click **Deploy**
 
 ### Custom Domain
 
-1. In Vercel → **Settings → Domains**, add `www.britenglishschool.com`
+1. In Vercel → **Settings → Domains**, add `www.BritEnglishAcademy.com`
 2. Update your DNS records as instructed by Vercel (CNAME or A record)
 3. Vercel provisions an SSL certificate automatically
 
@@ -238,6 +238,6 @@ This is a private project. Only collaborators added by the owner may contribute.
 
 ## License
 
-Proprietary — © 2026 Brit English School. All rights reserved.
+Proprietary — © 2026 Brit English Academy. All rights reserved.
 
 Technical implementation by [Germán Hernández Mairal](mailto:gerhm19@gmail.com).

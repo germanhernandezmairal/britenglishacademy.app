@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { ArrowLeft, ClipboardList } from "lucide-react"
 import { ReviewCard } from "./_components/ReviewCard"
 
-export const metadata: Metadata = { title: "Deberes | Admin | Brit English School" }
+export const metadata: Metadata = { title: "Deberes | Admin | Brit English Academy" }
 
 const SIGNED_URL_EXPIRY = 3600
 

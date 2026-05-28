@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { ArrowLeft } from "lucide-react"
 import { ExamForm } from "../_components/ExamForm"
 
-export const metadata: Metadata = { title: "Nuevo Examen | Admin | Brit English School" }
+export const metadata: Metadata = { title: "Nuevo Examen | Admin | Brit English Academy" }
 
 export default async function NewExamPage() {
   const supabase = await createClient()

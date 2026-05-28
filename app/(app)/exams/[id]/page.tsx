@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
   const supabase = await createClient()
   const { data } = await supabase.from("exams").select("title").eq("id", id).single()
-  return { title: data ? `${data.title} | Brit English School` : "Examen" }
+  return { title: data ? `${data.title} | Brit English Academy` : "Examen" }
 }
 
 export default async function ExamDetailPage({ params }: Props) {

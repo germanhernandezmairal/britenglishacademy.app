@@ -1,5 +1,5 @@
-self.addEventListener("push", (event) => {
-  let data = { title: "Brit English School", body: "", url: "/" }
+﻿self.addEventListener("push", (event) => {
+  let data = { title: "Brit English Academy", body: "", url: "/" }
   try { data = { ...data, ...event.data?.json() } } catch {}
 
   event.waitUntil(

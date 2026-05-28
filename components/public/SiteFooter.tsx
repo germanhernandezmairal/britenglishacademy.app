@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -73,7 +73,7 @@ export function SiteFooter() {
             <ul className="space-y-2 text-xs" style={{ color: "rgba(255,255,255,0.82)" }}>
               <li>📍 Rambla Nova 62, Tarragona</li>
               <li>📞 +34 877 072 975</li>
-              <li>✉️ info@britenglishschool.com</li>
+              <li>✉️ info@BritEnglishAcademy.com</li>
               <li>
                 <a
                   href="https://wa.me/34877072975"
@@ -100,7 +100,7 @@ export function SiteFooter() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <span>© 2026 Brit English School. Todos los derechos reservados.</span>
+          <span>© 2026 Brit English Academy. Todos los derechos reservados.</span>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacidad</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Términos</Link>

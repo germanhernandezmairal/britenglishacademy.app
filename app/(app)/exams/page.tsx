@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { GraduationCap, Clock, Trophy, RotateCcw } from "lucide-react"
 
-export const metadata: Metadata = { title: "Exámenes | Brit English School" }
+export const metadata: Metadata = { title: "Exámenes | Brit English Academy" }
 
 const SKILL_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   reading:         { label: "Comprensión lectora",  color: "#1A3A8C", bg: "#EEF1FA" },

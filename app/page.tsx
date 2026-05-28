@@ -1,4 +1,4 @@
-import Link from "next/link"
+﻿import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
 import { Users, GraduationCap, Bot, Heart, MessageCircle, Star } from "lucide-react"
@@ -6,15 +6,15 @@ import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.BritEnglishAcademy.com"
 
 export const metadata: Metadata = {
-  title: "Brit English School | Academia de Inglés Cambridge en Tarragona",
+  title: "Brit English Academy | Academia de Inglés Cambridge en Tarragona",
   description:
     "Centro preparador oficial Cambridge en Tarragona. Clases de inglés para niños, teens, adultos y empresas. B1, B2, C1, C2. 4.9/5 en Google.",
   alternates: { canonical: BASE },
   openGraph: {
-    title: "Brit English School | Academia de Inglés Cambridge en Tarragona",
+    title: "Brit English Academy | Academia de Inglés Cambridge en Tarragona",
     description:
       "Centro preparador oficial Cambridge en Tarragona. Grupos reducidos, IA integrada y preparación oficial para B1, B2, C1 y C2.",
     url: BASE,
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": ["EducationalOrganization", "LocalBusiness"],
-  name: "Brit English School",
+  name: "Brit English Academy",
   description:
     "Centro preparador Cambridge oficial en Tarragona. Clases de inglés para todos los niveles MCER (A1–C2).",
   url: BASE,
   telephone: "+34877072975",
-  email: "info@britenglishschool.com",
+  email: "info@BritEnglishAcademy.com",
   priceRange: "€€",
   address: {
     "@type": "PostalAddress",
@@ -246,7 +246,7 @@ export default function HomePage() {
               <div className="relative">
                 <Image
                   src="/free-imgs/hero-classroom.jpg"
-                  alt="Alumnos en clase en Brit English School Tarragona"
+                  alt="Alumnos en clase en Brit English Academy Tarragona"
                   width={580}
                   height={435}
                   className="rounded-2xl shadow-2xl object-cover"
@@ -639,7 +639,7 @@ export default function HomePage() {
               <div className="relative">
                 <Image
                   src="/free-imgs/cta-teacher.jpg"
-                  alt="Profesora en Brit English School Tarragona"
+                  alt="Profesora en Brit English Academy Tarragona"
                   width={340}
                   height={510}
                   className="rounded-2xl shadow-2xl object-cover"

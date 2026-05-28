@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js"
+﻿import { createClient } from "@supabase/supabase-js"
 import { sendEmail, tplHomeworkSubmitted, tplHomeworkCorrected, tplAnnouncement } from "./email"
 import { sendPush } from "./webpush"
 
@@ -69,7 +69,7 @@ export async function notifyHomeworkCorrected(studentId: string, studentName: st
     const [emailMap, subs] = await Promise.all([emailsForUsers([studentId]), subsForUsers([studentId])])
     const email = emailMap[studentId]
     await Promise.all([
-      email && sendEmail(email, "Tu tarea ha sido corregida — Brit English School", tplHomeworkCorrected(studentName, title, APP_URL)),
+      email && sendEmail(email, "Tu tarea ha sido corregida — Brit English Academy", tplHomeworkCorrected(studentName, title, APP_URL)),
       sendPush(subs, { title: "Tarea corregida", body: title, url: `${APP_URL}/homework` }),
     ])
   } catch (err) {
@@ -84,7 +84,7 @@ export async function notifyAnnouncement(content: string) {
     const [emailMap, subs] = await Promise.all([emailsForUsers(ids), subsForUsers(ids)])
     const emails = Object.values(emailMap)
     await Promise.all([
-      emails.length > 0 && sendEmail(emails, "Nuevo anuncio — Brit English School", tplAnnouncement(content, APP_URL)),
+      emails.length > 0 && sendEmail(emails, "Nuevo anuncio — Brit English Academy", tplAnnouncement(content, APP_URL)),
       sendPush(subs, { title: "Nuevo anuncio", body: content.slice(0, 100), url: `${APP_URL}/community` }),
     ])
   } catch (err) {

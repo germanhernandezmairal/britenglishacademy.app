@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { ArrowLeft, BookOpen, Plus } from "lucide-react"
 import { LessonRow } from "./_components/LessonRow"
 
-export const metadata: Metadata = { title: "Lecciones | Admin | Brit English School" }
+export const metadata: Metadata = { title: "Lecciones | Admin | Brit English Academy" }
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
   A1: { bg: "#FFF8E7", text: "#D4A017" }, A2: { bg: "#FFF8E7", text: "#D4A017" },

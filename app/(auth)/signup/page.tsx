@@ -1,11 +1,11 @@
-import Link from "next/link"
+﻿import Link from "next/link"
 import type { Metadata } from "next"
 import { signup, loginWithGoogle } from "@/app/actions/auth"
 import AuthCard from "@/components/shared/AuthCard"
 
 export const metadata: Metadata = {
   title: "Crear cuenta",
-  description: "Únete a la comunidad de Brit English School.",
+  description: "Únete a la comunidad de Brit English Academy.",
 }
 
 const ERROR_MESSAGES: Record<string, string> = {

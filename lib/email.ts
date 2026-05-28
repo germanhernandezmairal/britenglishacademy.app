@@ -1,6 +1,6 @@
-import { Resend } from "resend"
+﻿import { Resend } from "resend"
 
-const FROM = `Brit English School <${process.env.RESEND_FROM_EMAIL ?? "noreply@britenglishschool.com"}>`
+const FROM = `Brit English Academy <${process.env.RESEND_FROM_EMAIL ?? "noreply@BritEnglishAcademy.com"}>`
 
 function wrap(body: string): string {
   return `<!DOCTYPE html>
@@ -10,13 +10,13 @@ function wrap(body: string): string {
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:40px 16px;">
 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
 <tr><td style="background:#012169;padding:24px 32px;border-radius:12px 12px 0 0;">
-<p style="margin:0;color:#fff;font-size:18px;font-weight:700;letter-spacing:-0.3px;">Brit English School</p>
+<p style="margin:0;color:#fff;font-size:18px;font-weight:700;letter-spacing:-0.3px;">Brit English Academy</p>
 </td></tr>
 <tr><td style="background:#fff;padding:32px;border-radius:0 0 12px 12px;border:1px solid #E5E7EB;border-top:0;">
 ${body}
 </td></tr>
 <tr><td style="padding:20px 0;text-align:center;">
-<p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Brit English School · Correo automático, por favor no respondas.</p>
+<p style="margin:0;font-size:12px;color:#9CA3AF;">© ${new Date().getFullYear()} Brit English Academy · Correo automático, por favor no respondas.</p>
 </td></tr>
 </table></td></tr></table>
 </body></html>`
@@ -86,7 +86,7 @@ export function tplWelcome(fullName: string, appUrl: string): string {
   return `
     <h2 style="margin:0 0 16px;font-size:20px;color:#012169;">¡Bienvenido/a, ${firstName}!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#374151;line-height:1.6;">
-      Ya formas parte de la comunidad de Brit English School. Desde tu dashboard podrás:
+      Ya formas parte de la comunidad de Brit English Academy. Desde tu dashboard podrás:
     </p>
     <ul style="margin:0 0 16px;padding-left:20px;font-size:15px;color:#374151;line-height:1.8;">
       <li>Ver y completar lecciones en vídeo</li>

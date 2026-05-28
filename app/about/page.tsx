@@ -1,18 +1,18 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.BritEnglishAcademy.com"
 
 export const metadata: Metadata = {
-  title: "Sobre Nosotros | Brit English School Tarragona",
+  title: "Sobre Nosotros | Brit English Academy Tarragona",
   description:
-    "Conoce al equipo de Brit English School. Centro preparador Cambridge oficial en Tarragona desde 2014. Profesores nativos y CELTA certificados.",
+    "Conoce al equipo de Brit English Academy. Centro preparador Cambridge oficial en Tarragona desde 2014. Profesores nativos y CELTA certificados.",
   alternates: { canonical: `${BASE}/about` },
   openGraph: {
-    title: "Sobre Nosotros — Brit English School",
+    title: "Sobre Nosotros — Brit English Academy",
     description:
       "Más de 10 años formando a alumnos en Tarragona. Profesores nativos CELTA, 98% tasa de éxito Cambridge, centro preparador oficial.",
     url: `${BASE}/about`,
@@ -164,7 +164,7 @@ export default function AboutPage() {
                   className="text-base leading-relaxed mb-5"
                   style={{ color: "var(--color-text-secondary)" }}
                 >
-                  Brit English School nació con una convicción: el inglés es la llave que abre
+                  Brit English Academy nació con una convicción: el inglés es la llave que abre
                   puertas profesionales, académicas y personales. Nuestros alumnos no solo aprenden
                   un idioma — ganan confianza, oportunidades y un certificado reconocido en todo el
                   mundo.

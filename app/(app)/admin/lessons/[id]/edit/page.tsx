@@ -5,7 +5,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { ArrowLeft } from "lucide-react"
 import { LessonForm } from "../../_components/LessonForm"
 
-export const metadata: Metadata = { title: "Editar Lección | Admin | Brit English School" }
+export const metadata: Metadata = { title: "Editar Lección | Admin | Brit English Academy" }
 
 export default async function EditLessonPage({
   params,

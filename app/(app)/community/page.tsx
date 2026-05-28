@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { CommunityFeed } from "./_components/CommunityFeed"
 
-export const metadata: Metadata = { title: "Comunidad | Brit English School" }
+export const metadata: Metadata = { title: "Comunidad | Brit English Academy" }
 
 export default async function CommunityPage() {
   const supabase = await createClient()

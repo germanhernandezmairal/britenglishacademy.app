@@ -1,4 +1,4 @@
-"use server"
+﻿"use server"
 
 import { z } from "zod"
 
@@ -27,11 +27,11 @@ export async function submitContact(data: ContactFormData): Promise<ContactResul
       const resend = new Resend(process.env.RESEND_API_KEY)
 
       await resend.emails.send({
-        from: `Brit English School <${process.env.RESEND_FROM_EMAIL ?? "noreply@britenglishschool.com"}>`,
-        to: "info@britenglishschool.com",
+        from: `Brit English Academy <${process.env.RESEND_FROM_EMAIL ?? "noreply@BritEnglishAcademy.com"}>`,
+        to: "info@BritEnglishAcademy.com",
         subject: `Nuevo contacto web: ${name} (Nivel ${level})`,
         html: `
-          <h2>Nuevo mensaje de contacto — Brit English School</h2>
+          <h2>Nuevo mensaje de contacto — Brit English Academy</h2>
           <p><strong>Nombre:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           ${phone ? `<p><strong>Teléfono:</strong> ${phone}</p>` : ""}

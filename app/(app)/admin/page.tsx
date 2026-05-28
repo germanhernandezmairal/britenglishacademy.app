@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient, createAdminClient } from "@/lib/supabase/server"
@@ -7,7 +7,7 @@ import {
   ArrowRight, Clock, CheckCircle2, AlertCircle,
 } from "lucide-react"
 
-export const metadata: Metadata = { title: "Panel Admin | Brit English School" }
+export const metadata: Metadata = { title: "Panel Admin | Brit English Academy" }
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
   A1: { bg: "#FFF8E7", text: "#D4A017" },

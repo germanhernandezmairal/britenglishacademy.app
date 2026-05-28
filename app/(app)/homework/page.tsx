@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/server"
 import { HomeworkView } from "./_components/HomeworkView"
 
-export const metadata: Metadata = { title: "Mis deberes | Brit English School" }
+export const metadata: Metadata = { title: "Mis deberes | Brit English Academy" }
 
 const SIGNED_URL_EXPIRY = 3600 // 1 hour
 

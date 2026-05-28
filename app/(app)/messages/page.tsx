@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { InboxList } from "./_components/InboxList"
 
-export const metadata: Metadata = { title: "Mensajes | Brit English School" }
+export const metadata: Metadata = { title: "Mensajes | Brit English Academy" }
 
 export type ConversationSummary = {
   id: string

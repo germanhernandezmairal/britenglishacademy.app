@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Mi Dashboard | Brit English School",
+  title: "Mi Dashboard | Brit English Academy",
 }
 
 const LEVEL_NEXT: Record<string, string> = {

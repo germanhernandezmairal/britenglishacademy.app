@@ -1,18 +1,18 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/public/SiteHeader"
 import { SiteFooter } from "@/components/public/SiteFooter"
 import { AnimateIn } from "@/components/shared/AnimateIn"
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.BritEnglishAcademy.com"
 
 export const metadata: Metadata = {
-  title: "Blog de Inglés | Brit English School",
+  title: "Blog de Inglés | Brit English Academy",
   description:
-    "Consejos, guías y recursos para aprender inglés y preparar tus exámenes Cambridge. Por los profesores de Brit English School Tarragona.",
+    "Consejos, guías y recursos para aprender inglés y preparar tus exámenes Cambridge. Por los profesores de Brit English Academy Tarragona.",
   alternates: { canonical: `${BASE}/blog` },
   openGraph: {
-    title: "Blog de Inglés — Brit English School",
+    title: "Blog de Inglés — Brit English Academy",
     description:
       "Artículos, guías y consejos para dominar el inglés y aprobar tus exámenes Cambridge B1, B2, C1, C2.",
     url: `${BASE}/blog`,

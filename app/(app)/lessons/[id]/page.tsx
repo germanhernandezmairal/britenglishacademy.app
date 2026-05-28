@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
   const supabase = await createClient()
   const { data } = await supabase.from("lessons").select("title").eq("id", id).single()
-  return { title: data ? `${data.title} | Brit English School` : "Lección" }
+  return { title: data ? `${data.title} | Brit English Academy` : "Lección" }
 }
 
 type VocabItem = { word: string; definition: string; example?: string }

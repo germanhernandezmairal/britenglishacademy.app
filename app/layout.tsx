@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next"
+﻿import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import { cn } from "@/lib/utils"
 import "./globals.css"
@@ -18,8 +18,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Brit English School | Academia de Inglés Cambridge en Tarragona",
-    template: "%s | Brit English School",
+    default: "Brit English Academy | Academia de Inglés Cambridge en Tarragona",
+    template: "%s | Brit English Academy",
   },
   description:
     "Centro preparador Cambridge en Tarragona. Clases de inglés para niños, adultos y empresas. Preparación B1, B2, C1, C2. 4.9/5 en Google.",
@@ -28,21 +28,21 @@ export const metadata: Metadata = {
     "Cambridge Tarragona",
     "clases inglés Tarragona",
     "preparación Cambridge B2 C1",
-    "Brit English School",
+    "Brit English Academy",
     "cursos inglés online",
   ],
-  authors: [{ name: "Brit English School" }],
-  creator: "Brit English School",
+  authors: [{ name: "Brit English Academy" }],
+  creator: "Brit English Academy",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://www.britenglishschool.com"
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://www.BritEnglishAcademy.com"
   ),
   openGraph: {
     type: "website",
     locale: "es_ES",
     alternateLocale: "en_GB",
-    siteName: "Brit English School",
+    siteName: "Brit English Academy",
   },
-  twitter: { card: "summary_large_image", site: "@BritEnglishSchool" },
+  twitter: { card: "summary_large_image", site: "@BritEnglishAcademy" },
   robots: {
     index: true,
     follow: true,

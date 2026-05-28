@@ -1,5 +1,5 @@
--- ============================================================
--- Brit English School — Supabase Schema + RLS Policies
+﻿-- ============================================================
+-- Brit English Academy — Supabase Schema + RLS Policies
 -- ============================================================
 -- Run this in the Supabase SQL editor (dashboard → SQL editor)
 -- ============================================================
