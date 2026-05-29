@@ -57,8 +57,8 @@ Brit English Academy is a premium English school based in Tarragona, Spain. This
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/germanhernandezmairal/brit-english-academy.git
-cd brit-english-academy
+git clone https://github.com/germanhernandezmairal/britenglishacademy.app.git
+cd britenglishacademy.app
 ```
 
 ### 2. Install dependencies
