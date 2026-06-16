@@ -157,7 +157,7 @@ const FORMATS = [
   {
     icon: "🏫",
     title: "Clases presenciales",
-    desc: "Grupos reducidos de máximo 8 alumnos en Rambla Nova 62, Tarragona. Ambiente cercano y real.",
+    desc: "Grupos reducidos de máximo 8 alumnos en Rambla Nova, Tarragona. Ambiente cercano y real.",
     tag: "Más recomendado",
   },
   {

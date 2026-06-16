@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contacto — Brit English Academy Tarragona",
     description:
-      "Rambla Nova 62, Tarragona. Llámanos, escríbenos por WhatsApp o solicita tu test de nivel gratuito.",
+      "Rambla Nova, Tarragona. Llámanos, escríbenos por WhatsApp o solicita tu test de nivel gratuito.",
     url: `${BASE}/contact`,
   },
 }
@@ -24,14 +24,14 @@ const CONTACT_INFO = [
   {
     icon: "📍",
     label: "Dirección",
-    value: "Rambla Nova 62, 4ª planta\n43003 Tarragona",
+    value: "Rambla Nova\n43003 Tarragona",
     href: null,
   },
   {
     icon: "📞",
     label: "Teléfono",
-    value: "+34 877 072 975",
-    href: "tel:+34877072975",
+    value: "+34 611 223 344",
+    href: "tel:+34611223344",
   },
   {
     icon: "✉️",
@@ -43,7 +43,7 @@ const CONTACT_INFO = [
     icon: "💬",
     label: "WhatsApp",
     value: "Escribir por WhatsApp",
-    href: "https://wa.me/34877072975",
+    href: "https://wa.me/34611223344",
   },
 ]
 
@@ -174,7 +174,7 @@ export default function ContactPage() {
 
                 {/* WhatsApp CTA */}
                 <a
-                  href="https://wa.me/34877072975"
+                  href="https://wa.me/34611223344"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-white text-sm font-semibold transition-all hover:opacity-90 mt-2"

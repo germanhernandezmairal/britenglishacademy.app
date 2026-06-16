@@ -45,7 +45,7 @@ export function SiteFooter() {
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.82)" }}>
               Centro preparador Cambridge oficial en Tarragona.
-              Rambla Nova 62, 4ª planta.
+              Rambla Nova.
             </p>
           </motion.div>
 
@@ -71,12 +71,12 @@ export function SiteFooter() {
           <motion.div variants={itemVariants}>
             <h4 className="text-sm font-semibold mb-3" style={{ color: "white" }}>Contacto</h4>
             <ul className="space-y-2 text-xs" style={{ color: "rgba(255,255,255,0.82)" }}>
-              <li>📍 Rambla Nova 62, Tarragona</li>
-              <li>📞 +34 877 072 975</li>
+              <li>📍 Rambla Nova, Tarragona</li>
+              <li>📞 +34 611 223 344</li>
               <li>✉️ info@BritEnglishAcademy.com</li>
               <li>
                 <a
-                  href="https://wa.me/34877072975"
+                  href="https://wa.me/34611223344"
                   className="hover:text-white transition-colors"
                   style={{ color: "rgba(255,255,255,0.82)" }}
                   target="_blank"

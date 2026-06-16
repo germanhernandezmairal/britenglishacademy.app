@@ -28,7 +28,7 @@ const localBusinessSchema = {
   description:
     "Centro preparador Cambridge oficial en Tarragona. Clases de inglés para todos los niveles MCER (A1–C2).",
   url: BASE,
-  telephone: "+34877072975",
+  telephone: "+34611223344",
   email: "info@BritEnglishAcademy.com",
   priceRange: "€€",
   address: {
@@ -150,21 +150,21 @@ const COURSES = [
 
 const TESTIMONIALS = [
   {
-    name: "Naïm El Ouariachi",
+    name: "Marc Vidal Soler",
     level: "Examen Cambridge",
-    text: "Me apunté porque siempre he tenido problemas con el inglés. Tenía solo un mes para preparar el examen y gracias a la profesora Ana Mariuta conseguí aprobar y obtener el título. Muy recomendable.",
+    text: "Llegué con muy poca base y apenas cuatro semanas para preparar el examen. Con el acompañamiento de mi profesora aprobé y conseguí el certificado a la primera. Lo recomiendo sin dudarlo.",
     stars: 5,
   },
   {
-    name: "Jesús Molinero",
-    level: "Padre de alumnos",
-    text: "Mis dos hijos de 20 y 15 años han podido examinarse de sus respectivos títulos, no sólo aprobándolo, sino que además con muy buena nota.",
+    name: "Cristina Ferrer Gómez",
+    level: "Madre de alumnos",
+    text: "Mis dos hijas, de 18 y 14 años, se presentaron a sus exámenes oficiales y no solo los aprobaron, sino que además sacaron una nota excelente.",
     stars: 5,
   },
   {
-    name: "Anabel Martínez",
-    level: "Alumna",
-    text: "No podemos estar más contentos y satisfechos con Brit English: Profesionalidad, didáctica y vocación son un cocktail perfecto.",
+    name: "Roberto Sánchez Pla",
+    level: "Alumno",
+    text: "Imposible estar más satisfecho con la academia: rigor, buenas explicaciones y una verdadera vocación por enseñar se combinan a la perfección.",
     stars: 5,
   },
 ]
