@@ -168,7 +168,7 @@ export default function BlogPage() {
       <div className="container-wide py-16">
         {/* Featured posts */}
         {featured.length > 0 && (
-          <div className="mb-16">
+          <div className="mt-10 mb-12">
             <AnimateIn>
               <h2
                 className="text-xs font-semibold uppercase tracking-wider mb-6"
@@ -229,7 +229,7 @@ export default function BlogPage() {
         )}
 
         {/* Rest of posts */}
-        <div>
+        <div className="mb-12">
           <AnimateIn>
             <h2
               className="text-xs font-semibold uppercase tracking-wider mb-6"

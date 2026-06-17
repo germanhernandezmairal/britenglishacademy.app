@@ -42,31 +42,29 @@ function NavContent({ profile, onNav }: { profile: Profile; onNav?: () => void }
 
   return (
     <div className="flex flex-col h-full">
-      {/* Logo */}
+      {/* Logo — BRIT ENGLISH text mark (matches public SiteHeader) */}
       <div
-        className="flex items-center gap-2.5 px-4 py-5 border-b flex-shrink-0"
+        className="flex items-center px-5 py-5 border-b flex-shrink-0"
         style={{ borderColor: "var(--color-border)" }}
       >
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-          style={{ background: "var(--color-primary)" }}
-        >
-          B
-        </div>
-        <div className="leading-none">
-          <div
-            className="font-bold text-sm"
+        <Link href="/dashboard" className="flex items-center gap-1" onClick={onNav}>
+          <span
+            className="text-lg font-extrabold tracking-tight leading-none"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-primary)" }}
           >
-            Brit English
-          </div>
-          <div
-            className="text-[10px] font-semibold uppercase tracking-widest"
-            style={{ color: "var(--color-accent)" }}
+            BRIT
+          </span>
+          <span
+            className="text-lg font-light leading-none"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-secondary)",
+              letterSpacing: "0.18em",
+            }}
           >
-            School
-          </div>
-        </div>
+            ENGLISH
+          </span>
+        </Link>
       </div>
 
       {/* Navigation */}

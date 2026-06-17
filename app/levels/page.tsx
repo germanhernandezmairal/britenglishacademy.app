@@ -233,7 +233,7 @@ export default function LevelsPage() {
         style={{ background: "white", borderColor: "var(--color-border)" }}
       >
         <div className="container-wide">
-          <div className="flex gap-2 py-3 min-w-max">
+          <div className="flex gap-2 py-4 min-w-max">
             {LEVELS.map((l) => (
               <a
                 key={l.code}
@@ -442,9 +442,8 @@ export default function LevelsPage() {
                       >
                         <Link
                           href="/contact?subject=test-nivel"
-                          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all border hover:bg-gray-50"
+                          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all border text-[color:var(--color-primary)] hover:bg-[#0d1b3e] hover:!text-white"
                           style={{
-                            color: "var(--color-primary)",
                             borderColor: "var(--color-primary)",
                           }}
                         >
