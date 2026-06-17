@@ -79,7 +79,7 @@ export default async function AdminExamsPage() {
         <Link
           href="/admin/exams/new"
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:opacity-90"
-          style={{ background: "var(--color-primary)" }}
+          style={{ background: "var(--color-primary)", color: "#fff" }}
         >
           <Plus size={15} /> Nuevo examen
         </Link>
@@ -95,7 +95,7 @@ export default async function AdminExamsPage() {
           <Link
             href="/admin/exams/new"
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-            style={{ background: "var(--color-primary)" }}
+            style={{ background: "var(--color-primary)", color: "#fff" }}
           >
             <Plus size={14} /> Crear primer examen
           </Link>

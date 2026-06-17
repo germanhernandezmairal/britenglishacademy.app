@@ -564,7 +564,7 @@ export default function HomePage() {
             {TESTIMONIALS.map((t, i) => (
               <AnimateIn key={t.name} delay={i * 0.1} className="h-full">
               <div
-                className="h-full p-6 rounded-2xl border"
+                className="h-full flex flex-col p-6 rounded-2xl border"
                 style={{
                   background: "var(--color-bg)",
                   borderColor: "var(--color-border)",
@@ -579,7 +579,7 @@ export default function HomePage() {
                   style={{ color: "var(--color-text-secondary)" }}>
                   &ldquo;{t.text}&rdquo;
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mt-auto">
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold"
                     style={{ background: "var(--color-primary)" }}

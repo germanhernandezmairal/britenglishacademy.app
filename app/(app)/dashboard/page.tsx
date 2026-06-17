@@ -267,7 +267,7 @@ export default async function DashboardPage() {
                 <Link
                   href="/homework"
                   className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold px-4 py-2 rounded-lg text-white"
-                  style={{ background: "var(--color-primary)" }}
+                  style={{ background: "var(--color-primary)", color: "#fff" }}
                 >
                   Enviar mi primer deber
                 </Link>

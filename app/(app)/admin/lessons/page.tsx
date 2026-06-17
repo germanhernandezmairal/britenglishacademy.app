@@ -70,7 +70,7 @@ export default async function AdminLessonsPage() {
         <Link
           href="/admin/lessons/new"
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:opacity-90"
-          style={{ background: "var(--color-primary)" }}
+          style={{ background: "var(--color-primary)", color: "#fff" }}
         >
           <Plus size={15} /> Nueva lección
         </Link>
@@ -86,7 +86,7 @@ export default async function AdminLessonsPage() {
           <Link
             href="/admin/lessons/new"
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-            style={{ background: "var(--color-primary)" }}
+            style={{ background: "var(--color-primary)", color: "#fff" }}
           >
             <Plus size={14} /> Crear primera lección
           </Link>

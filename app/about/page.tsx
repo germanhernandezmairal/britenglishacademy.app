@@ -127,8 +127,8 @@ export default function AboutPage() {
 
       {/* Stats bar */}
       <section style={{ background: "var(--color-primary)" }}>
-        <div className="container-wide py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="container-wide py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-2 pb-4">
             {STATS.map((stat, i) => (
               <AnimateIn key={stat.label} delay={i * 0.1} direction="none">
                 <div className="text-center">
