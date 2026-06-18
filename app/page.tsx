@@ -132,7 +132,7 @@ const COURSES = [
     tag: "Todos los niveles",
   },
   {
-    image: "/free-imgs/course-verano.jpg",
+    image: "/free-imgs/course-cambridge.jpg",
     title: "Preparación Cambridge",
     desc: "Supera el B1, B2, C1 o C2 con nuestro método probado y una alta tasa de éxito.",
     href: "/levels",

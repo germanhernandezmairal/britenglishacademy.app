@@ -54,6 +54,14 @@ next-env.d.ts
 # scratch / debug screenshots in the repo root
 cta-fix.png
 
+# Local QA / bug-hunt scratch scripts and screenshots (root-level, prefixed with _)
+/_*.mjs
+/_*.png
+/_*.webp
+/_*.jpg
+/_*.avif
+/_*.bin
+
 # Local image drafts — kept for reference, not committed
 /public/free-imgs/Oldest ones/
 /public/free-imgs/phoenix-v1.0_*.jpg
