@@ -61,6 +61,7 @@ cta-fix.png
 /_*.jpg
 /_*.avif
 /_*.bin
+/_*.txt
 
 # Local image drafts — kept for reference, not committed
 /public/free-imgs/Oldest ones/

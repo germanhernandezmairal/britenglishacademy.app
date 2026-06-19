@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useTransition, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import { Upload, FileText, X, AlertCircle, Loader2 } from "lucide-react"
 import { submitHomework } from "@/app/actions/homework"
 import { LottiePlayer } from "@/components/shared/LottiePlayer"
@@ -25,6 +26,7 @@ export function UploadForm({ onClose }: { onClose: () => void }) {
   const [isPending, startTransition] = useTransition()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
+  const router = useRouter()
 
   const handleFile = useCallback((f: File) => {
     if (f.size > MAX_MB * 1024 * 1024) {
@@ -64,6 +66,7 @@ export function UploadForm({ onClose }: { onClose: () => void }) {
         setErrorMsg(result.error)
       } else {
         setStatus("success")
+        router.refresh()
       }
     })
   }

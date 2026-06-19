@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Plus, X } from "lucide-react"
 import { UploadForm } from "./UploadForm"
 import { SubmissionCard } from "./SubmissionCard"
@@ -41,6 +41,12 @@ type Submission = {
 export function HomeworkView({ initialSubmissions }: { initialSubmissions: Submission[] }) {
   const [submissions, setSubmissions] = useState(initialSubmissions)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Keep the list in sync after a router.refresh() (e.g. a new submission was
+  // just uploaded) — useState alone would stay stale on prop changes.
+  useEffect(() => {
+    setSubmissions(initialSubmissions)
+  }, [initialSubmissions])
 
   function handleDeleted(id: string) {
     setSubmissions((prev) => prev.filter((s) => s.id !== id))
