@@ -36,13 +36,15 @@ export async function addLessonComment(lessonId: string, content: string) {
   if (trimmed.length < 2) return { error: "Comentario muy corto" }
   if (trimmed.length > 1000) return { error: "Comentario demasiado largo" }
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("lesson_comments")
     .insert({ lesson_id: lessonId, author_id: user.id, content: trimmed })
+    .select("id, content, created_at, author:profiles(id, full_name, avatar_url)")
+    .single()
 
-  if (error) return { error: "No se pudo publicar el comentario" }
+  if (error || !data) return { error: "No se pudo publicar el comentario" }
   revalidatePath(`/lessons/${lessonId}`)
-  return { success: true }
+  return { success: true, comment: data }
 }
 
 export async function deleteLessonComment(commentId: string, lessonId: string) {

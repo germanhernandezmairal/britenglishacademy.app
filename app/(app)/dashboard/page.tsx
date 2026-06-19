@@ -123,7 +123,7 @@ export default async function DashboardPage() {
       .order("created_at", { ascending: false })
       .limit(3),
     supabase
-      .from("exam_attempts")
+      .from("exam_submissions")
       .select("id", { count: "exact", head: true })
       .eq("student_id", user.id),
   ])

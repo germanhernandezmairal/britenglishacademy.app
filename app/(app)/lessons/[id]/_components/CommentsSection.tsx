@@ -69,6 +69,9 @@ export function CommentsSection({
         setError(result.error)
         return
       }
+      if ("comment" in result && result.comment) {
+        setComments((prev) => [...prev, result.comment as Comment])
+      }
       setText("")
       textareaRef.current?.focus()
     })
