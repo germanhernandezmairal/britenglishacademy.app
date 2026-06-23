@@ -239,7 +239,7 @@ export function PostCard({
   const [deleting, startDelete]             = useTransition()
 
   const isAdmin   = currentUser.role === "admin"
-  const isAuthor  = post.author.id === currentUser.id
+  const isAuthor  = post.author?.id === currentUser.id
   const canDelete = isAdmin || isAuthor
   const totalComments = comments.length + replies.length
 

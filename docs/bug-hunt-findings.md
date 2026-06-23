@@ -14,10 +14,10 @@ Left in the live DB so we can resume; clean up at the end of the hunt.
 
 **Severity:** 🔴 blocker · 🟠 major · 🟡 minor · 🔵 polish
 
-> **▶ RESUME HERE (next session):** Flows 1 & 2 ✅ done. Start **Flow 3 (community & messages)**.
-> Expect the SAME v1↔v2 schema drift — **probe the live DB first** (`_probe.mjs` pattern) for
-> `community_posts`, `post_comments`, `conversations`, `conversation_participants`, `messages`,
-> `notifications` before browser-testing. Test content seeded for Flow 2 is still in prod (see Cleanup).
+> **▶ RESUME HERE (next session):** Flows 1, 2, 3 ✅ done (Flow 3: F3-1 + F3-3 fixed & verified). Start
+> **Flow 4 (admin panels)** — and address the deferred items: **F2-3** (admin can't author interactive-exam
+> questions / lesson vocab+PDFs) and **F3-2** (admin onboarding-gate for staff with no level). Flow 3 schema
+> was NOT drifted (unlike Flow 2). Test content seeded for Flow 2 still in prod (see Cleanup).
 
 ---
 
@@ -162,7 +162,90 @@ exam `d2d8f786-9723-4857-b9d8-49acaf50f083` (both `[QA]`-prefixed, B2, published
 
 ## Flow 3 — Community & messages
 
-_(pending)_
+**Schema is NOT drifted here (unlike Flow 2).** Probed the live DB (service role): every v2 table/column
+the app uses already exists in prod — `posts`, `post_reactions`, `post_comments`, `conversations`,
+`conversation_participants`, `messages`, `push_subscriptions`, `notifications`, `profiles.is_active`. The
+orphaned v1 `community_posts` also still exists (0 rows). All Flow-3 tables are empty (clean slate). Probed
+the RLS-exposed community path as a **student token**: insert+read of `posts`/`post_reactions`/`post_comments`
+all succeed. (Repro gap, not a prod bug: there's no committed migration for `posts`/`post_reactions` and
+`schema.sql` still defines the v1 `community_posts` — a fresh deploy from `schema.sql` would be wrong.)
+
+**Verified working (browser, student + admin):**
+- Community: create post (instant + persisted), 🔥 reaction (optimistic, count updates), comment (instant),
+  delete post — 0 console/network errors.
+- Messages direct: search user → create conversation → send → other user sees it in inbox + thread → reply.
+  Message persists on reload. (Realtime push verified indirectly; full two-client realtime re-test pending.)
+- Messages broadcast: admin broadcasts to level B2 → B2 student sees it in inbox → opens thread → message
+  renders → input is correctly **read-only** for the student ("solo lectura para estudiantes").
+
+### 🔴 BUG F3-1 — `/community` returns 500 for students whenever a post by another user exists (author RLS + unguarded deref) — ✅ FIXED & VERIFIED
+
+**The community feed was fundamentally broken for students in any real multi-user state.**
+
+Root cause (two layers, both confirmed against the **live** DB):
+1. **`profiles` RLS** (`schema.sql:45-54`) has only `profiles_select_own` (`auth.uid() = id`) and
+   `profiles_select_admin` (admin/teacher reads all). **No policy lets a student read another user's profile.**
+   Probe as student token: `GET /profiles?id=eq.<admin>` → **0 rows**.
+2. `app/(app)/community/page.tsx` builds the feed on the **RLS-bound** client and embeds
+   `author:profiles(...)`. For any post authored by someone other than the viewing student, the embed is a
+   left join → **`author: null`**. `PostCard` then does `post.author.id` (line ~242, also `.full_name`,
+   `.level`) with **no null guard** → `Cannot read properties of null (reading 'id')` → the entire
+   `/community` RSC throws → **HTTP 500**. A student can only see their *own* posts without crashing; the
+   first admin announcement / weekly challenge / other student's post locks every student out of community.
+
+`post_comments` authors come from the same RLS-hidden source, but `CommentRow` already null-guards
+(`comment.author?.full_name ?? "Usuario"`), so comments degrade gracefully instead of crashing. Messages
+avoids the whole problem by fetching other users' profiles via `createAdminClient` (service role).
+
+**Why the earlier browser runs masked it:** Flow-3 tables start empty; the first student run only ever had
+the student's *own* post in the feed (author = self = readable), so it rendered fine. The crash only appears
+once a *second* author's post exists — caught by injecting an admin announcement (`_f3e.mjs`):
+`HTTP 500 GET /community` + `pageerror: Cannot read properties of null (reading 'id')`.
+
+**Fix (Option A — user's choice): keep RLS strict, fetch authors via the service-role admin client**
+(exactly how the messages pages already resolve other users' profiles). `app/(app)/community/page.tsx` now
+selects `author_id` (no `author:profiles(...)` embed) on the RLS client, then one `createAdminClient()`
+`.in("id", authorIds)` query loads every post + comment author into a map; `authorFor(id)` attaches them with
+a `"Usuario"` fallback so a deleted/unknown author can never 500 the page. Defensive `post.author?.id` guards
+added in `PostCard.tsx` and `CommunityFeed.tsx`. **Verified:** `_f3e.mjs` — student now loads `/community`
+with an admin announcement present (HTTP 200, author shows as "QA Admin · C2", 0 console/network errors);
+`_f3a.mjs` regression — student post/react/comment/delete all still work. Typecheck clean. No RLS/DB change.
+
+### 🟠 BUG F3-3 — Realtime live chat did not deliver (messages only appeared on reload) — ✅ FIXED & VERIFIED
+
+`ConversationView` subscribes to `postgres_changes` (INSERT on `messages`, filtered by `conversation_id`) for
+live chat, but in the live app a subscribed client received **no** events; messages only appeared on reload.
+
+**Diagnosis (ruled out the obvious culprits):**
+- DB publication is **correct** — `psql` against the live DB: `supabase_realtime` exists and already contains
+  both `public.messages` and `public.conversations`. (So the originally-suspected publication migration was a
+  red herring — no DDL needed.)
+- Data path + RLS are fine — `_f3f.mjs`: an inserted admin message persists and the student sees it on reload.
+- **Node realtime probe (`_rt.mjs`) was decisive:** subscribing to the same channel **with the student JWT
+  (`realtime.setAuth(jwt)`) DID receive the INSERT event** (`received: true`); the browser did not. Realtime
+  `postgres_changes` is **RLS-filtered**, so the socket must be authenticated as the user or the server drops
+  every event.
+
+**Root cause (code):** `ConversationView` created a fresh `createClient()` (`@supabase/ssr` browser client) in
+`useEffect` and `.subscribe()`d **synchronously**, before the client finished recovering its session and
+pushed the access token to the realtime socket → the channel joined as `anon` → RLS filtered out all message
+events.
+
+**Fix:** in the realtime `useEffect`, `await supabase.auth.getSession()` and `supabase.realtime.setAuth(token)`
+**before** `.subscribe()` (guarded with a `cancelled` flag for cleanup). Also: the incoming-sender profile
+fetch uses the RLS client (a student can't read another user's profile), so it now uses `.maybeSingle()` (no
+406) and falls back to the known `otherUser` for direct conversations; the correct name otherwise resolves on
+reload (server fetches sender profiles via the admin client). **Verified (`_f3f.mjs`): student now receives the
+message live with no reload, 0 console/network errors.** Typecheck clean. No DB/RLS change.
+
+### 🟡 BUG F3-2 — Admins/teachers with no CEFR level are forced through student onboarding to reach any app page (incl. /admin)
+
+`app/(app)/layout.tsx:27` gates **every** `/(app)` route behind `if (!profile.level) redirect("/onboarding")`
+with no role exemption. A freshly-provisioned admin/teacher (level null — as our QA admin was, and as manual
+DB promotion typically leaves them) is bounced into the student-framed CEFR onboarding ("¿Cuál es tu nivel de
+inglés? Esto nos ayuda a personalizar tu experiencia") and cannot reach `/admin` until they pick a learner
+level. Self-resolves once any level is set (worked around in testing by setting QA admin → C2 via service
+role). Low impact / arguably by-design, but staff shouldn't have to declare a CEFR level. Revisit in Flow 4.
 
 ## Flow 4 — Admin panels
 
@@ -180,6 +263,9 @@ _(none yet)_
 - [ ] Delete seeded `[QA]` content: lesson `81d33d27-a17b-4c16-a8f2-c2c6a7e080f9`, exam `d2d8f786-9723-4857-b9d8-49acaf50f083`
 - [ ] Delete test `exam_submissions` for the QA exam (several, from `_f2b.mjs` runs)
 - [ ] Delete test `homework_submissions` titled `QA Homework …` (several, from `_f2d.mjs` runs) + their files in the `homework` bucket under `60714bd7-…/`
-- [ ] Any other test rows created (posts, messages, conversations, lesson_completions)
+- [x] Leftover QA community posts (`QA …` / `[QA …]`) — deleted 2026-06-23
+- [ ] Flow 3 test conversations/messages: 1 direct conv (QA student ↔ QA admin) + 1 broadcast to B2, from `_f3b/_f3c`
+- [ ] QA admin `level` was set to C2 (was null) to pass the onboarding gate for testing — reset to null if real admins should have no level (see F3-2)
+- [ ] Any other test rows created (messages, conversations, lesson_completions)
 - [ ] Keep the `homework` storage bucket (real feature dependency — do NOT delete)
 - [ ] (Optional) drop orphaned v1 exam tables `exam_attempts`/`exam_questions`/`exam_answers` once v2 proven

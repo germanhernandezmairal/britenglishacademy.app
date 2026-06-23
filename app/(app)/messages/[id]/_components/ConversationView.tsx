@@ -86,40 +86,60 @@ export function ConversationView({
   // Realtime subscription
   useEffect(() => {
     const supabase = createClient()
+    let channel: ReturnType<typeof supabase.channel> | null = null
+    let cancelled = false
 
-    const channel = supabase
-      .channel(`conv:${conversationId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "messages",
-          filter: `conversation_id=eq.${conversationId}`,
-        },
-        async (payload) => {
-          const raw = payload.new as {
-            id: string; conversation_id: string; sender_id: string; content: string; created_at: string
+    ;(async () => {
+      // Realtime postgres_changes is RLS-filtered: the socket must be authenticated
+      // as the current user, or the server filters out every message event. A fresh
+      // browser client recovers its session asynchronously, so we must push the access
+      // token to realtime BEFORE subscribing — otherwise the channel joins as `anon`
+      // and no events are delivered. See bug F3-3.
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.access_token) supabase.realtime.setAuth(session.access_token)
+      if (cancelled) return
+
+      channel = supabase
+        .channel(`conv:${conversationId}`)
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "messages",
+            filter: `conversation_id=eq.${conversationId}`,
+          },
+          async (payload) => {
+            const raw = payload.new as {
+              id: string; conversation_id: string; sender_id: string; content: string; created_at: string
+            }
+
+            // Don't double-add own optimistic messages
+            if (raw.sender_id === currentUser.id) return
+
+            // Fetch sender profile for the incoming message. Under RLS a student
+            // can't read another user's profile, so fall back to the known peer
+            // (otherUser) for direct conversations; ConversationView renders
+            // "Usuario" if still null. The correct name resolves on reload (the
+            // server fetches sender profiles via the admin client).
+            const { data: sender } = await supabase
+              .from("profiles")
+              .select("id, full_name, avatar_url, level, role")
+              .eq("id", raw.sender_id)
+              .maybeSingle()
+
+            const resolvedSender =
+              sender ?? (raw.sender_id === otherUser?.id ? otherUser : null)
+
+            setMessages((prev) => [...prev, { ...raw, sender: resolvedSender }])
+            markConversationAsRead(conversationId)
           }
+        )
+        .subscribe()
+    })()
 
-          // Don't double-add own optimistic messages
-          if (raw.sender_id === currentUser.id) return
-
-          // Fetch sender profile for the incoming message
-          const { data: sender } = await supabase
-            .from("profiles")
-            .select("id, full_name, avatar_url, level, role")
-            .eq("id", raw.sender_id)
-            .single()
-
-          setMessages((prev) => [...prev, { ...raw, sender: sender ?? null }])
-          markConversationAsRead(conversationId)
-        }
-      )
-      .subscribe()
-
-    return () => { supabase.removeChannel(channel) }
-  }, [conversationId, currentUser.id])
+    return () => { cancelled = true; if (channel) supabase.removeChannel(channel) }
+  }, [conversationId, currentUser.id, otherUser])
 
   function handleSend() {
     const trimmed = input.trim()
