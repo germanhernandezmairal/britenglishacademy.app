@@ -75,7 +75,7 @@ export function CommunityFeed({
 
   const filtered = posts.filter((p) => {
     if (activeTab === "all")              return true
-    if (activeTab === "mine")             return p.author.id === currentUser.id
+    if (activeTab === "mine")             return p.author?.id === currentUser.id
     return p.type === activeTab
   })
 
