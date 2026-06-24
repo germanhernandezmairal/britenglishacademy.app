@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Clock, Eye, EyeOff, Trash2 } from "lucide-react"
+import Link from "next/link"
+import { Clock, Eye, EyeOff, Trash2, Pencil } from "lucide-react"
 import { toggleExamPublished, deleteExam } from "@/app/actions/admin"
 
 const TYPE_LABELS: Record<string, string> = {
@@ -96,6 +97,14 @@ export function ExamRow({ exam }: { exam: Exam }) {
 
       {/* Actions */}
       <div className="flex items-center gap-1.5 flex-shrink-0">
+        <Link
+          href={`/admin/exams/${exam.id}/edit`}
+          title="Editar"
+          className="p-2 rounded-lg transition-all hover:opacity-70"
+          style={{ background: "var(--color-bg-alt)", color: "var(--color-text-muted)" }}
+        >
+          <Pencil size={15} />
+        </Link>
         <button
           onClick={handleToggle}
           disabled={publishLoading}
