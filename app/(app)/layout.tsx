@@ -24,7 +24,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     redirect("/login")
   }
 
-  if (!profile.level) {
+  // Only students declare a CEFR level via onboarding; staff (admin/teacher)
+  // have no learner level and must not be funnelled through it.
+  if (!profile.level && profile.role === "student") {
     redirect("/onboarding")
   }
 

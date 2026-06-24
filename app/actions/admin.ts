@@ -181,10 +181,24 @@ export async function toggleLessonPublished(lessonId: string, isPublished: boole
   return { success: true, is_published: !isPublished }
 }
 
-export async function createExam(formData: FormData) {
-  const auth = await getAdminUser()
-  if (!auth) return { error: "No autorizado" }
+type ExamQuestion = {
+  id: string
+  type: "mcq" | "gap_fill" | "open_text"
+  question: string
+  options?: string[]
+  correct_answer?: string
+  max_score: number
+}
 
+function parseExamForm(formData: FormData):
+  | { error: string }
+  | {
+      values: {
+        title: string; description: string | null; level: string; skill: string
+        exam_type: string; time_limit_minutes: number | null; max_score: number
+        is_published: boolean; questions: ExamQuestion[]; pdf_url: string | null
+      }
+    } {
   const title = (formData.get("title") as string ?? "").trim()
   const description = (formData.get("description") as string ?? "").trim() || null
   const level = formData.get("level") as string
@@ -192,8 +206,8 @@ export async function createExam(formData: FormData) {
   const exam_type = formData.get("exam_type") as string
   const timeLimitRaw = (formData.get("time_limit_minutes") as string ?? "").trim()
   const time_limit_minutes = timeLimitRaw ? (parseInt(timeLimitRaw) || null) : null
-  const max_score = parseInt(formData.get("max_score") as string ?? "100") || 100
   const is_published = formData.get("is_published") === "true"
+  const pdf_url = (formData.get("pdf_url") as string ?? "").trim() || null
 
   if (title.length < 2) return { error: "El título es obligatorio" }
   if (!["A1", "A2", "B1", "B2", "C1", "C2"].includes(level)) return { error: "Nivel inválido" }
@@ -201,10 +215,59 @@ export async function createExam(formData: FormData) {
     return { error: "Habilidad inválida" }
   if (!["pdf_practice", "interactive"].includes(exam_type)) return { error: "Tipo inválido" }
 
+  let questions: ExamQuestion[] = []
+  if (exam_type === "interactive") {
+    try {
+      questions = JSON.parse((formData.get("questions") as string) || "[]")
+    } catch {
+      return { error: "Preguntas con formato inválido" }
+    }
+    if (!Array.isArray(questions) || questions.length === 0)
+      return { error: "Añade al menos una pregunta" }
+    for (const q of questions) {
+      if (!q.question?.trim()) return { error: "Cada pregunta necesita un enunciado" }
+      if (!(Number(q.max_score) >= 1)) return { error: "Cada pregunta necesita puntos (≥1)" }
+      if (q.type === "mcq") {
+        const opts = (q.options ?? []).filter((o: string) => o?.trim())
+        if (opts.length < 2) return { error: "Las preguntas de opción múltiple necesitan ≥2 opciones" }
+        if (!q.correct_answer || !opts.includes(q.correct_answer))
+          return { error: "Marca la opción correcta en cada pregunta de opción múltiple" }
+      } else if (q.type === "gap_fill") {
+        if (!q.correct_answer?.trim()) return { error: "Las preguntas de hueco necesitan respuesta correcta" }
+      }
+    }
+  } else {
+    // pdf_practice
+    if (!pdf_url) return { error: "Sube el PDF del examen" }
+  }
+
+  // Interactive max_score is derived from questions; PDF uses the manual field.
+  const max_score =
+    exam_type === "interactive"
+      ? questions.reduce((s, q) => s + (Number(q.max_score) || 0), 0)
+      : (parseInt(formData.get("max_score") as string ?? "100") || 100)
+
+  return {
+    values: { title, description, level, skill, exam_type, time_limit_minutes, max_score, is_published, questions, pdf_url },
+  }
+}
+
+export async function createExam(formData: FormData) {
+  const auth = await getAdminUser()
+  if (!auth) return { error: "No autorizado" }
+
+  const parsed = parseExamForm(formData)
+  if ("error" in parsed) return parsed
+  const v = parsed.values
+
   const admin = await createAdminClient()
   const { data, error } = await admin
     .from("exams")
-    .insert({ title, description, level, skill, exam_type, time_limit_minutes, max_score, is_published, questions: [] })
+    .insert({
+      title: v.title, description: v.description, level: v.level, skill: v.skill,
+      exam_type: v.exam_type, time_limit_minutes: v.time_limit_minutes, max_score: v.max_score,
+      is_published: v.is_published, questions: v.questions, pdf_url: v.pdf_url,
+    })
     .select("id")
     .single()
 
@@ -212,6 +275,32 @@ export async function createExam(formData: FormData) {
   revalidatePath("/admin/exams")
   revalidatePath("/exams")
   return { success: true, id: data.id }
+}
+
+export async function updateExam(examId: string, formData: FormData) {
+  const auth = await getAdminUser()
+  if (!auth) return { error: "No autorizado" }
+
+  const parsed = parseExamForm(formData)
+  if ("error" in parsed) return parsed
+  const v = parsed.values
+
+  const admin = await createAdminClient()
+  const { error } = await admin
+    .from("exams")
+    .update({
+      title: v.title, description: v.description, level: v.level, skill: v.skill,
+      exam_type: v.exam_type, time_limit_minutes: v.time_limit_minutes, max_score: v.max_score,
+      is_published: v.is_published, questions: v.questions, pdf_url: v.pdf_url,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", examId)
+
+  if (error) return { error: "Error al actualizar el examen" }
+  revalidatePath("/admin/exams")
+  revalidatePath("/exams")
+  revalidatePath(`/exams/${examId}`)
+  return { success: true }
 }
 
 export async function deleteExam(examId: string) {
