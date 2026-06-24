@@ -28,7 +28,8 @@ export async function uploadResource(
   if (!ALLOWED_PREFIXES.includes(prefix)) return { error: "Destino inválido" }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_")
-  const path = `${prefix}/${Date.now()}-${crypto.randomUUID()}-${safeName}`
+  const cleanName = safeName.replace(/^[._]+/, "") || "file"
+  const path = `${prefix}/${Date.now()}-${crypto.randomUUID()}-${cleanName}`
   const buffer = await file.arrayBuffer()
 
   const admin = await createAdminClient()
@@ -37,6 +38,7 @@ export async function uploadResource(
     .upload(path, buffer, { contentType: "application/pdf", upsert: false })
 
   if (uploadError) {
+    console.error("[uploadResource]", uploadError)
     return { error: "Error al subir el archivo. Verifica que el bucket 'resources' existe." }
   }
 
