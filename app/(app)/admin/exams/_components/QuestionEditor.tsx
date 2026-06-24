@@ -41,11 +41,14 @@ export function QuestionEditor({
   }
 
   function changeType(idx: number, type: Question["type"]) {
-    const patch: Partial<Question> = { type }
-    if (type === "mcq") { patch.options = questions[idx].options ?? ["", ""]; patch.correct_answer = "" }
-    else if (type === "gap_fill") { patch.options = undefined; patch.correct_answer = "" }
-    else { patch.options = undefined; patch.correct_answer = undefined }
-    update(idx, patch)
+    setQuestions((prev) =>
+      prev.map((q, i) => {
+        if (i !== idx) return q
+        if (type === "mcq") return { ...q, type, options: q.options ?? ["", ""], correct_answer: "" }
+        if (type === "gap_fill") return { ...q, type, options: undefined, correct_answer: "" }
+        return { ...q, type, options: undefined, correct_answer: undefined }
+      })
+    )
   }
 
   function setOption(qIdx: number, oIdx: number, value: string) {
@@ -144,7 +147,7 @@ export function QuestionEditor({
                 type="number"
                 min={1}
                 value={q.max_score}
-                onChange={(e) => update(i, { max_score: parseInt(e.target.value) || 0 })}
+                onChange={(e) => update(i, { max_score: parseInt(e.target.value, 10) || 1 })}
                 placeholder="Puntos"
                 className={INPUT}
                 style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}
