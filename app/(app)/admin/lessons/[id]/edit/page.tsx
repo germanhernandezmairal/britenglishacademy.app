@@ -25,7 +25,7 @@ export default async function EditLessonPage({
   const admin = await createAdminClient()
   const { data: lesson } = await admin
     .from("lessons")
-    .select("id, title, description, level, video_url, order_index, is_published")
+    .select("id, title, description, level, video_url, order_index, is_published, vocabulary, pdf_resources")
     .eq("id", id)
     .single()
 
@@ -60,6 +60,8 @@ export default async function EditLessonPage({
             video_url: lesson.video_url,
             order_index: lesson.order_index,
             is_published: lesson.is_published,
+            vocabulary: Array.isArray(lesson.vocabulary) ? lesson.vocabulary : [],
+            pdf_resources: Array.isArray(lesson.pdf_resources) ? lesson.pdf_resources : [],
           }}
         />
       </div>

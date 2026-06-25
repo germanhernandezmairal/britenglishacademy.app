@@ -15,6 +15,16 @@ async function getAdminUser() {
   return { userId: user.id, role: profile.role as string }
 }
 
+function parseJsonArray<T>(raw: FormDataEntryValue | null): T[] {
+  if (typeof raw !== "string" || !raw.trim()) return []
+  try {
+    const v = JSON.parse(raw)
+    return Array.isArray(v) ? (v as T[]) : []
+  } catch {
+    return []
+  }
+}
+
 export async function updateStudentLevel(studentId: string, level: string) {
   const auth = await getAdminUser()
   if (!auth) return { error: "No autorizado" }
@@ -109,6 +119,8 @@ export async function createLesson(formData: FormData) {
   const video_url = (formData.get("video_url") as string ?? "").trim() || null
   const order_index = parseInt(formData.get("order_index") as string ?? "0") || 0
   const is_published = formData.get("is_published") === "true"
+  const vocabulary = parseJsonArray(formData.get("vocabulary"))
+  const pdf_resources = parseJsonArray(formData.get("pdf_resources"))
 
   if (title.length < 2) return { error: "El título es obligatorio (mín. 2 caracteres)" }
   if (!["A1", "A2", "B1", "B2", "C1", "C2"].includes(level)) return { error: "Nivel inválido" }
@@ -116,7 +128,7 @@ export async function createLesson(formData: FormData) {
   const admin = await createAdminClient()
   const { data, error } = await admin
     .from("lessons")
-    .insert({ title, description, level, video_url, order_index, is_published, created_by: auth.userId })
+    .insert({ title, description, level, video_url, order_index, is_published, vocabulary, pdf_resources, created_by: auth.userId })
     .select("id")
     .single()
 
@@ -136,13 +148,15 @@ export async function updateLesson(lessonId: string, formData: FormData) {
   const video_url = (formData.get("video_url") as string ?? "").trim() || null
   const order_index = parseInt(formData.get("order_index") as string ?? "0") || 0
   const is_published = formData.get("is_published") === "true"
+  const vocabulary = parseJsonArray(formData.get("vocabulary"))
+  const pdf_resources = parseJsonArray(formData.get("pdf_resources"))
 
   if (title.length < 2) return { error: "El título es obligatorio" }
 
   const admin = await createAdminClient()
   const { error } = await admin
     .from("lessons")
-    .update({ title, description, level, video_url, order_index, is_published, updated_at: new Date().toISOString() })
+    .update({ title, description, level, video_url, order_index, is_published, vocabulary, pdf_resources, updated_at: new Date().toISOString() })
     .eq("id", lessonId)
 
   if (error) return { error: "Error al actualizar" }
