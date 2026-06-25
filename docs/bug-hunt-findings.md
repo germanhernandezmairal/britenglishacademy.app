@@ -249,7 +249,27 @@ role). Low impact / arguably by-design, but staff shouldn't have to declare a CE
 
 ## Flow 4 — Admin panels
 
-_(pending)_
+**Status: closed.** (verified 2026-06-25, branch `fix/flow4-admin-authoring`)
+
+- **F3-2 fixed** — staff onboarding gate now exempts admin/teacher roles (commit `f495cf7`).
+- **F2-3 closed** — admin authoring implemented end-to-end:
+  - Exam authoring: interactive `QuestionEditor` (mcq / gap_fill / open_text, per-question points,
+    reorder, mark-correct) with **derived** `max_score`; PDF exams via upload; mutual exclusion by
+    `exam_type`. New `updateExam` + exam edit route + edit link in `ExamRow`.
+  - Lesson authoring: `VocabularyEditor` (word/definition/example) + multi-PDF `pdf_resources`
+    upload wired into `LessonForm` + lesson edit page; video stays YouTube-only.
+  - New public `resources` storage bucket + `uploadResource` server action (service-role, 20 MB,
+    PDF-only).
+- **No schema drift in Flow 4** — `exams.questions/pdf_url` (migration 003) and
+  `lessons.vocabulary/pdf_resources` (schema.sql + migration 004) already existed; authoring writes
+  the exact JSON shapes the student pages consume.
+- **E2E verified** (Playwright, live Supabase): authored `[QA] F4 Interactive` (3 q, max_score 30
+  derived), `[QA] F4 PDF` (pdf_url + max_score 100), `[QA] F4 Lesson` (1 vocab + 1 PDF, published);
+  both public PDFs serve `200 application/pdf`. As QA student: interactive scored **25/30**
+  (mcq+gap_fill auto-graded; open_text neutral fallback), PDF **0/100** (AI-only) — both with
+  `summary = "Análisis de IA no disponible"`; lesson vocab + PDF render. Zero console/HTTP errors.
+- **Deferred (F2-9):** real AI grading needs Anthropic credits. Once `ANTHROPIC_API_KEY` is live,
+  re-take the interactive open_text + PDF exams and confirm `claude_feedback.summary` is real content.
 
 ---
 
@@ -269,3 +289,7 @@ _(none yet)_
 - [ ] Any other test rows created (messages, conversations, lesson_completions)
 - [ ] Keep the `homework` storage bucket (real feature dependency — do NOT delete)
 - [ ] (Optional) drop orphaned v1 exam tables `exam_attempts`/`exam_questions`/`exam_answers` once v2 proven
+- [ ] Delete `[QA] F4 *` exams (interactive + PDF) and their exam_submissions
+- [ ] Delete `[QA] F4 Lesson` and its lesson_completions
+- [ ] Delete uploaded test PDFs under resources/exam-pdfs/ and resources/lesson-pdfs/
+- [ ] Keep the `resources` storage bucket (real feature dependency — do NOT delete)
