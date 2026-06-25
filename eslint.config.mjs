@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local QA / bug-hunt scratch scripts (gitignored, not shipped):
+    "_*.mjs",
   ]),
 ]);
 

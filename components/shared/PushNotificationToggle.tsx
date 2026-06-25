@@ -18,22 +18,27 @@ export function PushNotificationToggle() {
   const [pending, setPending] = useState(false)
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
-      setStatus("unsupported")
-      return
-    }
-    if (Notification.permission === "denied") {
-      setStatus("denied")
-      return
-    }
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then(async (reg) => {
+    // Capability detection + SW registration run after mount (inside an async
+    // callback) so the first client render matches the server ("loading") and
+    // we avoid a hydration mismatch.
+    void (async () => {
+      if (typeof window === "undefined") return
+      if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+        setStatus("unsupported")
+        return
+      }
+      if (Notification.permission === "denied") {
+        setStatus("denied")
+        return
+      }
+      try {
+        const reg = await navigator.serviceWorker.register("/sw.js")
         const sub = await reg.pushManager.getSubscription()
         setStatus(sub ? "subscribed" : "unsubscribed")
-      })
-      .catch(() => setStatus("unsupported"))
+      } catch {
+        setStatus("unsupported")
+      }
+    })()
   }, [])
 
   async function handleToggle() {
