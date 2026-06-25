@@ -258,7 +258,7 @@ export function PostCard({
     })
     setUserReactions((prev) => {
       const next = new Set(prev)
-      had ? next.delete(emoji) : next.add(emoji)
+      if (had) next.delete(emoji); else next.add(emoji)
       return next
     })
     startReaction(async () => {
@@ -273,7 +273,7 @@ export function PostCard({
         })
         setUserReactions((prev) => {
           const next = new Set(prev)
-          had ? next.add(emoji) : next.delete(emoji)
+          if (had) next.add(emoji); else next.delete(emoji)
           return next
         })
       }

@@ -66,13 +66,14 @@ function NewConversationModal({ onClose }: { onClose: () => void }) {
   useEffect(() => { inputRef.current?.focus() }, [])
 
   useEffect(() => {
-    if (!query.trim()) { setResults([]); return }
+    const q = query.trim()
     const timeout = setTimeout(() => {
+      if (!q) { setResults([]); return }
       startSearch(async () => {
         const res = await searchUsers(query)
         setResults(res.users as UserResult[])
       })
-    }, 300)
+    }, q ? 300 : 0)
     return () => clearTimeout(timeout)
   }, [query])
 

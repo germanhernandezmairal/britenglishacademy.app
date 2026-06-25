@@ -23,6 +23,21 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "20mb",
     },
   },
+  async headers() {
+    // Baseline security headers applied to every route. A full CSP is deferred
+    // until the inline-script/style surface is audited (Tailwind + Next).
+    const securityHeaders = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      {
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
+      },
+    ];
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
 };
 
 export default nextConfig;
