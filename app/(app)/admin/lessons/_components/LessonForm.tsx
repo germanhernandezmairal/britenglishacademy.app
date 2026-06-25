@@ -3,6 +3,8 @@
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createLesson, updateLesson } from "@/app/actions/admin"
+import { VocabularyEditor, type VocabItem } from "./VocabularyEditor"
+import { PdfUploadField, type PdfResource } from "@/app/(app)/admin/_components/PdfUploadField"
 
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
@@ -14,6 +16,8 @@ type LessonData = {
   video_url: string | null
   order_index: number
   is_published: boolean
+  vocabulary: VocabItem[]
+  pdf_resources: PdfResource[]
 }
 
 const FIELD = "block text-sm font-medium mb-1.5"
@@ -132,6 +136,19 @@ export function LessonForm({ lesson }: { lesson?: LessonData }) {
         <p className="text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>
           Pega la URL de YouTube. Se convertirá automáticamente a embed.
         </p>
+      </div>
+
+      {/* Vocabulary */}
+      <div className="pt-2 border-t" style={{ borderColor: "var(--color-border)" }}>
+        <VocabularyEditor name="vocabulary" initial={lesson?.vocabulary ?? []} />
+      </div>
+
+      {/* PDF resources */}
+      <div className="pt-2 border-t" style={{ borderColor: "var(--color-border)" }}>
+        <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-text)" }}>
+          Recursos descargables (PDF)
+        </label>
+        <PdfUploadField prefix="lesson-pdfs" multiple name="pdf_resources" initial={lesson?.pdf_resources ?? []} />
       </div>
 
       {/* Published */}
