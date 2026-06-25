@@ -289,7 +289,7 @@ _(none yet)_
 - [ ] Any other test rows created (messages, conversations, lesson_completions)
 - [ ] Keep the `homework` storage bucket (real feature dependency — do NOT delete)
 - [ ] (Optional) drop orphaned v1 exam tables `exam_attempts`/`exam_questions`/`exam_answers` once v2 proven
-- [ ] Delete `[QA] F4 *` exams (interactive + PDF) and their exam_submissions
-- [ ] Delete `[QA] F4 Lesson` and its lesson_completions
-- [ ] Delete uploaded test PDFs under resources/exam-pdfs/ and resources/lesson-pdfs/
-- [ ] Keep the `resources` storage bucket (real feature dependency — do NOT delete)
+- [x] Delete `[QA] F4 *` exams (interactive + PDF) and their exam_submissions — done 2026-06-25 (2 exams + 2 submissions)
+- [x] Delete `[QA] F4 Lesson` and its lesson_completions — done 2026-06-25 (1 lesson, 0 completions)
+- [x] Delete uploaded test PDFs under resources/exam-pdfs/ and resources/lesson-pdfs/ — done 2026-06-25 (2 PDFs)
+- [x] Keep the `resources` storage bucket (real feature dependency — do NOT delete) — kept
