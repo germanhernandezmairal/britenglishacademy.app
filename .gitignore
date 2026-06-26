@@ -77,3 +77,8 @@ supabase/.env
 logs/
 
 .vercel
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
