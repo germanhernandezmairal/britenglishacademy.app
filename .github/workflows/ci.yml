@@ -51,10 +51,13 @@ jobs:
 
       - name: Export Supabase env
         run: |
+          # supabase status -o env wraps values in double-quotes (Go %q format).
+          # Strip them with sed so the raw values go into $GITHUB_ENV without quotes.
           supabase status -o env \
             --override-name api.url=NEXT_PUBLIC_SUPABASE_URL \
             --override-name auth.anon_key=NEXT_PUBLIC_SUPABASE_ANON_KEY \
             --override-name auth.service_role_key=SUPABASE_SERVICE_ROLE_KEY \
+            | sed 's/="\(.*\)"$/=\1/' \
             >> "$GITHUB_ENV"
           echo "NEXT_PUBLIC_APP_URL=http://localhost:3000" >> "$GITHUB_ENV"
 
