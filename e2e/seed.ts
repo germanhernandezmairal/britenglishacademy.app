@@ -72,14 +72,16 @@ export async function seedDatabase(): Promise<void> {
   } else {
     // Already exists → look up + reset password.
     const listRes = await fetch(`${url}/auth/v1/admin/users?per_page=200`, { headers: h })
+    if (!listRes.ok) throw new Error(`[seed] could not list auth users: ${await listRes.text()}`)
     const listJson = await listRes.json()
     userId = (listJson.users || []).find((u: { email: string }) => u.email === STUDENT_EMAIL)?.id
     if (!userId) throw new Error(`[seed] could not create or find ${STUDENT_EMAIL}: ${JSON.stringify(createJson)}`)
-    await fetch(`${url}/auth/v1/admin/users/${userId}`, {
+    const resetRes = await fetch(`${url}/auth/v1/admin/users/${userId}`, {
       method: "PUT",
       headers: h,
       body: JSON.stringify({ password: STUDENT_PASSWORD, email_confirm: true }),
     })
+    if (!resetRes.ok) throw new Error(`[seed] password reset failed: ${await resetRes.text()}`)
   }
 
   // 2. Upsert the profile (covers both "trigger created the row" and "it didn't").
@@ -97,7 +99,8 @@ export async function seedDatabase(): Promise<void> {
   if (!profileRes.ok) throw new Error(`[seed] profile upsert failed: ${await profileRes.text()}`)
 
   // 3. Reset prior submissions for this exam, then upsert the published exam.
-  await fetch(`${url}/rest/v1/exam_submissions?exam_id=eq.${EXAM_ID}`, { method: "DELETE", headers: h })
+  const deleteRes = await fetch(`${url}/rest/v1/exam_submissions?exam_id=eq.${EXAM_ID}`, { method: "DELETE", headers: h })
+  if (!deleteRes.ok) throw new Error(`[seed] submissions cleanup failed: ${await deleteRes.text()}`)
   const examRes = await fetch(`${url}/rest/v1/exams`, {
     method: "POST",
     headers: { ...h, Prefer: "resolution=merge-duplicates,return=minimal" },
