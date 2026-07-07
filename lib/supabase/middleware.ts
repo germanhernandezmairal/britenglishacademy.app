@@ -49,14 +49,26 @@ export async function updateSession(request: NextRequest) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = "/login"
     loginUrl.searchParams.set("redirectTo", pathname)
-    return NextResponse.redirect(loginUrl)
+    return redirectWithSession(loginUrl, supabaseResponse)
   }
 
   if (user && (pathname === "/login" || pathname === "/signup")) {
     const dashboardUrl = request.nextUrl.clone()
     dashboardUrl.pathname = "/dashboard"
-    return NextResponse.redirect(dashboardUrl)
+    return redirectWithSession(dashboardUrl, supabaseResponse)
   }
 
   return supabaseResponse
+}
+
+// A redirect creates a brand-new response, so any refreshed Supabase auth
+// cookies that getUser() wrote onto `supabaseResponse` are dropped unless we
+// copy them across. Carrying them keeps the browser in sync with a rotated
+// refresh token when a session refresh coincides with an auth redirect.
+function redirectWithSession(url: URL, supabaseResponse: NextResponse): NextResponse {
+  const redirectResponse = NextResponse.redirect(url)
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    redirectResponse.cookies.set(cookie)
+  })
+  return redirectResponse
 }
