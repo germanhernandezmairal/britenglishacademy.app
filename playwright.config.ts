@@ -27,5 +27,7 @@ export default defineConfig({
     url: BASE_URL,
     reuseExistingServer: !isCI,
     timeout: 120_000,
+    stdout: "pipe",
+    stderr: "pipe",
   },
 })
