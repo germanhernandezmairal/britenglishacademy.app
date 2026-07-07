@@ -49,12 +49,6 @@ jobs:
       - name: Start local Supabase
         run: supabase start
 
-      - name: DEBUG dump applied profiles policies
-        run: |
-          psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" \
-            -c "select policyname, cmd, qual from pg_policies where schemaname='public' and tablename='profiles' order by policyname;" \
-            -c "select proname, prosecdef from pg_proc where proname='current_user_role';"
-
       - name: Export Supabase env
         run: |
           # supabase status -o env wraps values in double-quotes (Go %q format).

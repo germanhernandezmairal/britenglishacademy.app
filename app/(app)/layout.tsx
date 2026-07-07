@@ -14,20 +14,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     redirect("/login")
   }
 
-  const { data: profile, error: profileError } = await supabase
+  const { data: profile } = await supabase
     .from("profiles")
     .select("full_name, level, role")
     .eq("id", user.id)
     .single()
-
-  // --- TEMP DIAGNOSTIC (remove after CI evidence gathered) ---
-  console.log(
-    "[DBG-RSC-PROFILE2]",
-    "user=", user.id.slice(0, 8),
-    "profile=", profile ? JSON.stringify(profile) : "NULL",
-    "profileErr=", profileError ? `${profileError.code}:${profileError.message}` : "none",
-  )
-  // --- END TEMP DIAGNOSTIC ---
 
   if (!profile) {
     redirect("/login")
