@@ -9,6 +9,7 @@ export async function updateSession(request: NextRequest) {
 
   let supabaseResponse = NextResponse.next({ request })
 
+  let refreshed = false
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -18,6 +19,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
+          refreshed = true
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           )
@@ -30,9 +32,39 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user }, error: getUserError } = await supabase.auth.getUser()
+
+  // --- TEMP DIAGNOSTIC (remove after CI evidence gathered) ---
+  const dbg: Record<string, string> = {}
+  const authCookie = request.cookies
+    .getAll()
+    .find((c) => /sb-.*-auth-token(\.0)?$/.test(c.name))
+  dbg["x-dbg-user"] = user ? "1" : "0"
+  dbg["x-dbg-refreshed"] = refreshed ? "1" : "0"
+  dbg["x-dbg-err"] = getUserError ? `${getUserError.name}:${getUserError.status ?? ""}:${getUserError.message}`.slice(0, 120) : "none"
+  dbg["x-dbg-cklen"] = String(authCookie?.value.length ?? -1)
+  dbg["x-dbg-nowsec"] = String(Math.floor(Date.now() / 1000))
+  try {
+    if (authCookie) {
+      const raw = authCookie.value.startsWith("base64-")
+        ? Buffer.from(authCookie.value.slice(7), "base64").toString("utf8")
+        : decodeURIComponent(authCookie.value)
+      const sess = JSON.parse(raw)
+      dbg["x-dbg-expat"] = String(sess.expires_at ?? "?")
+      dbg["x-dbg-hasrt"] = sess.refresh_token ? "1" : "0"
+    } else {
+      dbg["x-dbg-expat"] = "nocookie"
+      dbg["x-dbg-hasrt"] = "0"
+    }
+  } catch (e) {
+    dbg["x-dbg-expat"] = "parsefail:" + (e as Error).message.slice(0, 40)
+    dbg["x-dbg-hasrt"] = "?"
+  }
+  const stamp = (res: NextResponse) => {
+    for (const [k, v] of Object.entries(dbg)) res.headers.set(k, v)
+    return res
+  }
+  // --- END TEMP DIAGNOSTIC ---
 
   const { pathname } = request.nextUrl
 
@@ -49,16 +81,16 @@ export async function updateSession(request: NextRequest) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = "/login"
     loginUrl.searchParams.set("redirectTo", pathname)
-    return redirectWithSession(loginUrl, supabaseResponse)
+    return stamp(redirectWithSession(loginUrl, supabaseResponse))
   }
 
   if (user && (pathname === "/login" || pathname === "/signup")) {
     const dashboardUrl = request.nextUrl.clone()
     dashboardUrl.pathname = "/dashboard"
-    return redirectWithSession(dashboardUrl, supabaseResponse)
+    return stamp(redirectWithSession(dashboardUrl, supabaseResponse))
   }
 
-  return supabaseResponse
+  return stamp(supabaseResponse)
 }
 
 // A redirect creates a brand-new response, so any refreshed Supabase auth
