@@ -42,15 +42,26 @@ create table public.profiles (
 
 alter table public.profiles enable row level security;
 
+-- Returns the caller's role WITHOUT triggering RLS on `profiles`. A policy on
+-- `profiles` that reads `profiles` directly recurses (Postgres error 42P17), so
+-- the admin policies below must go through this SECURITY DEFINER function, which
+-- bypasses RLS. Mirrors the live prod definition.
+create or replace function public.current_user_role()
+  returns text
+  language sql
+  stable
+  security definer
+  set search_path to 'public'
+as $$
+  select role::text from public.profiles where id = auth.uid()
+$$;
+
 create policy "profiles_select_own" on public.profiles
   for select using (auth.uid() = id);
 
 create policy "profiles_select_admin" on public.profiles
   for select using (
-    exists (
-      select 1 from public.profiles p
-      where p.id = auth.uid() and p.role in ('admin', 'teacher')
-    )
+    public.current_user_role() in ('admin', 'teacher')
   );
 
 create policy "profiles_update_own" on public.profiles
@@ -59,10 +70,7 @@ create policy "profiles_update_own" on public.profiles
 
 create policy "profiles_update_admin" on public.profiles
   for update using (
-    exists (
-      select 1 from public.profiles p
-      where p.id = auth.uid() and p.role = 'admin'
-    )
+    public.current_user_role() = 'admin'
   );
 
 create policy "profiles_insert_own" on public.profiles
