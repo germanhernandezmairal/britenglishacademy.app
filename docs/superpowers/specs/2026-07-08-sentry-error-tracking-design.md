@@ -39,9 +39,21 @@ hard to reverse.
    > Next.js middleware intercepts the configured tunnel route."
 
    `proxy.ts`'s matcher currently matches every path except static assets, so it
-   *would* intercept `/monitoring` and run `updateSession()` on every error POST.
-   Failure mode is silent: client events simply never arrive. The matcher must
-   exclude the tunnel route.
+   *would* intercept `/monitoring`.
+
+   Two separate consequences, stated at the confidence each deserves:
+
+   - **Verified from our code:** `updateSession()` would run a
+     `supabase.auth.getUser()` network call on every error POST. It would *not*
+     redirect — `/monitoring` is absent from `isAppRoute`
+     (`lib/supabase/middleware.ts:39-46`) — so this is pure waste, not breakage.
+   - **Per Sentry's docs, mechanism unstated:** client-side event recording
+     "will fail" under Turbopack when middleware intercepts the tunnel route.
+     We have not reproduced this and cannot explain it from our own code.
+
+   Either way the fix is the same one-line matcher exclusion. We adopt it on the
+   documented warning, not on a failure we have observed. Verification step 4 is
+   what will actually confirm client events arrive.
 
 3. **The no-op contract.** The money-path E2E gate (PR #17) is hermetic because
    Upstash, Anthropic, Resend, Replicate and VAPID all no-op when their env vars
