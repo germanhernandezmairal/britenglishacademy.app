@@ -17,14 +17,14 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
 
 ## High blast radius — do next
 
-- [ ] **Error tracking (Sentry, client + server).** *Needs a Sentry account + DSN.* Right now a
-      production error is invisible unless a user emails. Highest-value missing safety net.
-- [ ] **2 high + 4 moderate production npm vulnerabilities.** `npm audit` flags fixes; most apply
-      via `npm audit fix` (non-breaking). Apply, then validate with a preview build before merge.
-      Dependabot will also propose these. (Chains: `uuid → svix`, `postcss`.)
-- [ ] **No automated test of the "money path."** The student exam/lesson flow is verified only by
-      ad-hoc gitignored Playwright scripts. Promote one happy-path flow to a committed E2E test
-      runnable in CI (needs a test Supabase project or seeded fixtures).
+- [x] **Error tracking (Sentry, client + server).** Errors-only config; no-op without a DSN.
+      Provisioned via the Sentry integration on the Vercel Marketplace. See
+      `docs/superpowers/specs/2026-07-08-sentry-error-tracking-design.md`.
+- [x] **2 high + 4 moderate production npm vulnerabilities.** Resolved 2026-06-26 (PR #14):
+      `npm audit` reports 0 vulnerabilities.
+- [x] **No automated test of the "money path."** Shipped 2026-07-07 (PR #17): a Playwright
+      gate runs the seeded student → interactive exam → 3/3 flow against an ephemeral local
+      Supabase on every PR.
 
 ## Medium
 
@@ -50,3 +50,8 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
       `globe.svg`, `window.svg`, `file.svg`) — delete if unreferenced.
 - [ ] **QA cleanup leftovers** — see `docs/bug-hunt-findings.md` cleanup checklist (test users,
       Flow 2–3 seed data, conversations).
+- [ ] **Unlayered `a:not(.btn)` rule in `app/globals.css:257`** outranks Tailwind's `text-*`
+      utilities (higher specificity *and* unlayered CSS beats `@layer utilities`). Every
+      coloured link needs an inline `style` or `!` override to work around it. Wrapping the
+      rule in `@layer base` would let utilities win by default. Needs a visual pass over
+      every `<a>` before flipping.
