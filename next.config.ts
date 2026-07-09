@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -40,4 +41,25 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Quiet locally, verbose in CI.
+  silent: !process.env.CI,
+  telemetry: false,
+
+  // Route Sentry events through our own domain so ad blockers do not silently
+  // discard client-side errors. Must stay in sync with the exclusion in
+  // proxy.ts's matcher.
+  tunnelRoute: "/monitoring",
+
+  sourcemaps: {
+    // Deterministic rather than relying on undocumented behaviour: CI has no
+    // auth token and `npm run build` must not fail. Vercel gets the token from
+    // the Sentry Marketplace integration.
+    disable: !process.env.SENTRY_AUTH_TOKEN,
+    // Do not leave source maps sitting in .next/static to be served publicly.
+    deleteSourcemapsAfterUpload: true,
+  },
+});
