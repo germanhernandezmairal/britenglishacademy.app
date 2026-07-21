@@ -26,8 +26,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     redirect("/login")
   }
 
-  // Lands on this request's isolation scope, which instrumentation.ts's
-  // onRequestError reads. UUID + role only, never email.
+  // Attaches user to Sentry for the paths that share this request's async
+  // scope: client events (mirrored by <SentryUser> below) and any explicit
+  // Sentry.captureException made within this request. NOTE: uncaught SERVER
+  // render errors are captured by instrumentation.ts's onRequestError, which
+  // runs OUTSIDE this async context and does NOT see this user — those events
+  // carry only url/transaction (live-verified 2026-07-21; see docs/tech-debt.md).
+  // UUID + role only, never email (students are minors).
   Sentry.setUser({ id: user.id, role: profile.role })
 
   // Only students declare a CEFR level via onboarding; staff (admin/teacher)
