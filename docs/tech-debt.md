@@ -20,11 +20,23 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
 - [x] **Error tracking (Sentry, client + server).** Errors-only config; no-op without a DSN.
       Provisioned via the Sentry integration on the Vercel Marketplace. See
       `docs/superpowers/specs/2026-07-08-sentry-error-tracking-design.md`.
+      **Live-verified 2026-07-21** on the preview: un-minified server traces, `/monitoring`
+      tunnel (POST 200), client user context = UUID + role only (no PII). Two follow-ups below:
+      wire Sentry to Production, and the server-side user-context gap.
 - [x] **2 high + 4 moderate production npm vulnerabilities.** Resolved 2026-06-26 (PR #14):
       `npm audit` reports 0 vulnerabilities.
 - [x] **No automated test of the "money path."** Shipped 2026-07-07 (PR #17): a Playwright
       gate runs the seeded student → interactive exam → 3/3 flow against an ephemeral local
       Supabase on every PR.
+
+- [ ] **Keep Supabase awake (free-tier auto-pauses after 7 days idle).** A paused DB makes login
+      return `invalid_credentials` on prod AND every preview until manually restored from the
+      dashboard (hit us 2026-07-21). Add a daily Vercel Cron → API route that runs a trivial
+      Supabase query so the free project never idles out. Not upgrading to Pro for now.
+- [ ] **Wire Sentry to Production.** Prod env has NO Sentry vars, so Sentry is dormant on the live
+      site — only the preview branch is wired. Add `NEXT_PUBLIC_SENTRY_DSN` + `SENTRY_ORG` +
+      `SENTRY_PROJECT` + `SENTRY_AUTH_TOKEN` to the Production scope, then redeploy `main` so it
+      activates with source-map upload. (Deferred 2026-07-21.)
 
 ## Medium
 
@@ -50,6 +62,11 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
       `globe.svg`, `window.svg`, `file.svg`) — delete if unreferenced.
 - [ ] **QA cleanup leftovers** — see `docs/bug-hunt-findings.md` cleanup checklist (test users,
       Flow 2–3 seed data, conversations).
+- [ ] **Sentry server-side user context missing.** `Sentry.setUser()` in `app/(app)/layout.tsx`
+      does not reach `onRequestError`-captured server errors (Next.js scope isolation — the hook
+      runs outside the render async context); client events attach user + role fine. To fix,
+      re-read the Supabase session in `instrumentation.ts`'s `onRequestError` and set the user
+      before capture. Live-confirmed 2026-07-21.
 - [ ] **Unlayered `a:not(.btn)` rule in `app/globals.css:257`** outranks Tailwind's `text-*`
       utilities (higher specificity *and* unlayered CSS beats `@layer utilities`). Every
       coloured link needs an inline `style` or `!` override to work around it. Wrapping the
