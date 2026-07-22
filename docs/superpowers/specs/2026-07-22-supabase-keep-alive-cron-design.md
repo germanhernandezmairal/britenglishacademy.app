@@ -36,17 +36,24 @@ rather than a silent week that ends in a broken login.
 
 ## Architecture
 
-Three files. No new dependencies.
+Four files. No new dependencies.
 
 | File | Purpose |
 |---|---|
-| `app/api/cron/keep-alive/route.ts` | GET handler: auth-gate → Supabase read → report |
+| `lib/cron/keep-alive.ts` | The logic: authorization gate + ping runner |
+| `lib/cron/keep-alive.test.ts` | vitest coverage of both |
+| `app/api/cron/keep-alive/route.ts` | Thin GET handler wiring the two together |
 | `vercel.json` (new file) | `crons` entry pointing at that path |
-| `app/api/cron/keep-alive/route.test.ts` | vitest coverage of all four branches |
 
 Both `app/api/` and `vercel.json` are greenfield: the repo currently has a single route handler
-(`app/auth/callback/route.ts`) and no Vercel config file. There is no existing pattern to conflict
-with.
+(`app/auth/callback/route.ts`) and no Vercel config file.
+
+**Why the logic lives in `lib/` rather than beside the route** (revised during planning): the test
+runner is configured with `include: ["lib/**/*.test.ts", "proxy.test.ts"]`, so a test placed under
+`app/` is silently never collected — it would look like passing coverage while running nothing.
+Rather than widen that config, the feature follows the pattern already set by
+`lib/observability/sentry-options.ts`: dependency-injected functions in `lib/` with a colocated
+test, and a route handler thin enough that it needs no test of its own.
 
 ## Data flow
 
@@ -120,14 +127,17 @@ case is that Sentry tells you before a user does.
 
 ## Testing
 
-Four vitest cases against the exported `GET`, mocking `lib/supabase/server` and `@sentry/nextjs`:
+Fourteen vitest cases in `lib/cron/keep-alive.test.ts`, split across the two functions:
 
-| Case | Expected |
+| Function | Cases |
 |---|---|
-| No `Authorization` header | `401`, no database call |
-| Wrong bearer token | `401`, no database call |
-| Valid token, query succeeds | `200`, `ok: true` |
-| Valid token, query errors | `503`, `captureException` called |
+| `isAuthorizedCronRequest` | secret undefined / empty / whitespace, header missing, wrong secret, bare secret without the `Bearer` scheme, correct secret at the wrong length, and the exact match |
+| `runKeepAlivePing` | query resolves clean, query matches zero rows, query returns a Postgres error, query throws, query rejects with a non-`Error` value |
+
+No module mocking is needed. Both functions take their dependencies as parameters — the secret as a
+default-valued argument, and the query as a thunk — so each test passes a two-line fake. This
+matches how `lib/observability/sentry-options.test.ts` already works; no existing test in the repo
+uses `vi.mock`.
 
 No network and no database, so the suite stays hermetic and runs in the fast `check` CI job
 alongside the existing vitest tests.
