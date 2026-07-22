@@ -29,14 +29,16 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
       gate runs the seeded student → interactive exam → 3/3 flow against an ephemeral local
       Supabase on every PR.
 
-- [ ] **Keep Supabase awake (free-tier auto-pauses after 7 days idle).** A paused DB makes login
-      return `invalid_credentials` on prod AND every preview until manually restored from the
-      dashboard (hit us 2026-07-21). Add a daily Vercel Cron → API route that runs a trivial
-      Supabase query so the free project never idles out. Not upgrading to Pro for now.
-- [ ] **Wire Sentry to Production.** Prod env has NO Sentry vars, so Sentry is dormant on the live
-      site — only the preview branch is wired. Add `NEXT_PUBLIC_SENTRY_DSN` + `SENTRY_ORG` +
-      `SENTRY_PROJECT` + `SENTRY_AUTH_TOKEN` to the Production scope, then redeploy `main` so it
-      activates with source-map upload. (Deferred 2026-07-21.)
+- [x] **Keep Supabase awake (free-tier auto-pauses after 7 days idle).** Shipped 2026-07-22: a
+      daily Vercel Cron hits `/api/cron/keep-alive`, which runs an anon `head` count against
+      `blog_posts` using the same client login uses. Gated on `CRON_SECRET` (fails closed) and
+      reports failures to Sentry, so a database problem alerts instead of surfacing later as a
+      misleading `invalid_credentials` login error. Note this PREVENTS idling; it cannot un-pause
+      an already-paused project. Still on the free tier.
+- [x] **Wire Sentry to Production.** Done 2026-07-22: the four Sentry vars were added to the
+      Production scope and `main` redeployed with source-map upload confirmed in the build log.
+      Live-verified on brit-english-academy.vercel.app — client SDK initialised, a test throw
+      tunnelled through `/monitoring` (POST 200) and landed in `sentry-aqua-yacht`.
 
 ## Medium
 
