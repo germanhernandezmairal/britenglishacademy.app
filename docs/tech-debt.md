@@ -64,11 +64,18 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
       `globe.svg`, `window.svg`, `file.svg`) — delete if unreferenced.
 - [ ] **QA cleanup leftovers** — see `docs/bug-hunt-findings.md` cleanup checklist (test users,
       Flow 2–3 seed data, conversations).
-- [ ] **Sentry server-side user context missing.** `Sentry.setUser()` in `app/(app)/layout.tsx`
-      does not reach `onRequestError`-captured server errors (Next.js scope isolation — the hook
-      runs outside the render async context); client events attach user + role fine. To fix,
-      re-read the Supabase session in `instrumentation.ts`'s `onRequestError` and set the user
-      before capture. Live-confirmed 2026-07-21.
+- [x] **Sentry server-side user context missing.** `Sentry.setUser()` in `app/(app)/layout.tsx`
+      did not reach `onRequestError`-captured server errors (Next.js scope isolation — the hook
+      runs outside the render async context); client events attach user + role fine.
+      **Fixed 2026-07-23:** `instrumentation.ts`'s `onRequestError` now resolves the user id from
+      the request cookies via a local `getSession()` decode (`lib/observability/request-user.ts`,
+      no network / no DB dependency in the error path) and sets it on a fresh isolation scope.
+      **Id only** — the JWT's `role` claim is the Postgres role, not our app role. Pending merge +
+      live re-verify on prod against the 2026-07-21 check.
+- [ ] **Sentry not scoped to Preview deploys (deferred).** The four Sentry vars are Production-only.
+      Previews get no error capture, but they also lack Supabase env (auth flows don't work there)
+      and source-map upload needs `SENTRY_AUTH_TOKEN` (write-only, unreadable via CLI). Low value
+      while previews are ephemeral; revisit if/when a staging Supabase exists.
 - [ ] **Unlayered `a:not(.btn)` rule in `app/globals.css:257`** outranks Tailwind's `text-*`
       utilities (higher specificity *and* unlayered CSS beats `@layer utilities`). Every
       coloured link needs an inline `style` or `!` override to work around it. Wrapping the
