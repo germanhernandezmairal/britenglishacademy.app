@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { headers } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
-import { getLoginLimiter, getSignupLimiter } from "@/lib/ratelimit"
+import { checkRateLimit, getLoginLimiter, getSignupLimiter } from "@/lib/ratelimit"
 import { z } from "zod"
 
 async function clientIp(): Promise<string> {
@@ -30,10 +30,8 @@ const onboardingSchema = z.object({
 
 export async function login(formData: FormData): Promise<never> {
   const ip = await clientIp()
-  const limiter = getLoginLimiter()
-  if (limiter) {
-    const { success } = await limiter.limit(ip)
-    if (!success) redirect("/login?error=rate_limited")
+  if (!(await checkRateLimit(getLoginLimiter(), ip))) {
+    redirect("/login?error=rate_limited")
   }
 
   const supabase = await createClient()
@@ -81,10 +79,8 @@ export async function loginWithGoogle(): Promise<never> {
 
 export async function signup(formData: FormData): Promise<never> {
   const ip = await clientIp()
-  const limiter = getSignupLimiter()
-  if (limiter) {
-    const { success } = await limiter.limit(ip)
-    if (!success) redirect("/signup?error=rate_limited")
+  if (!(await checkRateLimit(getSignupLimiter(), ip))) {
+    redirect("/signup?error=rate_limited")
   }
 
   const supabase = await createClient()
