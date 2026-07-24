@@ -28,10 +28,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   // Attaches user to Sentry for the paths that share this request's async
   // scope: client events (mirrored by <SentryUser> below) and any explicit
-  // Sentry.captureException made within this request. NOTE: uncaught SERVER
-  // render errors are captured by instrumentation.ts's onRequestError, which
-  // runs OUTSIDE this async context and does NOT see this user — those events
-  // carry only url/transaction (live-verified 2026-07-21; see docs/tech-debt.md).
+  // Sentry.captureException made within this request. Uncaught SERVER render
+  // errors do NOT come through here — instrumentation.ts's onRequestError runs
+  // outside this async context and resolves the id from the request cookies
+  // itself, which is why it attaches the id but not the role.
   // UUID + role only, never email (students are minors).
   Sentry.setUser({ id: user.id, role: profile.role })
 

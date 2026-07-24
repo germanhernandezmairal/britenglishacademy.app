@@ -70,8 +70,26 @@ Derived from the `docs/mvp-best-practices.md` audit (2026-06-25). Check items of
       **Fixed 2026-07-23:** `instrumentation.ts`'s `onRequestError` now resolves the user id from
       the request cookies via a local `getSession()` decode (`lib/observability/request-user.ts`,
       no network / no DB dependency in the error path) and sets it on a fresh isolation scope.
-      **Id only** — the JWT's `role` claim is the Postgres role, not our app role. Pending merge +
-      live re-verify on prod against the 2026-07-21 check.
+      **Id only** — the JWT's `role` claim is the Postgres role, not our app role.
+      **Live-verified on production 2026-07-24** (`SENTRY-AQUA-YACHT-6`, release `3df77e93ad13`): a
+      server render error thrown while signed in as qa.student attached
+      `ID 60714bd7-b8fc-49d5-a325-6176c03aa3e8` with no email or username, and the issue counts
+      1 user where the 2026-07-21 check counted 0.
+- [x] **Production login returned 500 on every attempt for ~66 days.** Found 2026-07-24. The stored
+      `UPSTASH_REDIS_REST_URL` carried a trailing newline; Upstash validates eagerly, so `new Redis()`
+      threw `UrlError` on construction and the throw escaped uncaught from `login()`'s first step
+      (digest `3201808633`, confirmed in `vercel logs`). Hidden because `buildRedis()` returns `null`
+      when the vars are *absent* — previews and the E2E gate have none, so **production was the only
+      environment running that path**. Fixed by PR #28: credentials are trimmed on read, limiter
+      construction is wrapped, and the new `checkRateLimit()` fails **open** (reports to Sentry,
+      allows the request) so a limiter fault can never take auth down again.
+- [ ] **Audit Production env vars for stray whitespace.** `UPSTASH_REDIS_REST_URL` is still stored
+      with its trailing newline — harmless now that the value is trimmed on read, but wrong, and the
+      other Production vars have never been checked for the same thing. Values are write-only via
+      the CLI, so this needs the dashboard.
+- [ ] **Rate limiting has never actually been active.** Corollary of the bug above: the only
+      environment with Upstash credentials was the one where the client failed to construct. The
+      login (5/15min) and signup (3/hour) caps are unproven in practice — worth exercising once.
 - [ ] **Sentry not scoped to Preview deploys (deferred).** The four Sentry vars are Production-only.
       Previews get no error capture, but they also lack Supabase env (auth flows don't work there)
       and source-map upload needs `SENTRY_AUTH_TOKEN` (write-only, unreadable via CLI). Low value
